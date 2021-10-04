@@ -25,4 +25,4 @@ jobs:
       uses: irongut/CodeCoverageSummary@v1.0.5
       if: always()
       with:
-        filename: ${{ github.workspace }}/**/cobertura-coverage.xml
+        filename: ${{ github.workspace }}/**/*coverage.xml

@@ -28,4 +28,4 @@ jobs:
       uses: irongut/CodeCoverageSummary@v1.0.5
       if: always()
       with:
-        filename: ${{ github.workspace }}/**/*coverage.xml
+        filename: ${{ github.workspace }}/apigee-cicd-master/coverage/cobertura-coverage.xml

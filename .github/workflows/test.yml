@@ -1,13 +1,76 @@
+name: ${{ env.date:yyyyMMdd }}${{ env.rev:.r }}
 on:
-  push:
-    branches:
-    - main
+push:
+branches:
+- master
+env:
+group: Grp-ImranCloudRef
 jobs:
-  Job_1:
-    name: Agent job 1
-    runs-on: ubuntu-20.04
-    steps:
-    - uses: actions/checkout@v2
-    - name: Unit-Test-With-Coverage
-      run: cd ${{ github.workspace }}/apigee-cicd-master && npm install && npm test test/unit/test.js && npm run coverage test/unit/test.js
-      shell: cmd
+Job_1:
+name: Agent job 1
+runs-on: ubuntu-20.04
+steps:
+- uses: actions/checkout@v2
+- name: Unit-Test-With-Coverage
+run: cd ${{ github.workspace }}/apigee-cicd-master && npm install && npm test test/unit/test.js && npm run coverage test/unit/test.js
+shell: cmd
+- name: Publish Unit Test Results
+uses: EnricoMi/publish-unit-test-result-action@v1
+if: (${{ job.status }} != 'cancelled')
+with:
+files: /**/test-results.xml
+- name: Publish code coverage from ${{ github.workspace }}/**/*coverage.xml
+uses: irongut/CodeCoverageSummary@v1.0.5
+if: (${{ job.status }} != 'cancelled')
+with:
+filename: $(System.DefaultWorkingDirectory)/**/*coverage.xml
+- name: Policy-Code Analysis
+run: |
+cd ${{ github.workspace }}/apigee-cicd-master
+sudo npm install -g apigeelint
+apigeelint -s ${{ env.ProxyName }}/apiproxy -f html.js -e ${{ env.ProxyRuleSkip }} > ${{ github.workspace }}/apigeelint.html
+shell: cmd
+- name: HTML Preview
+id: html_preview
+uses: pavi2410/html-preview-action@v2
+with:
+html_file: 'index.html'
+
+- name: Checking Current Stable Revision
+run: "#!/bin/bash
+
+echo \"ORG: '${{ env.ORG }}'\"
+echo ${{ env.base64encoded }}
+echo ${{ env.ProxyName }}
+revision_info=$(curl -H \"Authorization: Basic ${{ env.base64encoded }}\" \"https://api.enterprise.apigee.com/v1/organizations/${{ env.ORG }}/apis/${{ env.ProxyName }}/deployments\")
+previous_revision_number=${{ env.jq -r .environment[0].revision[0].name <<< \"${revision_info}\" }} 
+
+echo $previous_revision_number
+echo $revision_info"
+shell: bash
+- name: Show Current Stable Revision
+run: 'echo "stable revision at other task: ${{ env.PWS.stable_revision_number }}"'
+shell: cmd
+- name: Deploy Proxy
+run: mvn clean install -f ${{ github.workspace }}/apigee-cicd-master/${{ env.ProxyName }}/pom.xml -P${{ env.ENV }} -Dusername=${{ env.apigeeUsernameNew }} -Dpassword=${{ env.apigeePasswordNew }} -Dorg=${{ env.ORG_New }} -Dapigee.config.options=create
+shell: cmd
+- name: Integration Test through script file
+shell: bash
+- name: Undeploy Current & redeploy stable revision
+run: "#!/bin/bash
+
+echo \"ORG: '${{ env.ORG }}'\"
+echo ${{ env.base64encoded }}
+echo ${{ env.ProxyName }}
+revision_info=$(curl -H \"Authorization: Basic ${{ env.base64encoded }}\" \"https://api.enterprise.apigee.com/v1/organizations/${{ env.ORG }}/apis/${{ env.ProxyName }}/deployments\")
+previous_revision_number=${{ env.jq -r .environment[0].revision[0].name <<< \"${revision_info}\" }} 
+
+echo $previous_revision_number
+echo $revision_info"
+shell: bash
+if: failure()
+name: Publish Integration Test Results
+uses: EnricoMi/publish-unit-test-result-action@v1
+if: (${{ job.status }} != 'cancelled')
+with:
+files: $(Build.SourcesDirectory)/apigeelint.html

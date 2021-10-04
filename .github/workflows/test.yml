@@ -15,14 +15,14 @@ jobs:
     - name: Unit-Test-With-Coverage
       run: cd ${{ github.workspace }}/apigee-cicd-master && npm install && npm test test/unit/test.js && npm run coverage test/unit/test.js
       
-    - uses: EnricoMi/publish-unit-test-result-action@v1 
     - name: Publish Unit Test Results
-      if: (${{ job.status }} != 'cancelled')
+      uses: EnricoMi/publish-unit-test-result-action@v1
+      if: always()
       with:
-        files: /**/test-results.xml
-        
-    - uses: irongut/CodeCoverageSummary@v1.0.5
+        files: ${{ github.workspace }}/**/test-results.xml
+      
     - name: Publish code coverage from ${{ github.workspace }}/**/*coverage.xml
+      uses: irongut/CodeCoverageSummary@v1.0.5
       if: (${{ job.status }} != 'cancelled')
       with:
         filename: ${{ github.workspace }}/**/*coverage.xml

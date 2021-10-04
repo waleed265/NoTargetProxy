@@ -1,4 +1,3 @@
-name: ${{ env.date:yyyyMMdd }}${{ env.rev:.r }}
 on:
   push:
     branches:

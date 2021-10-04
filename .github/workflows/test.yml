@@ -2,7 +2,7 @@ name: ${{ env.date:yyyyMMdd }}${{ env.rev:.r }}
 on:
 push:
 branches:
-- master
+- main
 env:
 group: Grp-ImranCloudRef
 jobs:

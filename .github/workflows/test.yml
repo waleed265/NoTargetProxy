@@ -23,9 +23,15 @@ jobs:
       if: always()
       with:
         files: ${{ github.workspace }}/**/test-results.xml
+        
+    - name: Coverage
+      run: cd ${{ github.workspace }}/apigee-cicd-master/coverage && ls     
       
     - name: Publish code coverage from ${{ github.workspace }}/**/*coverage.xml
       uses: irongut/CodeCoverageSummary@v1.0.5
       if: always()
       with:
         filename: ${{ github.workspace }}/apigee-cicd-master/coverage/cobertura-coverage.xml
+        
+    - name: Coverage
+      run: cd ${{ github.workspace }}/apigee-cicd-master/coverage && ls     

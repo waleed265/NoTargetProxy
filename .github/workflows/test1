@@ -1,0 +1,28 @@
+on:
+  push:
+    branches:
+    - main
+env:
+  group: Grp-ImranCloudRef
+jobs:
+  Job_1:
+  
+    name: Agent job 1
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Unit-Test-With-Coverage
+      run: cd ${{ github.workspace }}/apigee-cicd-master && npm install && npm test test/unit/test.js && npm run coverage test/unit/test.js
+      
+    - name: Publish Unit Test Results
+      uses: EnricoMi/publish-unit-test-result-action@v1
+      if: always()
+      with:
+        files: ${{ github.workspace }}/**/test-results.xml
+      
+    - name: Publish code coverage from ${{ github.workspace }}/**/*coverage.xml
+      uses: irongut/CodeCoverageSummary@v1.0.5
+      if: always()
+      with:
+        filename: ${{ github.workspace }}/coverage/cobertura-coverage.xml

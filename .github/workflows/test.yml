@@ -6,10 +6,12 @@ env:
   group: Grp-ImranCloudRef
 jobs:
   Job_1:
+  
     name: Agent job 1
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v2
+    
     - name: Unit-Test-With-Coverage
       run: cd ${{ github.workspace }}/apigee-cicd-master && npm install && npm test test/unit/test.js && npm run coverage test/unit/test.js
       
@@ -18,8 +20,9 @@ jobs:
       if: (${{ job.status }} != 'cancelled')
       with:
       files: /**/test-results.xml
+      
     - name: Publish code coverage from ${{ github.workspace }}/**/*coverage.xml
-        uses: irongut/CodeCoverageSummary@v1.0.5
+      uses: irongut/CodeCoverageSummary@v1.0.5
       if: (${{ job.status }} != 'cancelled')
-          with:
-            filename: ${{ github.workspace }}/**/*coverage.xml
+      with:
+      filename: ${{ github.workspace }}/**/*coverage.xml

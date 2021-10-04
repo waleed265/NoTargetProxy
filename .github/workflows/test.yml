@@ -4,12 +4,12 @@ on:
     branches:
     - main
 env:
-group: Grp-ImranCloudRef
+	group: Grp-ImranCloudRef
 jobs:
-Job_1:
-name: Agent job 1
-runs-on: ubuntu-20.04
-steps:
-- uses: actions/checkout@v2
-- name: Unit-Test-With-Coverage
-  run: cd ${{ github.workspace }}/apigee-cicd-master && npm install && npm test test/unit/test.js && npm run coverage test/unit/test.js
+	Job_1:
+		name: Agent job 1
+		runs-on: ubuntu-20.04
+		steps:
+		- uses: actions/checkout@v2
+		- name: Unit-Test-With-Coverage
+			run: cd ${{ github.workspace }}/apigee-cicd-master && npm install && npm test test/unit/test.js && npm run coverage test/unit/test.js

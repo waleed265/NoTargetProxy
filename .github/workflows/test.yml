@@ -4,7 +4,7 @@ on:
     branches:
     - main
 env:
-	group: Grp-ImranCloudRef
+  group: Grp-ImranCloudRef
 jobs:
 	Job_1:
 		name: Agent job 1

@@ -1,8 +1,8 @@
 name: ${{ env.date:yyyyMMdd }}${{ env.rev:.r }}
 on:
-push:
-branches:
-- main
+  push:
+    branches:
+    - main
 env:
 group: Grp-ImranCloudRef
 jobs:

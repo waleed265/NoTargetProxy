@@ -16,7 +16,7 @@ jobs:
       run: cd ${{ github.workspace }}/apigee-cicd-master && npm install && npm test test/unit/test.js && npm run coverage test/unit/test.js
       
     - name: Unit-Test-With-Coverage
-      run: cd ${{ github.workspace }} && ls 
+      run: cd ${{ github.workspace }}/apigee-cicd-master && ls 
       
     - name: Publish Unit Test Results
       uses: EnricoMi/publish-unit-test-result-action@v1

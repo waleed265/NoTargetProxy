@@ -19,10 +19,10 @@ jobs:
       uses: EnricoMi/publish-unit-test-result-action@v1
       if: (${{ job.status }} != 'cancelled')
       with:
-      files: /**/test-results.xml
+        files: /**/test-results.xml
       
     - name: Publish code coverage from ${{ github.workspace }}/**/*coverage.xml
       uses: irongut/CodeCoverageSummary@v1.0.5
       if: (${{ job.status }} != 'cancelled')
       with:
-      filename: ${{ github.workspace }}/**/*coverage.xml
+        filename: ${{ github.workspace }}/**/*coverage.xml

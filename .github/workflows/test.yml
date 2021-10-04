@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-    - master
+    - main
 jobs:
   Job_1:
     name: Agent job 1

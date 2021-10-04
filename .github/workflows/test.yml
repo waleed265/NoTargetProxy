@@ -23,6 +23,6 @@ jobs:
       
     - name: Publish code coverage from ${{ github.workspace }}/**/*coverage.xml
       uses: irongut/CodeCoverageSummary@v1.0.5
-      if: (${{ job.status }} != 'cancelled')
+      if: always()
       with:
         filename: ${{ github.workspace }}/**/*coverage.xml

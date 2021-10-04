@@ -15,9 +15,9 @@ jobs:
       
     - name: Publish Unit Test Results
       uses: EnricoMi/publish-unit-test-result-action@v1
-        if: (${{ job.status }} != 'cancelled')
-          with:
-            files: /**/test-results.xml
+      if: (${{ job.status }} != 'cancelled')
+      with:
+      files: /**/test-results.xml
     - name: Publish code coverage from ${{ github.workspace }}/**/*coverage.xml
         uses: irongut/CodeCoverageSummary@v1.0.5
       if: (${{ job.status }} != 'cancelled')

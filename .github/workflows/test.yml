@@ -31,5 +31,5 @@ jobs:
       uses: Tintef/nyc-reporter-action@0.1.0
       with:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        REPORTER: 'text' # defaults to 'text-summary'    
+        REPORTER: 'cobertura' # defaults to 'text-summary'    
         COVERAGE_FOLDER: ${{ github.workspace }}/apigee-cicd-master/coverage

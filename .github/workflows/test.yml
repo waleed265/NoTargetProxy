@@ -36,7 +36,7 @@ jobs:
       with:
         path: ${{ github.workspace }}/apigee-cicd-master/coverage/cobertura-coverage.xml
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        minimum_coverage: 75
+        minimum_coverage: 100
         skip_covered: false
         fail_below_threshold: true
         show_line: true

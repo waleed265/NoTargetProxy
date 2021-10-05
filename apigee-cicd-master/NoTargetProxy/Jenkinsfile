@@ -1,0 +1,86 @@
+#!groovy
+
+
+pipeline {
+    agent any
+    tools {
+			nodejs "nodejs"
+			maven 'maven'
+		}
+    stages {
+        stage('Initial-Checks') {
+            steps {
+                echo "PIPELINE EXECUTION STARTED"
+                script {
+timestamps {
+
+
+stage ('My_CICD_Project - Build') {
+// Shell build step
+
+sh """ 
+cd /var/lib/jenkins/workspace/jenkinsfile_pipeline/mochaapptest  
+
+npm -v 
+npm install -g apigeelint
+npm install -g jshint@2.4.4 
+npm install -g jshint-html-reporter 
+npm install -g nyc  
+npm install -g mocha 
+npm install -g mocha-junit-reporter  
+
+apigeelint -s /var/lib/jenkins/workspace/jenkinsfile_pipeline/src/gateway/NoTargetProxy/apiproxy -f table.js
+
+apigeelint -s /var/lib/jenkins/workspace/jenkinsfile_pipeline/src/gateway/NoTargetProxy/apiproxy -f html.js > reports/index.html  
+
+cp /var/lib/jenkins/workspace/jenkinsfile_pipeline/src/gateway/NoTargetProxy/apiproxy/resources/jsc/app.js /var/lib/jenkins/workspace/jenkinsfile_pipeline/mochaapptest  
+
+jshint --reporter node_modules/jshint-html-reporter/reporter.js app.js > reports/jshint.html   
+
+MOCHA_FILE=./reports/jenkins-test-results.xml mocha test --reporter mocha-junit-reporter
+
+npm run coverage 
+
+cd /var/lib/jenkins/workspace/jenkinsfile_pipeline 
+
+mvn clean install -P test -Dusername=rimsha.aizaz@abacuscambridge.com -Dpassword=Rimsha@03 -Dorg=rimshaaizaz-eval -f /var/lib/jenkins/workspace/jenkinsfile_pipeline/src/gateway/NoTargetProxy/pom.xml -Dapigee.config.options=update 
+
+ 
+""" 
+
+
+    }
+
+
+
+
+stage('Publishing Reports') {
+    sh """ 
+    cd /var/lib/jenkins/workspace/jenkinsfile_pipeline/mochaapptest 
+	cp /var/lib/jenkins/workspace/jenkinsfile_pipeline/mochaapptest/coverage/cobertura-coverage.xml /var/lib/jenkins/workspace/jenkinsfile_pipeline
+     """
+    publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '/var/lib/jenkins/workspace/jenkinsfile_pipeline/mochaapptest/reports', reportFiles: 'index.html', reportName: 'Apigee Lint Report', reportTitles: ''])
+	
+	publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '/var/lib/jenkins/workspace/jenkinsfile_pipeline/mochaapptest/reports', reportFiles: 'jshint.html', reportName: 'JsHint Report', reportTitles: ''])
+	
+	junit skipPublishingChecks: true, testResults: 'mochaapptest/reports/jenkins-test-results.xml'
+	
+	cobertura coberturaReportFile: 'cobertura-coverage.xml'
+       
+    }
+
+}
+
+}
+				echo "Stable Revision:"
+        }}
+    }
+post {
+    success {
+        slackSend channel: '#buildstatus',
+                  color: 'good',
+                  message: "The pipeline ${currentBuild.fullDisplayName} completed successfully."
+    }
+}
+}
+

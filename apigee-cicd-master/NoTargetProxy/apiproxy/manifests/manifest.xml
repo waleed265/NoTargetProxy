@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Manifest name="manifest">
+    <Policies>
+        <VersionInfo resourceName="JavaScript-1" version="SHA-512:1d0da5a993dadc0c9e751e44aff30c5f793fd813bf344f017419841a036caeb64cf065e9c062cc7dc44ddaf7ac8dfb65ace9cc45349b071d82bf9004513b2601"/>
+        <VersionInfo resourceName="OA2-VerifyAccessToken" version="SHA-512:a45c08790c3697d51bc2a866ad1ca7a7b1fc3c684d67131d558f08a539a57209cb3a28c780b116e800f3793cc25e10957209d0955407b039b45a51bf92cce388"/>
+        <VersionInfo resourceName="textResponse" version="SHA-512:e0caac9631bc543112d8e05511021432d18ef6b870f66ef39f91f1727f7bd98ed851836305dc8f6c3b883cf8fce603062fe3271a18c0c4b3c0426c2abc2d492f"/>
+    </Policies>
+    <ProxyEndpoints>
+        <VersionInfo resourceName="default" version="SHA-512:f0b0aad4351deb9be679bda137e5adffc592e3320ff7d56b03cc199b4cae7a17e6bf680b2afc3ffc5bc9f4296e0ebfb42d2e673b238d7f535ca3b5e83c8fec71"/>
+    </ProxyEndpoints>
+    <Resources>
+        <VersionInfo resourceName="jsc://JavaScript-1.js" version="SHA-512:953b0692f3e767a74e3e2f60c1dcf9964c8c2c969f2a69c80b877965703b5715b5cc80d82972ef787d1cb7c815504e9652fe6dc9fe502b1d456a80f5af2644f7"/>
+        <VersionInfo resourceName="jsc://Logging-User-Setting-ID.js" version="SHA-512:94d688835c726a59acd4165beb30122432cb1315413aca71c177c106ad9c1d9e9529eb21673365778f8498fd3e3dfe02e05c9b55c9d0b97c8c5677dd20a7a346"/>
+        <VersionInfo resourceName="jsc://app.js" version="SHA-512:472932746f87274e1fe2f4c36f4558a087a3422c999211aa76a9cc1449659f665ad9973472c58f7d22e089c7e9c64839919f9bed9ba3127523b4616683d1d943"/>
+        <VersionInfo resourceName="node://hello-world.js" version="SHA-512:af2aed96a9a04d520882852dea526071bcd53fc98d49138dd27861df33be13d4930d62dd7e0217eb75c6e39b05810fffe09132429061566a3b5b2dcfcf087172"/>
+    </Resources>
+    <SharedFlows/>
+    <TargetEndpoints>
+        <VersionInfo resourceName="default" version="SHA-512:0867cc24f98bfd1c8229207d716a502b85dc3c28a6989779f6d6411832753968394ef71ea945acb16eb88b3260f58fe600e6da6e3935f3df71e7d2d546f52a2b"/>
+    </TargetEndpoints>
+</Manifest>

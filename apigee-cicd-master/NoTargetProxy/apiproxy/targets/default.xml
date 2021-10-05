@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?><TargetEndpoint name="default">
+    <Description/>
+    <FaultRules/>
+    <Flows/>
+    <HTTPTargetConnection>
+        <Properties/>
+        <URL>http://rimshaaizaz-eval-test.apigee.net</URL>
+    </HTTPTargetConnection>
+    <PreFlow name="PreFlow">
+        <Request/>
+        <Response/>
+    </PreFlow>
+    <PostFlow name="PostFlow">
+        <Request/>
+        <Response/>
+    </PostFlow>
+</TargetEndpoint>

@@ -27,9 +27,9 @@ jobs:
     #- name: Coverage
       #run: cp ${{ github.workspace }}/apigee-cicd-master/coverage/cobertura-coverage.xml ${{ github.workspace }} && cd ${{ github.workspace }} &&  ls     
       
-    - name: NYC Coverage Report
-      uses: Tintef/nyc-reporter-action@0.1.0
+    - name: Cobertura Coverage Report
+      uses: 5monkeys/cobertura-action@master
       with:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        REPORTER: 'cobertura' # defaults to 'text-summary'    
-        COVERAGE_FOLDER: ${{ github.workspace }}/apigee-cicd-master/coverage
+        path: src/test.xml
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        #minimum_coverage: 75

@@ -1,9 +1,9 @@
 #!/bin/bash -xv
 
-ORG=$1
-base64encoded=$2
-ProxyName=$3
-ENV=$4
+# ORG=$1
+# base64encoded=$2
+# ProxyName=$3
+# ENV=$4
 
 echo "ORG: $ORG"
 echo "base64encoded: $base64encoded"

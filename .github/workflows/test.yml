@@ -10,6 +10,9 @@ on:
     - DEV
 env:
   ProxyName: NoTargetProxy
+  ORG: rimshaaizaz-eval
+  base64encoded: cmltc2hhLmFpemF6QGFiYWN1c2NhbWJyaWRnZS5jb206Umltc2hhQDAz
+  ENV: prod
 jobs:
   Job_1:
   

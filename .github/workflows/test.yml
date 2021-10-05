@@ -61,5 +61,5 @@ jobs:
         html_file: '${{ github.workspace }}/apigeelint.html'
     
     - name: Checking Current Stable Revision
-      run: sh chmod +x ./revision.sh
+      run: sh ./revision.sh
       shell: bash

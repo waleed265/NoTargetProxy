@@ -25,7 +25,7 @@ jobs:
         files: ${{ github.workspace }}/**/test-results.xml
         
     - name: Coverage
-      run: cp cobertura-coverage.xml ${{ github.workspace }} && cd ${{ github.workspace }} &&  ls     
+      run: cp ${{ github.workspace }}/apigee-cicd-master/coverage/cobertura-coverage.xml ${{ github.workspace }} && cd ${{ github.workspace }} &&  ls     
       
     - name: Publish code coverage from ${{ github.workspace }}/**/*coverage.xml
       uses: irongut/CodeCoverageSummary@v1.0.5

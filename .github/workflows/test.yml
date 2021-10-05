@@ -2,10 +2,12 @@ on:
   pull_request:
     types: [opened]
     branches:
-    - '*'
+    - main
+    - DEV
   push:
     branches:
-    - '*'
+    - main
+    - DEV
 env:
   group: Grp-ImranCloudRef
 jobs:

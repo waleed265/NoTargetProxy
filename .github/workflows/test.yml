@@ -27,7 +27,8 @@ jobs:
     - name: Coverage
       run: cp ${{ github.workspace }}/apigee-cicd-master/coverage/cobertura-coverage.xml ${{ github.workspace }} && cd ${{ github.workspace }} &&  ls     
       
-    - uses: tintef/nyc-reporter-action
+    - name: Publish Coverage Results
+      uses: tintef/nyc-reporter-action    
       with:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         REPORTER: 'text' # defaults to 'text-summary'    

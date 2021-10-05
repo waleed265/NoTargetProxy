@@ -3,9 +3,11 @@ on:
     types: [opened]
     branches:
     - main
+    - DEV
   push:
     branches:
     - main
+    - DEV
 env:
   group: Grp-ImranCloudRef
 jobs:
@@ -44,6 +46,7 @@ jobs:
         show_class_names: true
         show_missing: true
         only_changed_files: false
+<<<<<<< HEAD
       
     - name: Policy-Code Analysis
       run: |
@@ -56,3 +59,5 @@ jobs:
         uses: pavi2410/html-preview-action@v2
         with:
             html_file: 'index.html'
+=======
+>>>>>>> e4b69ff85cd6aa94d670217878bd3b7389bc43b9

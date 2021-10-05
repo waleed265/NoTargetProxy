@@ -1,9 +1,9 @@
 on:
-  pull_request:
-    types: [opened]
-    branches:
-    - main
-    - DEV
+  # pull_request:
+    # types: [opened]
+    # branches:
+    # - main
+    # - DEV
   push:
     branches:
     - main

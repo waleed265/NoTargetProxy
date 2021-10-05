@@ -30,6 +30,6 @@ jobs:
     - name: Cobertura Coverage Report
       uses: 5monkeys/cobertura-action@master
       with:
-        path: src/test.xml
+        path: ${{ github.workspace }}/apigee-cicd-master/coverage/cobertura-coverage.xml
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        #minimum_coverage: 75
+        minimum_coverage: 75

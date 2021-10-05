@@ -27,11 +27,7 @@ jobs:
     - name: Coverage
       run: cp ${{ github.workspace }}/apigee-cicd-master/coverage/cobertura-coverage.xml ${{ github.workspace }} && cd ${{ github.workspace }} &&  ls     
       
-    - name: Publish code coverage from ${{ github.workspace }}/**/*coverage.xml
-      uses: irongut/CodeCoverageSummary@v1.0.5
-      if: always()
+    - uses: tintef/nyc-reporter-action
       with:
-        filename: ${{ github.workspace }}/cobertura-coverage.xml
-        
-    - name: Coverage
-      run: cd ${{ github.workspace }}/apigee-cicd-master/coverage && ls     
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        REPORTER: 'text' # defaults to 'text-summary'    

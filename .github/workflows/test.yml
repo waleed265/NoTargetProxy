@@ -1,0 +1,61 @@
+on:
+  pull_request:
+    types: [opened]
+    branches:
+    - main
+    - DEV
+  push:
+    branches:
+    - main
+    - DEV
+env:
+  ProxyName: NoTargetProxy
+jobs:
+  Job_1:
+  
+    name: Agent job 1
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Unit-Test-With-Coverage
+      run: cd ${{ github.workspace }}/apigee-cicd-master && npm install && npm test test/unit/test.js && npm run coverage test/unit/test.js
+      
+    - name: Coverage
+      run: cd ${{ github.workspace }}/apigee-cicd-master/coverage && ls 
+      
+    - name: Publish Unit Test Results
+      uses: EnricoMi/publish-unit-test-result-action@v1
+      if: always()
+      with:
+        files: ${{ github.workspace }}/**/test-results.xml
+        
+    #- name: Coverage
+      #run: cp ${{ github.workspace }}/apigee-cicd-master/coverage/cobertura-coverage.xml ${{ github.workspace }} && cd ${{ github.workspace }} &&  ls     
+      
+    - name: Cobertura Coverage Report
+      uses: 5monkeys/cobertura-action@master
+      with:
+        path: ${{ github.workspace }}/apigee-cicd-master/coverage/cobertura-coverage.xml
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        minimum_coverage: 75
+        skip_covered: false
+        fail_below_threshold: true
+        show_line: true
+        show_branch: true
+        show_class_names: true
+        show_missing: true
+        only_changed_files: false
+      
+    - name: Policy-Code Analysis
+      run: |
+        cd ${{ github.workspace }}/apigee-cicd-master
+        sudo npm install -g apigeelint
+        apigeelint -s ${{ env.ProxyName }}/apiproxy -f table.js
+        apigeelint -s ${{ env.ProxyName }}/apiproxy -f html.js > ${{ github.workspace }}/apigeelint.html
+        
+    - name: HTML Preview
+      id: html_preview
+      uses: pavi2410/html-preview-action@v2
+      with:
+        html_file: 'apigeelint.html'

@@ -68,5 +68,5 @@ jobs:
       shell: bash    
     
     - name: Checking Current Stable Revision
-      run: sh ./revision.sh
+      run: chmod +x ./revision.sh
       shell: bash

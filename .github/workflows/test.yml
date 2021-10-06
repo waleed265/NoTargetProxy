@@ -12,7 +12,7 @@ env:
   ProxyName: NoTargetProxy
   ORG: rimshaaizaz-eval
   base64encoded: cmltc2hhLmFpemF6QGFiYWN1c2NhbWJyaWRnZS5jb206Umltc2hhQDAz
-  ENV: prod
+  ENV: test
 jobs:
   Job_1:
   
@@ -61,11 +61,7 @@ jobs:
       id: html_preview
       uses: pavi2410/html-preview-action@v2
       with:
-        html_file: '${{ github.workspace }}/apigeelint.html'
-        
-    - name: Checking Current Stable Revision
-      run: echo "hahaha"
-      shell: bash    
+        html_file: '${{ github.workspace }}/apigeelint.html'    
     
     - name: Checking Current Stable Revision
       run: bash ./revision.sh

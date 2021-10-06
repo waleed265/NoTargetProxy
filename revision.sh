@@ -11,7 +11,6 @@ echo "ProxyName: $ProxyName"
 
 revision_info=$(curl -H "Authorization: Basic $base64encoded" "https://api.enterprise.apigee.com/v1/organizations/$ORG/environments/$ENV/apis/$ProxyName/deployments")
 
-
 stable_revision_number=$(jq -r .revision[0].name <<< "${revision_info}" )  
 
 echo "stable revision: $stable_revision_number"

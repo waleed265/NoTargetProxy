@@ -12,7 +12,9 @@ env:
   ProxyName: NoTargetProxy
   ORG: rimshaaizaz-eval
   base64encoded: cmltc2hhLmFpemF6QGFiYWN1c2NhbWJyaWRnZS5jb206Umltc2hhQDAz
-  ENV: test
+  ENV: prod
+  apigeeUsername: rimsha.aizaz@abacuscambridge.com
+  apigeePassword: ${{ secrets.apigeePassword }}
 jobs:
   Job_1:
   
@@ -66,3 +68,6 @@ jobs:
     - name: Checking Current Stable Revision
       run: bash ./revision.sh
       shell: bash
+      
+    - name: Deploy Proxy
+      run: mvn clean install -f ${{ github.workspace }}/apigee-cicd-master/${{ env.ProxyName }}/pom.xml -P${{ env.ENV }} -Dusername=${{ env.apigeeUsername }} -Dpassword=${{ env.apigeePassword }} -Dorg=${{ env.ORG }} -Dapigee.config.options=create

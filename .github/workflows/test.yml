@@ -15,7 +15,7 @@ env:
   ENV: prod
   apigeeUsername: rimsha.aizaz@abacuscambridge.com
   apigeePassword: ${{ secrets.apigeePassword }}
-  NEWMAN_TARGET_URL: NoTargetProxy_GET_Req_Fail.postman_collection.json
+  NEWMAN_TARGET_URL: NoTargetProxy_GET_Req_Pass1.postman_collection.json
   
 jobs:
   Job_1:

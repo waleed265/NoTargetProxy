@@ -71,6 +71,9 @@ jobs:
       run: bash ./revision.sh
       shell: bash
       
+    - name: Echo Current Stable Revision
+      run: echo "stable_revision_number=$stable_revision_number"
+      
     - name: Deploy Proxy
       run: mvn clean install -f ${{ github.workspace }}/apigee-cicd-master/${{ env.ProxyName }}/pom.xml -P${{ env.ENV }} -Dusername=${{ env.apigeeUsername }} -Dpassword=${{ env.apigeePassword }} -Dorg=${{ env.ORG }} -Dapigee.config.options=create
     

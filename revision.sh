@@ -15,4 +15,4 @@ stable_revision_number=$(jq -r .revision[0].name <<< "${revision_info}" )
 
 echo "stable revision: $stable_revision_number"
 
-echo "##vso[task.setvariable variable=stable_revision_number;isOutput=true]$stable_revision_number"
+#echo "##vso[task.setvariable variable=stable_revision_number;isOutput=true]$stable_revision_number"

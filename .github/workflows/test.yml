@@ -68,5 +68,5 @@ jobs:
       shell: bash    
     
     - name: Checking Current Stable Revision
-      run: sudo ./revision.sh
+      run: sh ./revision.sh
       shell: bash

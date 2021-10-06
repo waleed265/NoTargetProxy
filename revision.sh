@@ -1,4 +1,4 @@
-#!/bin/bash -xv
+#!/bin/bash
 
 # ORG=$1
 # base64encoded=$2

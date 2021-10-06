@@ -1,7 +1,9 @@
 #!/bin/bash
 
-ORG=$1
-base64encoded=$2
+# ORG=$1
+# base64encoded=$2
+echo "ORG: $ORG"
+echo "base64encoded: $base64encoded"
 
 client_id=$(curl -H "Authorization: Basic $base64encoded" "https://api.enterprise.apigee.com/v1/organizations/$ORG/apiproducts/Cicd-Prod-Product?query=list&entity=keys")
 

@@ -1,3 +1,4 @@
 testing dev branch
 - '*'
 a
+echo "stable_revision_number=$stable_revision_number"

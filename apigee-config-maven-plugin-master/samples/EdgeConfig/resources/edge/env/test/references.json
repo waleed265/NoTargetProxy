@@ -1,0 +1,7 @@
+[
+  {
+    "name" : "sampleReference",
+    "refers": "freetrial",
+    "resourceType": "KeyStore"
+  }
+]

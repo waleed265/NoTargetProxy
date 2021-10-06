@@ -15,7 +15,7 @@ env:
   ENV: prod
   apigeeUsername: rimsha.aizaz@abacuscambridge.com
   apigeePassword: ${{ secrets.apigeePassword }}
-  NEWMAN_TARGET_URL: NoTargetProxy_GET_Req_PassW.postman_collection.json
+  NEWMAN_TARGET_URL: NoTargetProxy_GET_Req_Fail.postman_collection.json
   
 jobs:
   Job_1:
@@ -77,3 +77,8 @@ jobs:
     - name: Integration Test through script file
       run: bash ./integration.sh
       shell: bash
+      
+    - name: Undeploy Current & redeploy stable revision
+      run: bash ./undeploy.sh
+      shell: bash
+      if: failure()

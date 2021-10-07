@@ -11,9 +11,9 @@ on:
 env:
   ProxyName: NoTargetProxy
   ORG: rimshaaizaz-eval
-  base64encoded: cmltc2hhLmFpemF6QGFiYWN1c2NhbWJyaWRnZS5jb206Umltc2hhQDAz
+  base64encoded: ${{ secrets.base64encoded }}
   ENV: prod
-  apigeeUsername: rimsha.aizaz@abacuscambridge.com
+  apigeeUsername: ${{ secrets.apigeeUsername }}
   apigeePassword: ${{ secrets.apigeePassword }}
   NEWMAN_TARGET_URL: NoTargetProxy_GET_Req_PassW.postman_collection.json
   

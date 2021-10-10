@@ -7,7 +7,6 @@ echo "**************************************************"
 echo "Before Decryption"
 echo "**************************************************"
 cd $GITHUB_WORKSPACE/apigee-cicd-master/$ProxyName && ls
-echo "**************************************************"
 # Decrypt the file
 #mkdir $HOME/secrets
 # --batch to prevent interactive command

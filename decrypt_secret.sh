@@ -3,7 +3,9 @@
 echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
 echo "ProxyName: $ProxyName"
 echo "LARGE_SECRET_PASSPHRASE: $LARGE_SECRET_PASSPHRASE"
+echo "**************************************************"
 echo "Before Decryption"
+echo "**************************************************"
 cd $GITHUB_WORKSPACE/apigee-cicd-master/$ProxyName && ls
 echo "**************************************************"
 # Decrypt the file
@@ -13,5 +15,7 @@ echo "**************************************************"
 gpg --quiet --batch --yes --decrypt --passphrase="$LARGE_SECRET_PASSPHRASE" \
 --output $GITHUB_WORKSPACE/apigee-cicd-master/$ProxyName/edge.json $GITHUB_WORKSPACE/apigee-cicd-master/$ProxyName/edge.json.gpg
 
+echo "**************************************************"
 echo "After Decryption"
+echo "**************************************************"
 cd $GITHUB_WORKSPACE/apigee-cicd-master/$ProxyName && ls

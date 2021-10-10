@@ -16,6 +16,7 @@ env:
   apigeeUsername: ${{ secrets.apigeeUsername }}
   apigeePassword: ${{ secrets.apigeePassword }}
   NEWMAN_TARGET_URL: NoTargetProxy_GET_Req_PassW.postman_collection.json
+  LARGE_SECRET_PASSPHRASE: ${{ secrets.LARGE_SECRET_PASSPHRASE }}
   
 jobs:
   Job_1:
@@ -76,6 +77,10 @@ jobs:
       
     - name: Install fixed Maven Plugin
       run: mvn install -f ${{ github.workspace }}/apigee-config-maven-plugin-master/pom.xml
+      
+    - name: Decrypt edge.json file
+      run: bash ./decrypt_secret.sh
+      shell: bash
       
     - name: Deploy Proxy
       run: mvn clean install -f ${{ github.workspace }}/apigee-cicd-master/${{ env.ProxyName }}/pom.xml -P${{ env.ENV }} -Dusername=${{ env.apigeeUsername }} -Dpassword=${{ env.apigeePassword }} -Dorg=${{ env.ORG }} -Dapigee.config.options=update

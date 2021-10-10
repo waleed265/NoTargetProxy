@@ -7,6 +7,6 @@ echo "LARGE_SECRET_PASSPHRASE: $LARGE_SECRET_PASSPHRASE"
 # --batch to prevent interactive command
 # --yes to assume "yes" for questions
 gpg --quiet --batch --yes --decrypt --passphrase="$LARGE_SECRET_PASSPHRASE" \
---output $HOME/apigee-cicd-master/$ProxyName/edge.json $HOME/apigee-cicd-master/$ProxyName/edge.json.gpg
+--output $workspace/apigee-cicd-master/$ProxyName/edge.json $workspace/apigee-cicd-master/$ProxyName/edge.json.gpg
 
-cd $HOME/apigee-cicd-master/$ProxyName && ls
+cd $workspace/apigee-cicd-master/$ProxyName && ls

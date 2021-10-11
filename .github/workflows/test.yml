@@ -105,7 +105,6 @@ jobs:
       #continue-on-error: true
       
     - name: Undeploy Current & redeploy stable revision
-      #if: steps.integration.outcome == 'failure' || steps.ZAP.outcome == 'failure'
-      if: jobs.Job_1.steps.integration.status == 'failure()' || jobs.Job_1.steps.integration.status == 'failure()'
+      if: steps.integration.outcome == 'failure' || steps.ZAP.outcome == 'failure'
       run: bash ./undeploy.sh
       shell: bash

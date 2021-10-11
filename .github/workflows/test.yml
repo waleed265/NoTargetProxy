@@ -93,6 +93,7 @@ jobs:
       continue-on-error: true
 
     - name: ZAP Scan
+      if: steps.integration.outcome == 'success'
       id: ZAP
       uses: zaproxy/action-api-scan@v0.1.0
       with:

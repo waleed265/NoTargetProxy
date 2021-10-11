@@ -27,6 +27,15 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
+    - name: ZAP Scan
+      uses: zaproxy/action-api-scan@v0.1.0
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        docker_name: 'owasp/zap2docker-stable'
+        format: openapi
+        target: '"$ZAP_TARGET_API_URL"'
+        cmd_options: '-z "-configFile /zap/wrk/options.prop"'
+    
     - name: Unit-Test-With-Coverage
       run: cd ${{ github.workspace }}/apigee-cicd-master && npm install && npm test test/unit/test.js && npm run coverage test/unit/test.js
       
@@ -88,16 +97,7 @@ jobs:
     
     - name: Integration Test through script file
       run: bash ./integration.sh
-      shell: bash
-      
-    - name: ZAP Scan
-        uses: zaproxy/action-api-scan@v0.1.0
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          docker_name: 'owasp/zap2docker-stable'
-          format: openapi
-          target: '"$ZAP_TARGET_API_URL"'
-          cmd_options: '-z "-configFile /zap/wrk/options.prop"'
+      shell: bash  
       
     - name: Undeploy Current & redeploy stable revision
       run: bash ./undeploy.sh

@@ -35,6 +35,7 @@ jobs:
         format: openapi
         target: '${{ env.ZAP_TARGET_API_URL }}'
         cmd_options: '-z "-configFile /zap/wrk/options.prop"'
+        fail_action: true
     
     - name: Unit-Test-With-Coverage
       run: cd ${{ github.workspace }}/apigee-cicd-master && npm install && npm test test/unit/test.js && npm run coverage test/unit/test.js

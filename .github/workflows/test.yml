@@ -33,7 +33,7 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
         docker_name: 'owasp/zap2docker-stable'
         format: openapi
-        target: '"$ZAP_TARGET_API_URL"'
+        target: "$ZAP_TARGET_API_URL"
         cmd_options: '-z "-configFile /zap/wrk/options.prop"'
     
     - name: Unit-Test-With-Coverage

@@ -102,6 +102,6 @@ jobs:
       shell: bash  
       
     - name: Undeploy Current & redeploy stable revision
+      if: steps.integration.outcome == 'failure'
       run: bash ./undeploy.sh
       shell: bash
-      if: steps.integration.outcome == 'failure'

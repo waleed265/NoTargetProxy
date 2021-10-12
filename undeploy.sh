@@ -5,7 +5,7 @@
 # ProxyName=$3
 # my_stable_revision=$4
 # ENV=$5
-
+exit 1
 echo "ENV: $ENV"
 echo "ORG: $ORG"
 echo "base64encoded: $base64encoded"

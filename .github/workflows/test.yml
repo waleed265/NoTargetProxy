@@ -107,5 +107,11 @@ jobs:
       
     - name: Undeploy Current & redeploy stable revision
       if: steps.integration.outcome == 'failure' || steps.ZAP.outcome == 'failure'
+      id: undeploy
+      run: bash ./undeploy.sh
+      shell: bash
+      
+    - name: Undeploy Current & redeploy stable revision
+      if: steps.undeploy.outcome == 'success' || steps.undeploy.outcome == 'failure'
       run: bash ./undeploy.sh
       shell: bash

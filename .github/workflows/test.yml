@@ -90,7 +90,7 @@ jobs:
       id: integration
       run: bash ./integration.sh
       shell: bash
-      #continue-on-error: true
+      continue-on-error: true
 
     - name: ZAP Scan
       if: steps.integration.outcome == 'success'
@@ -103,9 +103,9 @@ jobs:
         target: '${{ env.ZAP_TARGET_API_URL }}'
         cmd_options: '-z "-configFile /zap/wrk/options.prop"'
         fail_action: true
-      #continue-on-error: true
+      continue-on-error: true
       
     - name: Undeploy Current & redeploy stable revision
-      if: steps.integration.outcome == 'failure()' || steps.ZAP.outcome == 'failure()'
+      if: steps.integration.outcome == 'failure' || steps.ZAP.outcome == 'failure'
       run: bash ./undeploy.sh
       shell: bash

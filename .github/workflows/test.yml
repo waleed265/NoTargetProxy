@@ -5,10 +5,10 @@ on:
     # - main
     # - DEV
   workflow_dispatch
-  push:
-    branches:
-    - main
-    - DEV
+  # push:
+    # branches:
+    # - main
+    # - DEV
 env:
   ProxyName: NoTargetProxy
   ORG: rimshaaizaz-eval

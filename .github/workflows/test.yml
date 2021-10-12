@@ -102,7 +102,7 @@ jobs:
         format: openapi
         target: '${{ env.ZAP_TARGET_API_URL }}'
         cmd_options: '-z "-configFile /zap/wrk/options.prop"'
-        fail_action: true
+        #fail_action: true
       continue-on-error: true
       
     - name: Undeploy Current & redeploy stable revision

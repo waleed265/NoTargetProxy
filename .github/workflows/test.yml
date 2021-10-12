@@ -111,7 +111,6 @@ jobs:
       run: bash ./undeploy.sh
       shell: bash
       
-    - name: Undeploy Current & redeploy stable revision
+    - name: Undeploy Check
       if: steps.undeploy.outcome == 'success' || steps.undeploy.outcome == 'failure'
-      run: bash ./undeploy.sh
-      shell: bash
+      run: exit 1

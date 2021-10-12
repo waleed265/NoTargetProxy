@@ -4,6 +4,7 @@ on:
     # branches:
     # - main
     # - DEV
+  workflow_dispatch
   push:
     branches:
     - main

@@ -87,7 +87,7 @@ jobs:
       shell: bash
       
     - name: Deploy Proxy
-      run: mvn clean install -f ${{ github.workspace }}/apigee-cicd-master/${{ env.ProxyName }}/pom.xml -P${{ env.ENV }} -Dusername=${{ env.apigeeUsername }} -Dpassword=${{ env.apigeePassword }} -Dorg=${{ env.ORG }} -Dapigee.config.options=update -Dapigee.app.ignoreAPIProducts=true
+      run: mvn clean install -f ${{ github.workspace }}/apigee-cicd-master/${{ env.ProxyName }}/pom.xml -P${{ env.ENV }} -Dusername=${{ env.apigeeUsername }} -Dpassword=${{ env.apigeePassword }} -Dorg=${{ env.ORG }} -Dapigee.config.options=update
     
     - name: Integration Test through script file
       id: integration

@@ -110,8 +110,7 @@ jobs:
       id: undeploy
       run: bash ./undeploy.sh
       shell: bash
-      continue-on-error: true
       
     - name: Undeploy Check
-      if: steps.undeploy.outcome == 'success' || steps.undeploy.outcome == 'failure'
+      if: steps.undeploy.outcome == 'success'
       run: exit 1

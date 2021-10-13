@@ -105,7 +105,7 @@ jobs:
         docker_name: 'owasp/zap2docker-stable'
         format: openapi
         target: '${{ env.ZAP_TARGET_API_URL }}'
-        cmd_options: '-z "-configFile /zap/wrk/apigee-cicd-master/zap/scriptsoptions.prop"'
+        cmd_options: '-z "-configFile /zap/wrk/apigee-cicd-master/zap/options.prop"'
         #fail_action: true
       continue-on-error: true
       

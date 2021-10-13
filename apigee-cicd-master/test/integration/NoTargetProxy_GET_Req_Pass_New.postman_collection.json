@@ -74,12 +74,11 @@
 							"    let jsonResponse = response.json(),\r",
 							"        newAccessToken = jsonResponse.access_token;\r",
 							"\r",
-							"    console.log({ err, jsonResponse, newAccessToken })\r",
+							"    //console.log({ err, jsonResponse, newAccessToken })\r",
 							"\r",
 							"    pm.environment.set('accessToken', newAccessToken);\r",
 							"    pm.variables.set('accessToken', newAccessToken);\r",
-							"});\r",
-							"echo \"accessToken=$accessToken\" >> $GITHUB_ENV;"
+							"});"
 						],
 						"type": "text/javascript"
 					}

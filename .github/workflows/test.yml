@@ -19,7 +19,7 @@ env:
   api_product: Cicd-Prod-Product
   developer: hr@api.com
   app: hrapp
-  NEWMAN_TARGET_URL: NoTargetProxy_GET_Req_PassW.postman_collection.json
+  NEWMAN_TARGET_URL: NoTargetProxy_GET_Req_Pass_New.postman_collection.json
   LARGE_SECRET_PASSPHRASE: ${{ secrets.LARGE_SECRET_PASSPHRASE }}
   ZAP_TARGET_API_URL: http://rimshaaizaz-eval-prod.apigee.net/notargetproxy
   

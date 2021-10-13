@@ -20,3 +20,5 @@ echo "client_secret at script: '$secret'"
 
 sudo npm install -g newman
 newman run $NEWMAN_TARGET_URL --reporters cli,junit --reporter-junit-export junitReport.xml --env-var client_id=$id --env-var client_secret=$secret
+
+echo "accessToken at script: '$accessToken'"

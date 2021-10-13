@@ -19,7 +19,7 @@ secret=$(jq -r .consumerSecret <<< "${client_secret}" )
 echo "client_secret at script: '$secret'"
 
 sudo npm install -g newman
-newman run $NEWMAN_TARGET_URL --reporters cli,junit --reporter-junit-export junitReport.xml --env-var client_id=$id --env-var client_secret=$secret --export-environment env.json
+newman run $GITHUB_WORKSPACE/apigee-cicd-master/test/integration/$NEWMAN_TARGET_URL --reporters cli,junit --reporter-junit-export junitReport.xml --env-var client_id=$id --env-var client_secret=$secret --export-environment env.json
 cat env.json
 
 echo "accessToken at script: '$accessToken'"

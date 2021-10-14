@@ -144,6 +144,7 @@ jobs:
    
    Undeployment-On-Failure:
     runs-on: ubuntu-latest
+    needs: ['Integration-Testing','ZAP-DAST-SCAN']
     if: failure()
     steps:
      - name: Checkout Repository

@@ -145,7 +145,7 @@ jobs:
    Undeployment-On-Failure:
     runs-on: ubuntu-latest
     needs: ['Integration-Testing','ZAP-DAST-SCAN']
-    if: failure()
+    if: Integration-Testing.result == 'failure' || ZAP-DAST-SCAN.result == 'failure'
     steps:
      - name: Checkout Repository
        uses: actions/checkout@v2

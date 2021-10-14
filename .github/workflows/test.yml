@@ -138,7 +138,7 @@ jobs:
    
    Undeployment-On-Failure:
     runs-on: ubuntu-latest
-    if: jobs.Integration-Testing.steps.integration.outcome == 'failure'
+    if: Integration-Testing.steps.integration.outcome == 'failure'
     steps:
      - name: Undeploy Current & redeploy stable revision
        #if: steps.integration.outcome == 'failure' || steps.ZAP.outcome == 'failure'

@@ -101,7 +101,7 @@ jobs:
       id: ZAP
       uses: zaproxy/action-api-scan@v0.1.0
       env:
-        bearer_token: "Bearer ${{ env.accessToken }}"
+        bearer_token: Bearer ${{ env.accessToken }}
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         docker_name: 'owasp/zap2docker-stable'

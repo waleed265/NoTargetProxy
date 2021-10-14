@@ -94,7 +94,7 @@ jobs:
       id: integration
       run: bash ./apigee-cicd-master/scripts/integration.sh
       shell: bash
-      continue-on-error: true
+      #continue-on-error: true
 
     - name: ZAP Scan
       if: steps.integration.outcome == 'success'
@@ -114,14 +114,14 @@ jobs:
         -config replacer.full_list(0).regex=false \
         -config replacer.full_list(0).replacement=${{ env.bearer_token }}"'
         #fail_action: true
-      continue-on-error: true
+      #continue-on-error: true
       
-    - name: Undeploy Current & redeploy stable revision
-      if: steps.integration.outcome == 'failure' || steps.ZAP.outcome == 'failure'
-      id: undeploy
-      run: bash ./apigee-cicd-master/scripts/undeploy.sh
-      shell: bash
+    # - name: Undeploy Current & redeploy stable revision
+      # if: steps.integration.outcome == 'failure' || steps.ZAP.outcome == 'failure'
+      # id: undeploy
+      # run: bash ./apigee-cicd-master/scripts/undeploy.sh
+      # shell: bash
       
-    - name: Undeploy Check
-      if: steps.undeploy.outcome == 'success'
-      run: exit 1
+    # - name: Undeploy Check
+      # if: steps.undeploy.outcome == 'success'
+      # run: exit 1

@@ -139,7 +139,7 @@ jobs:
    Undeployment-On-Failure:
     runs-on: ubuntu-latest
     needs: Proxy-Deployment-on-Apigee
-    if: job.Integration-Testing.status || job.ZAP-DAST-SCAN.status == 'failure'
+    if: jobs.Integration-Testing.status.if || job.ZAP-DAST-SCAN.if == 'failure'
     steps:
      - name: Undeploy Current & redeploy stable revision
        #if: steps.integration.outcome == 'failure' || steps.ZAP.outcome == 'failure'

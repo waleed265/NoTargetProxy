@@ -112,7 +112,7 @@ jobs:
         -config replacer.full_list(0).matchtype=REQ_HEADER \
         -config replacer.full_list(0).matchstr=Authorization \
         -config replacer.full_list(0).regex=false \
-        -config replacer.full_list(0).replacement=${{ env.bablu_token }}"'
+        -config replacer.full_list(0).replacement=${{ env.accessToken }}"'
         #fail_action: true
       #continue-on-error: true
       

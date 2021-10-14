@@ -85,7 +85,7 @@ jobs:
          html_file: '${{ github.workspace }}/apigeelint.html'    
    
    
-   Proxy-Deployment-on-Apigee:
+   Proxy-Deployment-UnDeployment-on-Apigee:
     runs-on: ubuntu-latest
     needs: Policy-Code-Analysis
     steps:
@@ -108,11 +108,7 @@ jobs:
       
      - name: Deploy Proxy
        run: mvn clean install -f ${{ github.workspace }}/apigee-cicd-master/${{ env.ProxyName }}/pom.xml -P${{ env.ENV }} -Dusername=${{ env.apigeeUsername }} -Dpassword=${{ env.apigeePassword }} -Dorg=${{ env.ORG }} -Dapigee.config.options=update -Dapigee.app.ignoreAPIProducts=true
-    
-   Proxy-UnDeployment-on-Apigee:
-    runs-on: ubuntu-latest
-    needs: Proxy-Deployment-on-Apigee
-    steps: 
+ 
      - name: Integration Test through script file
        id: integration
        run: bash ./apigee-cicd-master/scripts/integration.sh

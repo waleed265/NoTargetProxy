@@ -66,6 +66,7 @@ jobs:
       
    Policy-Code-Analysis:
     runs-on: ubuntu-latest
+    needs: Unit-Test-With-Coverage
     steps:
      - name: Checkout Repository
        uses: actions/checkout@v2
@@ -86,6 +87,7 @@ jobs:
    
    Proxy-DeploymentUndeploment-on-Apigee:
     runs-on: ubuntu-latest
+    needs: Policy-Code-Analysis
     steps:
      - name: Checkout Repository
        uses: actions/checkout@v2

@@ -25,5 +25,7 @@ newman run $GITHUB_WORKSPACE/apigee-cicd-master/test/integration/$NEWMAN_TARGET_
 accessToken=$(cat env.json | jq -r '.values[] | select(.key=="accessToken").value')
 #echo "accessToken at script: $accessToken"
 bearer="Bearer "
+bablu_token=$bearer$accessToken
+echo "accessToken at script: $bablu_token"
 echo "accessToken=$accessToken" >> $GITHUB_ENV
-echo "bearer_token=$bearer$accessToken" >> $GITHUB_ENV
+echo "bablu_token=$bablu_token" >> $GITHUB_ENV

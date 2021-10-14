@@ -21,7 +21,7 @@ env:
   app: hrapp
   NEWMAN_TARGET_URL: NoTargetProxy_GET_Req_Pass_New.postman_collection.json
   LARGE_SECRET_PASSPHRASE: ${{ secrets.LARGE_SECRET_PASSPHRASE }}
-  ZAP_TARGET_API_URL: http://rimshaaizaz-eval-prod.apigee.net/notargetproxy
+  ZAP_TARGET_API_URL: https://rimshaaizaz-eval-prod.apigee.net/notargetproxy
   
 jobs:
   Job_1:
@@ -31,77 +31,75 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
-    # - name: Unit-Test-With-Coverage
-      # run: cd ${{ github.workspace }}/apigee-cicd-master && npm install && npm test test/unit/test.js && npm run coverage test/unit/test.js
+    - name: Unit-Test-With-Coverage
+      run: cd ${{ github.workspace }}/apigee-cicd-master && npm install && npm test test/unit/test.js && npm run coverage test/unit/test.js
       
-    # - name: Coverage
-      # run: cd ${{ github.workspace }}/apigee-cicd-master/coverage && ls 
+    - name: Coverage
+      run: cd ${{ github.workspace }}/apigee-cicd-master/coverage && ls 
       
-    # - name: Publish Unit Test Results
-      # uses: EnricoMi/publish-unit-test-result-action@v1
-      # if: always()
-      # with:
-        # files: ${{ github.workspace }}/**/test-results.xml
+    - name: Publish Unit Test Results
+      uses: EnricoMi/publish-unit-test-result-action@v1
+      if: always()
+      with:
+        files: ${{ github.workspace }}/**/test-results.xml
         
-    # #- name: Coverage
-      # #run: cp ${{ github.workspace }}/apigee-cicd-master/coverage/cobertura-coverage.xml ${{ github.workspace }} && cd ${{ github.workspace }} &&  ls     
+    #- name: Coverage
+      #run: cp ${{ github.workspace }}/apigee-cicd-master/coverage/cobertura-coverage.xml ${{ github.workspace }} && cd ${{ github.workspace }} &&  ls     
       
-    # - name: Cobertura Coverage Report
-      # uses: 5monkeys/cobertura-action@master
-      # with:
-        # path: ${{ github.workspace }}/apigee-cicd-master/coverage/cobertura-coverage.xml
-        # repo_token: ${{ secrets.GITHUB_TOKEN }}
-        # minimum_coverage: 75
-        # skip_covered: false
-        # fail_below_threshold: true
-        # show_line: true
-        # show_branch: true
-        # show_class_names: true
-        # show_missing: true
-        # only_changed_files: false
+    - name: Cobertura Coverage Report
+      uses: 5monkeys/cobertura-action@master
+      with:
+        path: ${{ github.workspace }}/apigee-cicd-master/coverage/cobertura-coverage.xml
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        minimum_coverage: 75
+        skip_covered: false
+        fail_below_threshold: true
+        show_line: true
+        show_branch: true
+        show_class_names: true
+        show_missing: true
+        only_changed_files: false
       
-    # - name: Policy-Code Analysis
-      # run: |
-        # cd ${{ github.workspace }}/apigee-cicd-master
-        # sudo npm install -g apigeelint
-        # apigeelint -s ${{ env.ProxyName }}/apiproxy -f table.js
-        # apigeelint -s ${{ env.ProxyName }}/apiproxy -f html.js > ${{ github.workspace }}/apigeelint.html
+    - name: Policy-Code Analysis
+      run: |
+        cd ${{ github.workspace }}/apigee-cicd-master
+        sudo npm install -g apigeelint
+        apigeelint -s ${{ env.ProxyName }}/apiproxy -f table.js
+        apigeelint -s ${{ env.ProxyName }}/apiproxy -f html.js > ${{ github.workspace }}/apigeelint.html
         
-    # - name: HTML Preview
-      # id: html_preview
-      # uses: pavi2410/html-preview-action@v2
-      # with:
-        # html_file: '${{ github.workspace }}/apigeelint.html'    
+    - name: HTML Preview
+      id: html_preview
+      uses: pavi2410/html-preview-action@v2
+      with:
+        html_file: '${{ github.workspace }}/apigeelint.html'    
     
-    # - name: Checking Current Stable Revision
-      # run: bash ./apigee-cicd-master/scripts/revision.sh
-      # shell: bash
+    - name: Checking Current Stable Revision
+      run: bash ./apigee-cicd-master/scripts/revision.sh
+      shell: bash
       
-    # - name: Echo Current Stable Revision
-      # run: echo "stable_revision_number=$stable_revision_number"
+    - name: Echo Current Stable Revision
+      run: echo "stable_revision_number=$stable_revision_number"
       
-    # - name: Install fixed Maven Plugin
-      # run: mvn install -f ${{ github.workspace }}/apigee-config-maven-plugin-master/pom.xml
+    - name: Install fixed Maven Plugin
+      run: mvn install -f ${{ github.workspace }}/apigee-config-maven-plugin-master/pom.xml
       
-    # - name: Decrypt edge.json file
-      # run: bash ./apigee-cicd-master/scripts/decrypt_secret.sh
-      # shell: bash
+    - name: Decrypt edge.json file
+      run: bash ./apigee-cicd-master/scripts/decrypt_secret.sh
+      shell: bash
       
-    # - name: Deploy Proxy
-      # run: mvn clean install -f ${{ github.workspace }}/apigee-cicd-master/${{ env.ProxyName }}/pom.xml -P${{ env.ENV }} -Dusername=${{ env.apigeeUsername }} -Dpassword=${{ env.apigeePassword }} -Dorg=${{ env.ORG }} -Dapigee.config.options=update -Dapigee.app.ignoreAPIProducts=true
+    - name: Deploy Proxy
+      run: mvn clean install -f ${{ github.workspace }}/apigee-cicd-master/${{ env.ProxyName }}/pom.xml -P${{ env.ENV }} -Dusername=${{ env.apigeeUsername }} -Dpassword=${{ env.apigeePassword }} -Dorg=${{ env.ORG }} -Dapigee.config.options=update -Dapigee.app.ignoreAPIProducts=true
     
     - name: Integration Test through script file
       id: integration
       run: bash ./apigee-cicd-master/scripts/integration.sh
       shell: bash
-      #continue-on-error: true
+      continue-on-error: true
 
     - name: ZAP Scan
       if: steps.integration.outcome == 'success'
       id: ZAP
       uses: zaproxy/action-api-scan@v0.1.0
-      # env:
-        # bearer_token: "Bearer "${{ env.accessToken }}
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         docker_name: 'owasp/zap2docker-stable'
@@ -109,14 +107,14 @@ jobs:
         target: '${{ env.ZAP_TARGET_API_URL }}'
         cmd_options: '-z "-configFile /zap/wrk/apigee-cicd-master/zap/options.prop"'
         #fail_action: true
-      #continue-on-error: true
+      continue-on-error: true
       
-    # - name: Undeploy Current & redeploy stable revision
-      # if: steps.integration.outcome == 'failure' || steps.ZAP.outcome == 'failure'
-      # id: undeploy
-      # run: bash ./apigee-cicd-master/scripts/undeploy.sh
-      # shell: bash
+    - name: Undeploy Current & redeploy stable revision
+      if: steps.integration.outcome == 'failure' || steps.ZAP.outcome == 'failure'
+      id: undeploy
+      run: bash ./apigee-cicd-master/scripts/undeploy.sh
+      shell: bash
       
-    # - name: Undeploy Check
-      # if: steps.undeploy.outcome == 'success'
-      # run: exit 1
+    - name: Undeploy Check
+      if: steps.undeploy.outcome == 'success'
+      run: exit 1

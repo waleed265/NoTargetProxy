@@ -26,8 +26,8 @@ accessToken=$(cat env.json | jq -r '.values[] | select(.key=="accessToken").valu
 
 accessToken="Bearer ${accessToken}"
 #foo="${foo} World"
-echo "accessToken at script: $accessToken"
-echo "accessToken=$accessToken" >> $GITHUB_ENV
+# echo "accessToken at script: $accessToken"
+# echo "accessToken=$accessToken" >> $GITHUB_ENV
 
 echo  "replacer.full_list(0).replacement=$accessToken" >> $GITHUB_WORKSPACE/apigee-cicd-master/zap/options.prop
 cat $GITHUB_WORKSPACE/apigee-cicd-master/zap/options.prop

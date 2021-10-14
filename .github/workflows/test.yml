@@ -33,7 +33,7 @@ jobs:
     runs-on: ubuntu-latest 
     steps:
      - name: Checkout Repository
-      uses: actions/checkout@v2
+       uses: actions/checkout@v2
     
      - name: Unit-Test-With-Coverage
        run: cd ${{ github.workspace }}/apigee-cicd-master && npm install && npm test test/unit/test.js && npm run coverage test/unit/test.js
@@ -64,13 +64,13 @@ jobs:
         show_missing: true
         only_changed_files: false
       
-   Policy-Code Analysis:
+   Policy-Code-Analysis:
     runs-on: ubuntu-latest
     steps:
      - name: Checkout Repository
        uses: actions/checkout@v2
     
-     - name: Policy-Code Analysis
+     - name: Policy-Code-Analysis
        run: |
         cd ${{ github.workspace }}/apigee-cicd-master
         sudo npm install -g apigeelint
@@ -84,7 +84,7 @@ jobs:
          html_file: '${{ github.workspace }}/apigeelint.html'    
    
    
-   Proxy Deployment/Undeploment on Apigee:
+   Proxy-DeploymentUndeploment-on-Apigee:
     runs-on: ubuntu-latest
     steps:
      - name: Checkout Repository

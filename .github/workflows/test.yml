@@ -92,7 +92,7 @@ jobs:
        shell: bash
       
      - name: Echo Current Stable Revision
-     - id: step1
+       id: step1
        run: echo "::set-output name=stable_revision_number::$stable_revision_number"
        #run: echo "stable_revision_number=$stable_revision_number"
       
@@ -114,7 +114,7 @@ jobs:
        uses: actions/checkout@v2
        
      - name: Echo Output  
-     - run: echo ${{needs.Deployment.outputs.output1}}
+       run: echo ${{needs.Deployment.outputs.output1}}
        
      - name: Integration Test through script file
        id: integration

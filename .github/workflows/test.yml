@@ -36,7 +36,7 @@ jobs:
        uses: actions/checkout@v2
     
      - name: Unit-Test-With-Coverage
-       run: cd ${{ github.workspace }}/apigee-cicd-master && npm install && npm test test/unit/test-sameed.js && npm run coverage test/unit/test-sameed.js
+       run: cd ${{ github.workspace }}/apigee-cicd-master && npm install && npm test test/unit/*.js && npm run coverage test/unit/*.js
       
      - name: Coverage
        run: cd ${{ github.workspace }}/apigee-cicd-master/coverage && ls 

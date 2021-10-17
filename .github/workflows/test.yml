@@ -71,15 +71,25 @@ jobs:
         apigeelint -s ${{ env.ProxyName }}/apiproxy -f table.js
         apigeelint -s ${{ env.ProxyName }}/apiproxy -f html.js > ${{ github.workspace }}/apigeelint.html
         
-     - name: Checking apigeelint.html
-       run: cd ${{ github.workspace }} &&  ls
+     - name: Publishing Apigee Lint Report
+       uses: actions/upload-artifact@v2
+       if: always()
+       with:
+        name: Apigee Lint Report
+        path: ${{ github.workspace }}/apigeelint.html
         
-     - name: HTML Preview
+     - name: HTML Link Generation
        id: html_preview
        uses: pavi2410/html-preview-action@v2
        with:
          html_file: 'apigeelint.html'    
-   
+         repo_token: ${{ secrets.GITHUB_TOKEN }}
+         
+      - name: Publishing Apigee Lint Report 
+        uses: github-actions-up-and-running/pr-comment@v1.0.0
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          message: ${{ format('[Click here to preview HTML page in browser]({0})', steps.html_preview.outputs.url) }}
    
    Deployment:
     runs-on: ubuntu-latest

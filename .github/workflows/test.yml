@@ -126,14 +126,14 @@ jobs:
        if: steps.integration.outcome == 'success'
        id: ZAP
        uses: zaproxy/action-api-scan@v0.1.0
+       continue-on-error: true
        with:
           token: ${{ secrets.GITHUB_TOKEN }}
           docker_name: 'owasp/zap2docker-stable'
           format: openapi
           target: '${{ env.ZAP_TARGET_API_URL }}'
           cmd_options: '-z "-configFile /zap/wrk/apigee-cicd-master/zap/options.prop"'
-          #fail_action: true
-          continue-on-error: true
+          fail_action: true
        
      - name: Undeploy Current & redeploy stable revision
        if: steps.integration.outcome == 'failure' || steps.ZAP.outcome == 'failure'

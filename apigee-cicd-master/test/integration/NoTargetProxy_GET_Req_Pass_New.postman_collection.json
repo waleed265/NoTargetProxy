@@ -32,7 +32,7 @@
 							"",
 							"pm.test(\"4. 404 Resource not found\", ()=>{",
 							"    pm.sendRequest({",
-							"    url: 'http://rimshaaizaz-eval-prod.apigee.net/notargetproxyy/string?jsonstring=%7B%20%20%20%22FunctionName%22%3A%22IsPorjectCreated%22%2C%20%20%20%22Flag%22%3A%22false%22%2C%20%20%20%22lst%22%3A%20%5B%5D%20%20%7D',",
+							"    url: 'https://rimshaaizaz-eval-prod.apigee.net/notargetproxyy/string?jsonstring=%7B%20%20%20%22FunctionName%22%3A%22IsPorjectCreated%22%2C%20%20%20%22Flag%22%3A%22false%22%2C%20%20%20%22lst%22%3A%20%5B%5D%20%20%7D',",
 							"    method: 'GET',",
 							"    header: {\"Authorization\": \"Bearer \"+ pm.variables.get(\"accessToken\"),",
 							"   'Content-Type':'application/json'},",
@@ -52,7 +52,7 @@
 					"listen": "prerequest",
 					"script": {
 						"exec": [
-							"let tokenUrl = 'https://rimshaaizaz-eval-prod.apigee.net/v1/token/generate?grant_type=client_credentials';\r",
+							"let tokenUrl = 'https://rimshaaizaz-eval-test.apigee.net/v1/token/generate?grant_type=client_credentials';\r",
 							"let clientId = pm.environment.get('client_id');\r",
 							"//console.log(\"client_id: ${clientId}\");\r",
 							"let clientSecret = pm.environment.get('client_secret');\r",
@@ -97,10 +97,10 @@
 					}
 				],
 				"url": {
-					"raw": "http://rimshaaizaz-eval-prod.apigee.net/notargetproxy",
-					"protocol": "http",
+					"raw": "https://rimshaaizaz-eval-test.apigee.net/notargetproxy",
+					"protocol": "https",
 					"host": [
-						"rimshaaizaz-eval-prod",
+						"rimshaaizaz-eval-test",
 						"apigee",
 						"net"
 					],

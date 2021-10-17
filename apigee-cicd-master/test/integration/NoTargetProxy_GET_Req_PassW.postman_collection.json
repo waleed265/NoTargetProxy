@@ -97,8 +97,8 @@
 					}
 				],
 				"url": {
-					"raw": "http://rimshaaizaz-eval-prod.apigee.net/notargetproxy",
-					"protocol": "http",
+					"raw": "https://rimshaaizaz-eval-prod.apigee.net/notargetproxy",
+					"protocol": "https",
 					"host": [
 						"rimshaaizaz-eval-prod",
 						"apigee",

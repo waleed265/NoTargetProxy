@@ -120,7 +120,7 @@ jobs:
        continue-on-error: true
        
      - name: ZAP Scan
-       #if: jobs.integration.outcome == 'success'
+       if: jobs.integration.outcome == 'success'
        id: ZAP
        uses: zaproxy/action-api-scan@v0.1.0
        with:
@@ -137,7 +137,7 @@ jobs:
        id: undeploy
        run: bash ./apigee-cicd-master/scripts/undeploy.sh
        shell: bash
-       env: ${{needs.Deployment.outputs.stable_revision_number}}
+       env: stable_revision_number=${{needs.Deployment.outputs.stable_revision_number}}
 
      - name: Undeploy Check
        if: steps.undeploy.outcome == 'success'

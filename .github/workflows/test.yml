@@ -114,7 +114,7 @@ jobs:
        uses: actions/checkout@v2
        
      - name: Echo Output  
-       run: echo ${{needs.Deployment.outputs.output1}}
+       run: echo "stable_revision_number=${{needs.Deployment.outputs.output1}}" >> $GITHUB_ENV 
        
      - name: Integration Test through script file
        id: integration
@@ -140,7 +140,7 @@ jobs:
        id: undeploy
        run: bash ./apigee-cicd-master/scripts/undeploy.sh
        shell: bash
-       env: stable_revision_number=${{needs.Deployment.outputs.output1}}
+       #env: stable_revision_number=${{needs.Deployment.outputs.output1}}
 
      - name: Undeploy Check
        if: steps.undeploy.outcome == 'success'

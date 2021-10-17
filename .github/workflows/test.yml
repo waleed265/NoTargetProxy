@@ -89,7 +89,7 @@ jobs:
        uses: github-actions-up-and-running/pr-comment@v1.0.1
        with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
-        message: Apigee Lint Report Link: ${{ steps.html_preview.outputs.url }}
+        message: ${{ steps.html_preview.outputs.url }}
    
    Deployment:
     runs-on: ubuntu-latest

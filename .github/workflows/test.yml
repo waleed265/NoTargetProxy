@@ -85,11 +85,11 @@ jobs:
          html_file: 'apigeelint.html'    
          repo_token: ${{ secrets.GITHUB_TOKEN }}
          
-      - name: Publishing Apigee Lint Report 
-        uses: github-actions-up-and-running/pr-comment@v1.0.0
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          message: ${{ format('[Click here to preview HTML page in browser]({0})', steps.html_preview.outputs.url) }}
+     - name: Publishing Apigee Lint Report Link 
+       uses: github-actions-up-and-running/pr-comment@v1.0.0
+       with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        message: ${{ format('[Click here to preview HTML page in browser]({0})', steps.html_preview.outputs.url) }}
    
    Deployment:
     runs-on: ubuntu-latest

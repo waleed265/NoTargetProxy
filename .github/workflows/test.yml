@@ -113,6 +113,9 @@ jobs:
      - name: Checkout Repository
        uses: actions/checkout@v2
        
+     - name: Echo Output  
+     - run: echo ${{needs.Deployment.outputs.output1}}
+       
      - name: Integration Test through script file
        id: integration
        run: bash ./apigee-cicd-master/scripts/integration.sh
@@ -137,7 +140,7 @@ jobs:
        id: undeploy
        run: bash ./apigee-cicd-master/scripts/undeploy.sh
        shell: bash
-       env: stable_revision_number=${{needs.Deployment.outputs.stable_revision_number}}
+       env: stable_revision_number=${{needs.Deployment.outputs.output1}}
 
      - name: Undeploy Check
        if: steps.undeploy.outcome == 'success'

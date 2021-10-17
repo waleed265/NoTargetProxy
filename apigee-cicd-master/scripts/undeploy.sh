@@ -51,3 +51,6 @@ curl -X POST --header "Content-Type: application/x-www-form-urlencoded" --header
 echo ""
 echo "Successfully deployed stable revision : '$stable_revision_number'"
 fi
+
+echo "Failing the Job"
+exit 1

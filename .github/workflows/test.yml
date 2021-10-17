@@ -142,6 +142,6 @@ jobs:
        shell: bash
        #env: stable_revision_number=${{needs.Deployment.outputs.output1}}
 
-     - name: Undeploy Check
-       if: steps.undeploy.outcome == 'success'
-       run: exit 1
+     # - name: Undeploy Check
+       # if: steps.undeploy.outcome == 'success'
+       # run: exit 1

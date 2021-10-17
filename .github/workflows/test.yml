@@ -78,7 +78,7 @@ jobs:
        id: html_preview
        uses: pavi2410/html-preview-action@v2
        with:
-         html_file: '${{ github.workspace }}/apigeelint.html'    
+         html_file: 'apigeelint.html'    
    
    
    Deployment:

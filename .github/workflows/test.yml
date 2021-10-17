@@ -71,6 +71,9 @@ jobs:
         apigeelint -s ${{ env.ProxyName }}/apiproxy -f table.js
         apigeelint -s ${{ env.ProxyName }}/apiproxy -f html.js > ${{ github.workspace }}/apigeelint.html
         
+     - name: Checking apigeelint.html
+       run: cd ${{ github.workspace }} &&  ls
+        
      - name: HTML Preview
        id: html_preview
        uses: pavi2410/html-preview-action@v2

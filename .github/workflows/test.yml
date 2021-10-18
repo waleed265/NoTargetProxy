@@ -153,7 +153,7 @@ jobs:
           format: openapi
           target: '${{ env.ZAP_TARGET_API_URL }}'
           cmd_options: '-z "-configFile /zap/wrk/apigee-cicd-master/zap/options.prop"'
-          fail_action: true
+          #fail_action: true
        
      - name: Undeploy Current & redeploy stable revision
        if: steps.integration.outcome == 'failure' || steps.ZAP.outcome == 'failure'

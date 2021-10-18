@@ -135,6 +135,9 @@ jobs:
        shell: bash
        continue-on-error: true
        
+      - name: Echo WorkSpace  
+       run: cd $GITHUB_WORKSPACE && ls
+       
      - name: Publishing Newman Integration Report
        uses: actions/upload-artifact@v2
        if: always()

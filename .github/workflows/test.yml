@@ -135,6 +135,13 @@ jobs:
        shell: bash
        continue-on-error: true
        
+     - name: Publishing Newman Integration Report
+       uses: actions/upload-artifact@v2
+       if: always()
+       with:
+        name: Newman Integration Report
+        path: ${{ github.workspace }}/newman_report.html
+       
      - name: ZAP Scan
        if: steps.integration.outcome == 'success'
        id: ZAP

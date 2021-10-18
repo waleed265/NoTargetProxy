@@ -18,8 +18,9 @@ client_secret=$(curl -H "Authorization: Basic $base64encoded" "https://api.enter
 secret=$(jq -r .consumerSecret <<< "${client_secret}" )
 #echo "client_secret at script: '$secret'"
 
-sudo npm install -g newman
-newman run $GITHUB_WORKSPACE/apigee-cicd-master/test/integration/$NEWMAN_TARGET_URL --reporters cli,junit --reporter-junit-export junitReport.xml --env-var client_id=$id --env-var client_secret=$secret --export-environment env.json
+sudo npm install -g newman 
+sudo npm install -g newman-reporter-htmlextra
+newman run $GITHUB_WORKSPACE/apigee-cicd-master/test/integration/$NEWMAN_TARGET_URL --reporters cli,junit --reporter-junit-export junitReport.xml,-reporter-htmlextra-export ./newman_report.html --env-var client_id=$id --env-var client_secret=$secret --export-environment env.json
 #cat env.json
 
 accessToken=$(cat env.json | jq -r '.values[] | select(.key=="accessToken").value')

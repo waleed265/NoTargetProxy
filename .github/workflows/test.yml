@@ -47,6 +47,15 @@ jobs:
        with:
         files: ${{ github.workspace }}/**/test-results.xml
         
+     - name: commit-status-update
+       uses: ouzi-dev/commit-status-updater@v1.1.0
+       with:
+        status: "pending"
+        addHoldComment: "true"
+        pendingComment: "action pending!"
+        successComment: "action success!"
+        failComment: "action failed!"
+        
     #- name: Coverage
       #run: cp ${{ github.workspace }}/apigee-cicd-master/coverage/cobertura-coverage.xml ${{ github.workspace }} && cd ${{ github.workspace }} &&  ls     
       
@@ -163,7 +172,7 @@ jobs:
        id: undeploy
        run: bash ./apigee-cicd-master/scripts/undeploy.sh
        shell: bash
-       #env: stable_revision_number=${{needs.Deployment.outputs.output1}}
+       #env: stable_revision_number: ${{needs.Deployment.outputs.output1}}
 
      # - name: Undeploy Check
        # if: steps.undeploy.outcome == 'success'

@@ -78,6 +78,18 @@ jobs:
         name: Apigee Lint Report
         path: ${{ github.workspace }}/reports/apigeelint.html
         
+     - name: Pushes test file
+       uses: dmnemec/copy_file_to_another_repo_action@main
+       env:
+        API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+       with:
+        source_file: '${{ github.workspace }}/reports/apigeelint.html'
+        destination_repo: 'waleed265/apigee_cicd'
+        destination_folder: 'reports'
+        user_email: 'muhammadwaleed.iqbal@abacuscambridge.com'
+        user_name: 'waleed265'
+        commit_message: 'A custom message for the commit'
+        
      - name: HTML Link Generation
        id: html_preview
        uses: pavi2410/html-preview-action@v2

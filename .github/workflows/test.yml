@@ -94,7 +94,7 @@ jobs:
        id: html_preview
        uses: pavi2410/html-preview-action@v2
        with:
-         html_file: 'reports/apigeelint.html'
+         html_file: 'main/reports/apigeelint.html'
          
      - name: Publishing Apigee Lint Report Link on PR
        continue-on-error: true

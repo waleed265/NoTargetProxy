@@ -212,8 +212,33 @@ jobs:
           docker_name: 'owasp/zap2docker-stable'
           format: openapi
           target: '${{ env.ZAP_TARGET_API_URL }}'
-          cmd_options: '-z "-configFile /zap/wrk/apigee-cicd-master/zap/options.prop" -r ./reports/zap_report_html.html'
+          cmd_options: '-z "-configFile /zap/wrk/apigee-cicd-master/zap/options.prop"'
           #fail_action: true
+          
+     - name: Pushes ZAP Report file to Repo
+       uses: dmnemec/copy_file_to_another_repo_action@main
+       env:
+        API_TOKEN_GITHUB: ${{ secrets.GITHUB_TOKEN }}
+       with:
+        source_file: '${{ github.workspace }}/report_html.html'
+        destination_repo: 'waleed265/apigee_cicd'
+        destination_folder: 'reports'
+        user_email: 'muhammadwaleed.iqbal@abacuscambridge.com'
+        user_name: 'waleed265'
+        
+     - uses: actions/checkout@v2
+     - name: HTML Link Generation for ZAP Report
+       id: html_preview1
+       uses: pavi2410/html-preview-action@v2
+       with:
+         html_file: 'reports/report_html.html'
+         
+     - name: Publishing ZAP Report Link on PR
+       continue-on-error: true
+       uses: github-actions-up-and-running/pr-comment@v1.0.1
+       with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        message: ${{ format('[Click here to preview HTML page in browser]({0})', steps.html_preview1.outputs.url) }}
        
      - name: Undeploy Current & redeploy stable revision
        if: steps.integration.outcome == 'failure' || steps.ZAP.outcome == 'failure'

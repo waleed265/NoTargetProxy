@@ -71,14 +71,14 @@ jobs:
         apigeelint -s ${{ env.ProxyName }}/apiproxy -f table.js
         apigeelint -s ${{ env.ProxyName }}/apiproxy -f html.js > ${{ github.workspace }}/reports/apigeelint.html
         
-     - name: Publishing Apigee Lint Report
+     - name: Publishing Apigee Lint Report to Artifacts
        uses: actions/upload-artifact@v2
        if: always()
        with:
         name: Apigee Lint Report
         path: ${{ github.workspace }}/reports/apigeelint.html
         
-     - name: Pushes test file
+     - name: Pushes Apigee Lint Report file to Repo
        uses: dmnemec/copy_file_to_another_repo_action@main
        env:
         API_TOKEN_GITHUB: ${{ secrets.GITHUB_TOKEN }}
@@ -88,10 +88,9 @@ jobs:
         destination_folder: 'reports'
         user_email: 'muhammadwaleed.iqbal@abacuscambridge.com'
         user_name: 'waleed265'
-        commit_message: 'A custom message for the commit'
         
      - uses: actions/checkout@v2
-     - name: HTML Link Generation
+     - name: HTML Link Generation for Apigee Lint Report
        id: html_preview
        uses: pavi2410/html-preview-action@v2
        with:
@@ -171,12 +170,37 @@ jobs:
      - name: Echo WorkSpace  
        run: cd $GITHUB_WORKSPACE && ls
        
-     - name: Publishing Newman Integration Report
+     - name: Publishing Newman Integration Report to Artifacts
        uses: actions/upload-artifact@v2
        if: always()
        with:
         name: Newman Integration Report
-        path: ${{ github.workspace }}/newman_report.html
+        path: ${{ github.workspace }}/reports/newman_report.html
+        
+     - name: Pushes Newman Integration Report file to Repo
+       uses: dmnemec/copy_file_to_another_repo_action@main
+       env:
+        API_TOKEN_GITHUB: ${{ secrets.GITHUB_TOKEN }}
+       with:
+        source_file: '${{ github.workspace }}/reports/newman_report.html'
+        destination_repo: 'waleed265/apigee_cicd'
+        destination_folder: 'reports'
+        user_email: 'muhammadwaleed.iqbal@abacuscambridge.com'
+        user_name: 'waleed265'
+        
+     - uses: actions/checkout@v2
+     - name: HTML Link Generation for Newman Integration Report
+       id: html_preview
+       uses: pavi2410/html-preview-action@v2
+       with:
+         html_file: 'reports/newman_report.html'
+         
+     - name: Publishing Newman Integration Report Link on PR
+       continue-on-error: true
+       uses: github-actions-up-and-running/pr-comment@v1.0.1
+       with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        message: ${{ format('[Click here to preview HTML page in browser]({0})', steps.html_preview.outputs.url) }}
        
      - name: ZAP Scan
        if: steps.integration.outcome == 'success'
@@ -188,7 +212,7 @@ jobs:
           docker_name: 'owasp/zap2docker-stable'
           format: openapi
           target: '${{ env.ZAP_TARGET_API_URL }}'
-          cmd_options: '-z "-configFile /zap/wrk/apigee-cicd-master/zap/options.prop"'
+          cmd_options: '-z "-configFile /zap/wrk/apigee-cicd-master/zap/options.prop" -r ./reports/zap_report_html.html'
           #fail_action: true
        
      - name: Undeploy Current & redeploy stable revision

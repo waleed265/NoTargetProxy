@@ -109,9 +109,9 @@ jobs:
        with:
         status: "${{ job.status }}"
         addHoldComment: "true"
-        pendingComment: "action pending!"
-        successComment: "action success!"
-        failComment: "action failed!"
+        pendingComment: "Pre-Deployment stage pending!"
+        successComment: "Pre-Deployment stage succeeded!"
+        failComment: "Pre-Deployment stage failed!"
    
    Deployment:
     runs-on: ubuntu-latest
@@ -147,9 +147,9 @@ jobs:
        with:
         status: "${{ job.status }}"
         addHoldComment: "true"
-        pendingComment: "action pending!"
-        successComment: "action success!"
-        failComment: "action failed!"
+        pendingComment: "Deployment stage pending!"
+        successComment: "Deployment stage succeeded!"
+        failComment: "Deployment stage failed!"
    
    Post-Deployment:
     runs-on: ubuntu-latest
@@ -207,6 +207,6 @@ jobs:
        with:
         status: "${{ job.status }}"
         addHoldComment: "true"
-        pendingComment: "action pending!"
-        successComment: "action success!"
-        failComment: "action failed!"
+        pendingComment: "Post-Deployment stage pending!"
+        successComment: "Post-Deployment stage succeeded!"
+        failComment: "Post-Deployment stage failed!"

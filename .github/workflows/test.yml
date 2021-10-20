@@ -69,20 +69,20 @@ jobs:
         cd ${{ github.workspace }}/apigee-cicd-master
         sudo npm install -g apigeelint
         apigeelint -s ${{ env.ProxyName }}/apiproxy -f table.js
-        apigeelint -s ${{ env.ProxyName }}/apiproxy -f html.js > ${{ github.workspace }}/apigeelint.html
+        apigeelint -s ${{ env.ProxyName }}/apiproxy -f html.js > ${{ github.workspace }}/reports/apigeelint.html
         
      - name: Publishing Apigee Lint Report
        uses: actions/upload-artifact@v2
        if: always()
        with:
         name: Apigee Lint Report
-        path: ${{ github.workspace }}/apigeelint.html
+        path: ${{ github.workspace }}/reports/apigeelint.html
         
      - name: HTML Link Generation
        id: html_preview
        uses: pavi2410/html-preview-action@v2
        with:
-         html_file: './apigeelint.html'
+         html_file: 'reports/apigeelint.html'
          
      - name: Publishing Apigee Lint Report Link on PR
        continue-on-error: true

@@ -90,9 +90,9 @@ jobs:
         user_name: 'waleed265'
         commit_message: 'A custom message for the commit'
         
+     - uses: actions/checkout@v2
      - name: HTML Link Generation
        id: html_preview
-       uses: actions/checkout@v2
        uses: pavi2410/html-preview-action@v2
        with:
          html_file: 'reports/apigeelint.html'

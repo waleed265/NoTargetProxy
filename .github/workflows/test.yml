@@ -47,15 +47,6 @@ jobs:
        with:
         files: ${{ github.workspace }}/**/test-results.xml
         
-     - name: commit-status-update
-       uses: ouzi-dev/commit-status-updater@v1.1.0
-       with:
-        status: "pending"
-        addHoldComment: "true"
-        pendingComment: "action pending!"
-        successComment: "action success!"
-        failComment: "action failed!"
-        
     #- name: Coverage
       #run: cp ${{ github.workspace }}/apigee-cicd-master/coverage/cobertura-coverage.xml ${{ github.workspace }} && cd ${{ github.workspace }} &&  ls     
       
@@ -99,6 +90,15 @@ jobs:
        with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         message: ${{ steps.html_preview.outputs.url }}
+        
+     - name: commit-status-update
+       uses: ouzi-dev/commit-status-updater@v1.1.0
+       with:
+        status: "pending"
+        addHoldComment: "true"
+        pendingComment: "action pending!"
+        successComment: "action success!"
+        failComment: "action failed!"
    
    Deployment:
     runs-on: ubuntu-latest

@@ -95,11 +95,8 @@ jobs:
        uses: ouzi-dev/commit-status-updater@v1.1.0
        if: always()
        with:
-        status: "pending"
         addHoldComment: "true"
-        pendingComment: "action pending!"
-        successComment: "action success!"
-        failComment: "action failed!"
+        status: "${{ job.status }}"
    
    Deployment:
     runs-on: ubuntu-latest

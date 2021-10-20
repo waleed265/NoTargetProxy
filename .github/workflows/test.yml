@@ -85,7 +85,7 @@ jobs:
          html_file: 'apigeelint.html'
          
      - name: Publishing Apigee Lint Report Link on PR
-       continue-on-error: true
+       #continue-on-error: true
        uses: github-actions-up-and-running/pr-comment@v1.0.1
        with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}

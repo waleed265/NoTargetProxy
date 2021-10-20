@@ -96,6 +96,10 @@ jobs:
        if: always()
        with:
         status: "${{ job.status }}"
+        addHoldComment: "true"
+        pendingComment: "action pending!"
+        successComment: "action success!"
+        failComment: "action failed!"
    
    Deployment:
     runs-on: ubuntu-latest

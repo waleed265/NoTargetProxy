@@ -90,9 +90,13 @@ jobs:
         user_email: 'muhammadwaleed.iqbal@abacuscambridge.com'
         user_name: 'waleed265'
         
-     - uses: actions/checkout@v2
+     # - uses: actions/checkout@v2
        # with:
         # clean: 'false'
+        
+     - name: Cloning Repo
+       run: |
+        git clone https://github.com/waleed265/apigee_cicd.git
         
      - name: HTML Link Generation for Apigee Lint Report
        id: html_preview
@@ -196,8 +200,8 @@ jobs:
         user_name: 'waleed265'
         
      - uses: actions/checkout@v2
-       # with:
-        # clean: 'false'
+       with:
+        clean: 'false'
         
      - name: HTML Link Generation for Newman Integration Report
        id: html_preview
@@ -240,8 +244,8 @@ jobs:
         user_name: 'waleed265'
         
      - uses: actions/checkout@v2
-       # with:
-        # clean: 'false'
+       with:
+        clean: 'false'
         
      - name: HTML Link Generation for ZAP Report
        id: html_preview1

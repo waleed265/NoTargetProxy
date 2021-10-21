@@ -79,7 +79,7 @@ jobs:
         path: ${{ github.workspace }}/reports/apigeelint.html
         
      - name: Pushes Apigee Lint Report file to Repo
-       uses: dmnemec/copy_file_to_another_repo_action@main
+       uses: dmnemec/copy_file_to_another_repo_action@v1.1.1
        env:
         API_TOKEN_GITHUB: ${{ secrets.GITHUB_TOKEN }}
        with:
@@ -88,8 +88,13 @@ jobs:
         destination_folder: 'reports'
         user_email: 'muhammadwaleed.iqbal@abacuscambridge.com'
         user_name: 'waleed265'
+        use_rsync: 'true'
         
      - uses: actions/checkout@v2
+       with:
+        clean: 'false'
+     #- run: git checkout HEAD^
+        
      - name: HTML Link Generation for Apigee Lint Report
        id: html_preview
        uses: pavi2410/html-preview-action@v2
@@ -180,7 +185,7 @@ jobs:
         path: ${{ github.workspace }}/reports/newman_report.html
         
      - name: Pushes Newman Integration Report file to Repo
-       uses: dmnemec/copy_file_to_another_repo_action@main
+       uses: dmnemec/copy_file_to_another_repo_action@v1.1.1
        if: always()
        env:
         API_TOKEN_GITHUB: ${{ secrets.GITHUB_TOKEN }}
@@ -190,8 +195,12 @@ jobs:
         destination_folder: 'reports'
         user_email: 'muhammadwaleed.iqbal@abacuscambridge.com'
         user_name: 'waleed265'
+        use_rsync: 'true'
         
      - uses: actions/checkout@v2
+       with:
+        clean: 'false'
+        
      - name: HTML Link Generation for Newman Integration Report
        id: html_preview
        uses: pavi2410/html-preview-action@v2
@@ -221,7 +230,7 @@ jobs:
           #fail_action: true
           
      - name: Pushes ZAP Report file to Repo
-       uses: dmnemec/copy_file_to_another_repo_action@main
+       uses: dmnemec/copy_file_to_another_repo_action@v1.1.1
        if: always()
        env:
         API_TOKEN_GITHUB: ${{ secrets.GITHUB_TOKEN }}
@@ -231,8 +240,12 @@ jobs:
         destination_folder: 'reports'
         user_email: 'muhammadwaleed.iqbal@abacuscambridge.com'
         user_name: 'waleed265'
+        use_rsync: 'true'
         
      - uses: actions/checkout@v2
+       with:
+        clean: 'false'
+        
      - name: HTML Link Generation for ZAP Report
        id: html_preview1
        uses: pavi2410/html-preview-action@v2

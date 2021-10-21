@@ -97,12 +97,13 @@ jobs:
      - name: Cloning Repo
        run: |
         git clone https://github.com/waleed265/apigee_cicd.git
+        ls
         
      - name: HTML Link Generation for Apigee Lint Report
        id: html_preview
        uses: pavi2410/html-preview-action@v2
        with:
-         html_file: 'reports/apigeelint.html'
+         html_file: 'apigee_cicd/reports/apigeelint.html'
          
      - name: Publishing Apigee Lint Report Link on PR
        continue-on-error: true

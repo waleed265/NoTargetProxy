@@ -90,13 +90,13 @@ jobs:
         user_email: 'muhammadwaleed.iqbal@abacuscambridge.com'
         user_name: 'waleed265'
         
-     # - uses: actions/checkout@v2
-       # with:
-        # clean: 'false'
+     - uses: actions/checkout@v2
+       with:
+        clean: 'false'
         
      - name: Cloning Repo
        run: |
-        git clone https://github.com/waleed265/apigee_cicd.git
+        #git clone https://github.com/waleed265/apigee_cicd.git
         ls
         
      - name: HTML Link Generation for Apigee Lint Report

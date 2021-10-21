@@ -21,8 +21,8 @@ secret=$(jq -r .consumerSecret <<< "${client_secret}" )
 sudo npm install -g newman 
 sudo npm install -g newman-reporter-htmlextra
 newman run $GITHUB_WORKSPACE/apigee-cicd-master/test/integration/$NEWMAN_TARGET_URL --reporters cli,junit --reporter-junit-export junitReport.xml --env-var client_id=$id --env-var client_secret=$secret --export-environment env.json
-rm -f $GITHUB_WORKSPACE/reports/newman_report.html
-rm -f $GITHUB_WORKSPACE/reports/report_html.html
+rm -f -v $GITHUB_WORKSPACE/reports/newman_report.html
+rm -f -v $GITHUB_WORKSPACE/reports/report_html.html
 newman run $GITHUB_WORKSPACE/apigee-cicd-master/test/integration/$NEWMAN_TARGET_URL -r htmlextra --reporter-htmlextra-export ./reports/newman_report.html --env-var client_id=$id --env-var client_secret=$secret
 #cat env.json
 

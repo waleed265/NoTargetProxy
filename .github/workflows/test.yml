@@ -226,7 +226,7 @@ jobs:
         user_email: 'muhammadwaleed.iqbal@abacuscambridge.com'
         user_name: 'waleed265'
         
-     - uses: actions/checkout@v2
+     #- uses: actions/checkout@v2
      - name: HTML Link Generation for ZAP Report
        id: html_preview1
        uses: pavi2410/html-preview-action@v2

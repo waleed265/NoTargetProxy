@@ -88,12 +88,10 @@ jobs:
         destination_folder: 'reports'
         user_email: 'muhammadwaleed.iqbal@abacuscambridge.com'
         user_name: 'waleed265'
-        use_rsync: 'true'
         
      - uses: actions/checkout@v2
        with:
         clean: 'false'
-     #- run: git checkout HEAD^
         
      - name: HTML Link Generation for Apigee Lint Report
        id: html_preview
@@ -195,7 +193,6 @@ jobs:
         destination_folder: 'reports'
         user_email: 'muhammadwaleed.iqbal@abacuscambridge.com'
         user_name: 'waleed265'
-        use_rsync: 'true'
         
      - uses: actions/checkout@v2
        with:
@@ -206,7 +203,7 @@ jobs:
        uses: pavi2410/html-preview-action@v2
        if: always()
        with:
-         html_file: 'reports/newman_report.html'
+        html_file: 'reports/newman_report.html'
          
      - name: Publishing Newman Integration Report Link on PR
        continue-on-error: true
@@ -240,7 +237,6 @@ jobs:
         destination_folder: 'reports'
         user_email: 'muhammadwaleed.iqbal@abacuscambridge.com'
         user_name: 'waleed265'
-        use_rsync: 'true'
         
      - uses: actions/checkout@v2
        with:
@@ -251,7 +247,7 @@ jobs:
        uses: pavi2410/html-preview-action@v2
        if: always()
        with:
-         html_file: 'reports/report_html.html'
+        html_file: 'reports/report_html.html'
          
      - name: Publishing ZAP Report Link on PR
        continue-on-error: true

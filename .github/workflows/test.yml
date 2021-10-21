@@ -92,6 +92,7 @@ jobs:
      - uses: actions/checkout@v2
        with:
         clean: 'false'
+     - run: git checkout HEAD^
         
      - name: HTML Link Generation for Apigee Lint Report
        id: html_preview
@@ -197,6 +198,7 @@ jobs:
      - uses: actions/checkout@v2
        with:
         clean: 'false'
+     - run: git checkout HEAD^
         
      - name: HTML Link Generation for Newman Integration Report
        id: html_preview
@@ -241,6 +243,7 @@ jobs:
      - uses: actions/checkout@v2
        with:
         clean: 'false'
+     - run: git checkout HEAD^
         
      - name: HTML Link Generation for ZAP Report
        id: html_preview1

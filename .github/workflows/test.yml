@@ -179,6 +179,7 @@ jobs:
         
      - name: Pushes Newman Integration Report file to Repo
        uses: dmnemec/copy_file_to_another_repo_action@main
+       if: always()
        env:
         API_TOKEN_GITHUB: ${{ secrets.GITHUB_TOKEN }}
        with:
@@ -192,12 +193,14 @@ jobs:
      - name: HTML Link Generation for Newman Integration Report
        id: html_preview
        uses: pavi2410/html-preview-action@v2
+       if: always()
        with:
          html_file: 'reports/newman_report.html'
          
      - name: Publishing Newman Integration Report Link on PR
        continue-on-error: true
        uses: github-actions-up-and-running/pr-comment@v1.0.1
+       if: always()
        with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         message: ${{ format('[Click here to preview HTML page in browser]({0})', steps.html_preview.outputs.url) }}
@@ -217,6 +220,7 @@ jobs:
           
      - name: Pushes ZAP Report file to Repo
        uses: dmnemec/copy_file_to_another_repo_action@main
+       if: always()
        env:
         API_TOKEN_GITHUB: ${{ secrets.GITHUB_TOKEN }}
        with:
@@ -226,16 +230,18 @@ jobs:
         user_email: 'muhammadwaleed.iqbal@abacuscambridge.com'
         user_name: 'waleed265'
         
-     #- uses: actions/checkout@v2
+     - uses: actions/checkout@v2
      - name: HTML Link Generation for ZAP Report
        id: html_preview1
        uses: pavi2410/html-preview-action@v2
+       if: always()
        with:
          html_file: 'reports/report_html.html'
          
      - name: Publishing ZAP Report Link on PR
        continue-on-error: true
        uses: github-actions-up-and-running/pr-comment@v1.0.1
+       if: always()
        with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         message: ${{ format('[Click here to preview HTML page in browser]({0})', steps.html_preview1.outputs.url) }}

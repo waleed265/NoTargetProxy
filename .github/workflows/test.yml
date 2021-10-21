@@ -93,11 +93,11 @@ jobs:
      - uses: actions/checkout@v2
        with:
         clean: 'false'
+        submodules: 'true'
         
      - name: Cloning Repo
        run: |
-        #git clone https://github.com/waleed265/apigee_cicd.git
-        ls
+        cd ${{ github.workspace }} && ls
         
      - name: HTML Link Generation for Apigee Lint Report
        id: html_preview

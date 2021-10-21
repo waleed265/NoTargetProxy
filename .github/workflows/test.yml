@@ -69,6 +69,7 @@ jobs:
         cd ${{ github.workspace }}/apigee-cicd-master
         sudo npm install -g apigeelint
         apigeelint -s ${{ env.ProxyName }}/apiproxy -f table.js
+        rm -f ${{ github.workspace }}/reports/apigeelint.html
         apigeelint -s ${{ env.ProxyName }}/apiproxy -f html.js > ${{ github.workspace }}/reports/apigeelint.html
         
      - name: Publishing Apigee Lint Report to Artifacts

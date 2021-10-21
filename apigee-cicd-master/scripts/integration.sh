@@ -24,11 +24,11 @@ newman run $GITHUB_WORKSPACE/apigee-cicd-master/test/integration/$NEWMAN_TARGET_
 rm -f -v $GITHUB_WORKSPACE/reports/newman_report.html
 rm -f -v $GITHUB_WORKSPACE/reports/report_html.html
 newman run $GITHUB_WORKSPACE/apigee-cicd-master/test/integration/$NEWMAN_TARGET_URL -r htmlextra --reporter-htmlextra-export ./reports/newman_report.html --env-var client_id=$id --env-var client_secret=$secret --export-environment env.json
-#cat env.json
+cat env.json
 
 accessToken=$(cat env.json | jq -r '.values[] | select(.key=="accessToken").value')
 
-accessToken="Bearer ${accessToken}"
+accessToken="Bearer1 ${accessToken}"
 #foo="${foo} World"
 # echo "accessToken at script: $accessToken"
 # echo "accessToken=$accessToken" >> $GITHUB_ENV

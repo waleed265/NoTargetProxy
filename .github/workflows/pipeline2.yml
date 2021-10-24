@@ -86,6 +86,7 @@ jobs:
        with:
         source_file: '${{ github.workspace }}/reports/apigeelint.html'
         destination_repo: 'waleed265/apigee_cicd'
+        destination_branch: 'DEV'
         destination_folder: 'reports'
         user_email: 'muhammadwaleed.iqbal@abacuscambridge.com'
         user_name: 'waleed265'

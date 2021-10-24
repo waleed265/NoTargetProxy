@@ -92,7 +92,7 @@ jobs:
         
      - uses: actions/checkout@v2
      
-     - run: git pull origin master
+     - run: git pull origin DEV
         
      - name: Cloning Repo
        run: |

@@ -91,7 +91,7 @@ jobs:
         user_email: 'muhammadwaleed.iqbal@abacuscambridge.com'
         user_name: 'waleed265'
         
-     - uses: actions/checkout@v2
+     # - uses: actions/checkout@v2
      
      - run: git pull origin DEV
         

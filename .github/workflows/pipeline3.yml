@@ -1,0 +1,290 @@
+name: Apigee_CICD_Pipeline_MAF_3
+on:
+  pull_request:
+    types: [closed]
+    branches:
+    - main
+    #- DEV
+  
+  # push:
+    # branches:
+    # - main
+    # - DEV
+    
+  workflow_dispatch:
+  
+env:
+  ProxyName: NoTargetProxy
+  ORG: rimshaaizaz-eval
+  base64encoded: ${{ secrets.base64encoded }}
+  ENV: prod
+  apigeeUsername: ${{ secrets.apigeeUsername }}
+  apigeePassword: ${{ secrets.apigeePassword }}
+  api_product: Cicd-Prod-Product
+  developer: hr@api.com
+  app: hrapp
+  NEWMAN_TARGET_URL: NoTargetProxy_GET_Req_Pass_New.postman_collection.json
+  LARGE_SECRET_PASSPHRASE: ${{ secrets.LARGE_SECRET_PASSPHRASE }}
+  ZAP_TARGET_API_URL: https://rimshaaizaz-eval-prod.apigee.net/notargetproxy
+  
+jobs:
+
+   # Pre-Deployment:
+    # runs-on: ubuntu-latest 
+    # steps:
+     # - name: Checkout Repository
+       # uses: actions/checkout@v2
+    
+     # - name: Unit-Test-With-Coverage
+       # run: cd ${{ github.workspace }}/apigee-cicd-master && npm install && npm test test/unit/*.js && npm run coverage test/unit/*.js
+      
+     # - name: Coverage
+       # run: cd ${{ github.workspace }}/apigee-cicd-master/coverage && ls 
+      
+     # - name: Publish Unit Test Results
+       # uses: EnricoMi/publish-unit-test-result-action@v1
+       # if: always()
+       # with:
+        # files: ${{ github.workspace }}/**/test-results.xml
+        
+    # #- name: Coverage
+      # #run: cp ${{ github.workspace }}/apigee-cicd-master/coverage/cobertura-coverage.xml ${{ github.workspace }} && cd ${{ github.workspace }} &&  ls     
+      
+     # - name: Cobertura Coverage Report
+       # uses: 5monkeys/cobertura-action@master
+       # with:
+        # path: ${{ github.workspace }}/apigee-cicd-master/coverage/cobertura-coverage.xml
+        # repo_token: ${{ secrets.GITHUB_TOKEN }}
+        # minimum_coverage: 75
+        # skip_covered: false
+        # fail_below_threshold: true
+        # show_line: true
+        # show_branch: true
+        # show_class_names: true
+        # show_missing: true
+        # only_changed_files: false
+    
+     # - name: Policy-Code-Analysis
+       # run: |
+        # cd ${{ github.workspace }}/apigee-cicd-master
+        # sudo npm install -g apigeelint
+        # apigeelint -s ${{ env.ProxyName }}/apiproxy -f table.js
+        # rm -f -v ${{ github.workspace }}/reports/apigeelint.html
+        # apigeelint -s ${{ env.ProxyName }}/apiproxy -f html.js > ${{ github.workspace }}/reports/apigeelint.html
+        
+     # - name: Publishing Apigee Lint Report to Artifacts
+       # uses: actions/upload-artifact@v2
+       # if: always()
+       # with:
+        # name: Apigee Lint Report
+        # path: ${{ github.workspace }}/reports/apigeelint.html
+        
+     # - name: Pushes Apigee Lint Report file to Repo
+       # uses: dmnemec/copy_file_to_another_repo_action@v1.1.1
+       # env:
+        # API_TOKEN_GITHUB: ${{ secrets.GITHUB_TOKEN }}
+       # with:
+        # source_file: '${{ github.workspace }}/reports/apigeelint.html'
+        # destination_repo: 'waleed265/apigee_cicd'
+        # destination_folder: 'reports'
+        # user_email: 'muhammadwaleed.iqbal@abacuscambridge.com'
+        # user_name: 'waleed265'
+        
+     # - uses: actions/checkout@v2
+       # with:
+        # clean: 'false'
+        # submodules: 'true'
+        
+     # - name: Cloning Repo
+       # run: |
+        # cd ${{ github.workspace }} && ls
+        
+     # - name: HTML Link Generation for Apigee Lint Report
+       # id: html_preview
+       # uses: pavi2410/html-preview-action@v2
+       # with:
+         # html_file: 'reports/apigeelint.html'
+         
+     # - name: Publishing Apigee Lint Report Link on PR
+       # continue-on-error: true
+       # uses: github-actions-up-and-running/pr-comment@v1.0.1
+       # with:
+        # repo-token: ${{ secrets.GITHUB_TOKEN }}
+        # message: ${{ format('[Click here to preview HTML page in browser]({0})', steps.html_preview.outputs.url) }}
+        
+     # - name: commit-status-update
+       # uses: ouzi-dev/commit-status-updater@v1.1.0
+       # continue-on-error: true
+       # if: always()
+       # with:
+        # status: "${{ job.status }}"
+        # addHoldComment: "true"
+        # pendingComment: "Pre-Deployment stage pending!"
+        # successComment: "Pre-Deployment stage succeeded!"
+        # failComment: "Pre-Deployment stage failed!"
+   
+   Deployment:
+   # this job will only run if the PR has been merged
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    needs: Pre-Deployment
+    outputs:
+      output1: ${{ steps.step1.outputs.stable_revision_number }}
+    steps:
+     - name: Checkout Repository
+       uses: actions/checkout@v2
+      
+     - name: Checking Current Stable Revision
+       run: bash ./apigee-cicd-master/scripts/revision.sh
+       shell: bash
+      
+     - name: Echo Current Stable Revision
+       id: step1
+       run: echo "::set-output name=stable_revision_number::$stable_revision_number"
+       #run: echo "stable_revision_number=$stable_revision_number"
+      
+     - name: Install fixed Maven Plugin
+       run: mvn install -f ${{ github.workspace }}/apigee-config-maven-plugin-master/pom.xml
+      
+     - name: Decrypt edge.json file
+       run: bash ./apigee-cicd-master/scripts/decrypt_secret.sh
+       shell: bash
+      
+     - name: Deploy Proxy
+       run: mvn clean install -f ${{ github.workspace }}/apigee-cicd-master/${{ env.ProxyName }}/pom.xml -P${{ env.ENV }} -Dusername=${{ env.apigeeUsername }} -Dpassword=${{ env.apigeePassword }} -Dorg=${{ env.ORG }} -Dapigee.config.options=update -Dapigee.app.ignoreAPIProducts=true
+       
+     - name: commit-status-update
+       uses: ouzi-dev/commit-status-updater@v1.1.0
+       continue-on-error: true
+       if: always()
+       with:
+        status: "${{ job.status }}"
+        addHoldComment: "true"
+        pendingComment: "Deployment stage pending!"
+        successComment: "Deployment stage succeeded!"
+        failComment: "Deployment stage failed!"
+   
+   Post-Deployment:
+   # this job will only run if the PR has been merged
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    needs: Deployment
+    steps:
+     - name: Checkout Repository
+       uses: actions/checkout@v2
+       
+     - name: Echo Output  
+       run: echo "stable_revision_number=${{needs.Deployment.outputs.output1}}" >> $GITHUB_ENV 
+       
+     - name: Integration Test through script file
+       id: integration
+       run: bash ./apigee-cicd-master/scripts/integration.sh
+       shell: bash
+       continue-on-error: true
+       
+     - name: Echo WorkSpace  
+       run: cd $GITHUB_WORKSPACE && ls
+       
+     - name: Publishing Newman Integration Report to Artifacts
+       uses: actions/upload-artifact@v2
+       if: always()
+       with:
+        name: Newman Integration Report
+        path: ${{ github.workspace }}/reports/newman_report.html
+        
+     - name: Pushes Newman Integration Report file to Repo
+       uses: dmnemec/copy_file_to_another_repo_action@v1.1.1
+       if: always()
+       env:
+        API_TOKEN_GITHUB: ${{ secrets.GITHUB_TOKEN }}
+       with:
+        source_file: '${{ github.workspace }}/reports/newman_report.html'
+        destination_repo: 'waleed265/apigee_cicd'
+        destination_folder: 'reports'
+        user_email: 'muhammadwaleed.iqbal@abacuscambridge.com'
+        user_name: 'waleed265'
+        
+     - uses: actions/checkout@v2
+       with:
+        clean: 'false'
+        
+     - name: HTML Link Generation for Newman Integration Report
+       id: html_preview
+       uses: pavi2410/html-preview-action@v2
+       if: always()
+       with:
+        html_file: 'reports/newman_report.html'
+         
+     - name: Publishing Newman Integration Report Link on PR
+       continue-on-error: true
+       uses: github-actions-up-and-running/pr-comment@v1.0.1
+       if: always()
+       with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        message: ${{ format('[Click here to preview HTML page in browser]({0})', steps.html_preview.outputs.url) }}
+       
+     - name: ZAP Scan
+       if: steps.integration.outcome == 'success'
+       id: ZAP
+       continue-on-error: true
+       uses: zaproxy/action-api-scan@v0.1.0
+       with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          docker_name: 'owasp/zap2docker-stable'
+          format: openapi
+          target: '${{ env.ZAP_TARGET_API_URL }}'
+          cmd_options: '-z "-configFile /zap/wrk/apigee-cicd-master/zap/options.prop"'
+          #fail_action: true
+          
+     - name: Pushes ZAP Report file to Repo
+       uses: dmnemec/copy_file_to_another_repo_action@v1.1.1
+       if: always()
+       env:
+        API_TOKEN_GITHUB: ${{ secrets.GITHUB_TOKEN }}
+       with:
+        source_file: '${{ github.workspace }}/report_html.html'
+        destination_repo: 'waleed265/apigee_cicd'
+        destination_folder: 'reports'
+        user_email: 'muhammadwaleed.iqbal@abacuscambridge.com'
+        user_name: 'waleed265'
+        
+     - uses: actions/checkout@v2
+       with:
+        clean: 'false'
+        
+     - name: HTML Link Generation for ZAP Report
+       id: html_preview1
+       uses: pavi2410/html-preview-action@v2
+       if: always()
+       with:
+        html_file: 'reports/report_html.html'
+         
+     - name: Publishing ZAP Report Link on PR
+       continue-on-error: true
+       uses: github-actions-up-and-running/pr-comment@v1.0.1
+       if: always()
+       with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        message: ${{ format('[Click here to preview HTML page in browser]({0})', steps.html_preview1.outputs.url) }}
+       
+     - name: Undeploy Current & redeploy stable revision
+       if: steps.integration.outcome == 'failure' || steps.ZAP.outcome == 'failure'
+       id: undeploy
+       run: bash ./apigee-cicd-master/scripts/undeploy.sh
+       shell: bash
+       #env: stable_revision_number: ${{needs.Deployment.outputs.output1}}
+
+     # - name: Undeploy Check
+       # if: steps.undeploy.outcome == 'success'
+       # run: exit 1
+       
+     - name: commit-status-update
+       uses: ouzi-dev/commit-status-updater@v1.1.0
+       continue-on-error: true
+       if: always()
+       with:
+        status: "${{ job.status }}"
+        addHoldComment: "true"
+        pendingComment: "Post-Deployment stage pending!"
+        successComment: "Post-Deployment stage succeeded!"
+        failComment: "Post-Deployment stage failed!"

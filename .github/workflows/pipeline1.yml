@@ -1,14 +1,14 @@
-name: Apigee_CICD_Pipeline_MAF
+name: Apigee_CICD_Pipeline_MAF_1
 on:
-  pull_request:
-    types: [opened]
-    branches:
-    - main
-    - DEV
+  # pull_request:
+    # types: [opened]
+    # branches:
+    # - main
+    # - DEV
   
   push:
     branches:
-    - main
+    #- main
     - DEV
     
   workflow_dispatch:

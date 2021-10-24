@@ -95,7 +95,8 @@ jobs:
        run: |
         git reset --hard HEAD
         git pull
-        git checkout DEV
+        
+     - uses: actions/checkout@v2
         
      - name: HTML Link Generation for Apigee Lint Report
        id: html_preview

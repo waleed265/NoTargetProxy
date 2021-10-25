@@ -12,8 +12,8 @@ on:
     # - DEV
     
   workflow_dispatch:
-   branches:
-   - DEV
+    branches:
+        - DEV
   
 env:
   ProxyName: NoTargetProxy

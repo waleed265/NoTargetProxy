@@ -14,6 +14,9 @@ on:
   workflow_dispatch:
     branches:
     - DEV
+
+env:
+  ProxyName: NoTargetProxy
   
 jobs:
 

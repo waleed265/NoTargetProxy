@@ -182,8 +182,8 @@ jobs:
        shell: bash
        continue-on-error: true
        
-     - name: Echo WorkSpace  
-       run: cd $GITHUB_WORKSPACE && ls
+     # - name: Echo WorkSpace  
+       # run: cd $GITHUB_WORKSPACE && ls
        
      - name: Publishing Newman Integration Report to Artifacts
        uses: actions/upload-artifact@v2
@@ -192,36 +192,36 @@ jobs:
         name: Newman Integration Report
         path: ${{ github.workspace }}/reports/newman_report.html
         
-     - name: Pushes Newman Integration Report file to Repo
-       uses: dmnemec/copy_file_to_another_repo_action@v1.1.1
-       if: always()
-       env:
-        API_TOKEN_GITHUB: ${{ secrets.GITHUB_TOKEN }}
-       with:
-        source_file: '${{ github.workspace }}/reports/newman_report.html'
-        destination_repo: 'waleed265/apigee_cicd'
-        destination_folder: 'reports'
-        user_email: 'muhammadwaleed.iqbal@abacuscambridge.com'
-        user_name: 'waleed265'
+     # - name: Pushes Newman Integration Report file to Repo
+       # uses: dmnemec/copy_file_to_another_repo_action@v1.1.1
+       # if: always()
+       # env:
+        # API_TOKEN_GITHUB: ${{ secrets.GITHUB_TOKEN }}
+       # with:
+        # source_file: '${{ github.workspace }}/reports/newman_report.html'
+        # destination_repo: 'waleed265/apigee_cicd'
+        # destination_folder: 'reports'
+        # user_email: 'muhammadwaleed.iqbal@abacuscambridge.com'
+        # user_name: 'waleed265'
         
-     - uses: actions/checkout@v2
-       with:
-        clean: 'false'
+     # - uses: actions/checkout@v2
+       # with:
+        # clean: 'false'
         
-     - name: HTML Link Generation for Newman Integration Report
-       id: html_preview
-       uses: pavi2410/html-preview-action@v2
-       if: always()
-       with:
-        html_file: 'reports/newman_report.html'
+     # - name: HTML Link Generation for Newman Integration Report
+       # id: html_preview
+       # uses: pavi2410/html-preview-action@v2
+       # if: always()
+       # with:
+        # html_file: 'reports/newman_report.html'
          
-     - name: Publishing Newman Integration Report Link on PR
-       continue-on-error: true
-       uses: github-actions-up-and-running/pr-comment@v1.0.1
-       if: always()
-       with:
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
-        message: ${{ format('[Click here to preview HTML page in browser]({0})', steps.html_preview.outputs.url) }}
+     # - name: Publishing Newman Integration Report Link on PR
+       # continue-on-error: true
+       # uses: github-actions-up-and-running/pr-comment@v1.0.1
+       # if: always()
+       # with:
+        # repo-token: ${{ secrets.GITHUB_TOKEN }}
+        # message: ${{ format('[Click here to preview HTML page in browser]({0})', steps.html_preview.outputs.url) }}
        
      - name: ZAP Scan
        if: steps.integration.outcome == 'success'
@@ -236,36 +236,36 @@ jobs:
           cmd_options: '-z "-configFile /zap/wrk/apigee-cicd-master/zap/options.prop"'
           #fail_action: true
           
-     - name: Pushes ZAP Report file to Repo
-       uses: dmnemec/copy_file_to_another_repo_action@v1.1.1
-       if: always()
-       env:
-        API_TOKEN_GITHUB: ${{ secrets.GITHUB_TOKEN }}
-       with:
-        source_file: '${{ github.workspace }}/report_html.html'
-        destination_repo: 'waleed265/apigee_cicd'
-        destination_folder: 'reports'
-        user_email: 'muhammadwaleed.iqbal@abacuscambridge.com'
-        user_name: 'waleed265'
+     # - name: Pushes ZAP Report file to Repo
+       # uses: dmnemec/copy_file_to_another_repo_action@v1.1.1
+       # if: always()
+       # env:
+        # API_TOKEN_GITHUB: ${{ secrets.GITHUB_TOKEN }}
+       # with:
+        # source_file: '${{ github.workspace }}/report_html.html'
+        # destination_repo: 'waleed265/apigee_cicd'
+        # destination_folder: 'reports'
+        # user_email: 'muhammadwaleed.iqbal@abacuscambridge.com'
+        # user_name: 'waleed265'
         
-     - uses: actions/checkout@v2
-       with:
-        clean: 'false'
+     # - uses: actions/checkout@v2
+       # with:
+        # clean: 'false'
         
-     - name: HTML Link Generation for ZAP Report
-       id: html_preview1
-       uses: pavi2410/html-preview-action@v2
-       if: always()
-       with:
-        html_file: 'reports/report_html.html'
+     # - name: HTML Link Generation for ZAP Report
+       # id: html_preview1
+       # uses: pavi2410/html-preview-action@v2
+       # if: always()
+       # with:
+        # html_file: 'reports/report_html.html'
          
-     - name: Publishing ZAP Report Link on PR
-       continue-on-error: true
-       uses: github-actions-up-and-running/pr-comment@v1.0.1
-       if: always()
-       with:
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
-        message: ${{ format('[Click here to preview HTML page in browser]({0})', steps.html_preview1.outputs.url) }}
+     # - name: Publishing ZAP Report Link on PR
+       # continue-on-error: true
+       # uses: github-actions-up-and-running/pr-comment@v1.0.1
+       # if: always()
+       # with:
+        # repo-token: ${{ secrets.GITHUB_TOKEN }}
+        # message: ${{ format('[Click here to preview HTML page in browser]({0})', steps.html_preview1.outputs.url) }}
        
      - name: Undeploy Current & redeploy stable revision
        if: steps.integration.outcome == 'failure' || steps.ZAP.outcome == 'failure'

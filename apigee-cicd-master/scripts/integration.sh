@@ -28,7 +28,7 @@ cat env.json
 
 accessToken=$(cat env.json | jq -r '.values[] | select(.key=="accessToken").value')
 
-accessToken="Bearer1 ${accessToken}"
+accessToken="Bearer ${accessToken}"
 #foo="${foo} World"
 # echo "accessToken at script: $accessToken"
 # echo "accessToken=$accessToken" >> $GITHUB_ENV

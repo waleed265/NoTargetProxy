@@ -52,7 +52,7 @@
 					"listen": "prerequest",
 					"script": {
 						"exec": [
-							"let tokenUrl = 'https://rimshaaizaz-eval-test.apigee.net/v1/token/generate?grant_type=client_credentials';\r",
+							"let tokenUrl = 'https://rimshaaizaz-eval-prod.apigee.net/v1/token/generate?grant_type=client_credentials';\r",
 							"let clientId = pm.environment.get('client_id');\r",
 							"//console.log(\"client_id: ${clientId}\");\r",
 							"let clientSecret = pm.environment.get('client_secret');\r",
@@ -97,10 +97,10 @@
 					}
 				],
 				"url": {
-					"raw": "https://rimshaaizaz-eval-test.apigee.net/notargetproxy",
+					"raw": "https://rimshaaizaz-eval-prod.apigee.net/notargetproxy",
 					"protocol": "https",
 					"host": [
-						"rimshaaizaz-eval-test",
+						"rimshaaizaz-eval-prod",
 						"apigee",
 						"net"
 					],

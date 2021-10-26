@@ -6,10 +6,10 @@ on:
     - main
     #- DEV
   
-  # push:
-    # branches:
-    # - main
-    # - DEV
+  push:
+    branches:
+    #- main
+    - DEV
     
   #workflow_dispatch:
   

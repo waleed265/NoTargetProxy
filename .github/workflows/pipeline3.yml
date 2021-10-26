@@ -11,7 +11,7 @@ on:
     #- main
     - DEV
     
-  #workflow_dispatch:
+  workflow_dispatch:
   
 env:
   ProxyName: NoTargetProxy

@@ -79,6 +79,9 @@ jobs:
      - name: Echo Output  
        run: echo "stable_revision_number=${{needs.Deployment.outputs.output1}}" >> $GITHUB_ENV 
        
+     - name: Install fixed Maven Plugin
+       run: mvn install -f ${{ github.workspace }}/apigee-config-maven-plugin-master/pom.xml
+       
      - name: Integration Test through script file
        id: integration
        run: bash ./apigee-cicd-master/scripts/integration.sh

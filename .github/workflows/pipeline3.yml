@@ -48,8 +48,8 @@ jobs:
        run: echo "::set-output name=stable_revision_number::$stable_revision_number"
        #run: echo "stable_revision_number=$stable_revision_number"
       
-     - name: Install fixed Maven Plugin
-       run: mvn install -f ${{ github.workspace }}/apigee-config-maven-plugin-master/pom.xml
+     # - name: Install fixed Maven Plugin
+       # run: mvn install -f ${{ github.workspace }}/apigee-config-maven-plugin-master/pom.xml
       
      - name: Decrypt edge.json file
        run: bash ./apigee-cicd-master/scripts/decrypt_secret.sh

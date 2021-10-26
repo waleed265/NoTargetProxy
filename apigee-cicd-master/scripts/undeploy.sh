@@ -22,13 +22,13 @@ echo "**************************************************"
 #mkdir $HOME/secrets
 # --batch to prevent interactive command
 # --yes to assume "yes" for questions
-gpg --quiet --batch --yes --decrypt --passphrase="$LARGE_SECRET_PASSPHRASE" \
---output $GITHUB_WORKSPACE/apigee-cicd-master/$ProxyName/edge-fallback/edge.json $GITHUB_WORKSPACE/apigee-cicd-master/$ProxyName/edge-fallback/edge-fallback.json.gpg
+# gpg --quiet --batch --yes --decrypt --passphrase="$LARGE_SECRET_PASSPHRASE" \
+# --output $GITHUB_WORKSPACE/apigee-cicd-master/$ProxyName/edge-fallback/edge.json $GITHUB_WORKSPACE/apigee-cicd-master/$ProxyName/edge-fallback/edge-fallback.json.gpg
 
-echo "**************************************************"
-echo "After Decryption"
-echo "**************************************************"
-cd $GITHUB_WORKSPACE/apigee-cicd-master/$ProxyName/edge-fallback && ls
+# echo "**************************************************"
+# echo "After Decryption"
+# echo "**************************************************"
+# cd $GITHUB_WORKSPACE/apigee-cicd-master/$ProxyName/edge-fallback && ls
 
 echo "**************************************************"
 echo "Deploying Fall Back Edge.json"

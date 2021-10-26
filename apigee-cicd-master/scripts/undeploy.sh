@@ -15,20 +15,19 @@ echo "stable revision: $stable_revision_number"
 echo "Fall Back Edge.json Deployment"
 echo "Before Decryption"
 echo "**************************************************"
-# echo "Removing Current edge.json decrypted file"
-# rm -f $GITHUB_WORKSPACE/apigee-cicd-master/$ProxyName/edge.json
-# cd $GITHUB_WORKSPACE/apigee-cicd-master/$ProxyName && ls
-# Decrypt the file
-#mkdir $HOME/secrets
-# --batch to prevent interactive command
-# --yes to assume "yes" for questions
-# gpg --quiet --batch --yes --decrypt --passphrase="$LARGE_SECRET_PASSPHRASE" \
-# --output $GITHUB_WORKSPACE/apigee-cicd-master/$ProxyName/edge-fallback/edge.json $GITHUB_WORKSPACE/apigee-cicd-master/$ProxyName/edge-fallback/edge-fallback.json.gpg
+cd $GITHUB_WORKSPACE/apigee-cicd-master/$ProxyName && ls
 
-# echo "**************************************************"
-# echo "After Decryption"
-# echo "**************************************************"
-# cd $GITHUB_WORKSPACE/apigee-cicd-master/$ProxyName/edge-fallback && ls
+#Decrypt the file
+#--batch to prevent interactive command
+#--yes to assume "yes" for questions
+
+gpg --quiet --batch --yes --decrypt --passphrase="$LARGE_SECRET_PASSPHRASE" \
+--output $GITHUB_WORKSPACE/apigee-cicd-master/$ProxyName/edge-fallback/edge.json $GITHUB_WORKSPACE/apigee-cicd-master/$ProxyName/edge-fallback/edge-fallback.json.gpg
+
+echo "**************************************************"
+echo "After Decryption"
+echo "**************************************************"
+cd $GITHUB_WORKSPACE/apigee-cicd-master/$ProxyName/edge-fallback && ls
 
 echo "**************************************************"
 echo "Deploying Fall Back Edge.json"
@@ -51,15 +50,15 @@ echo "Current ENV Name: '$env_name'"
 echo "Stable Revision: '$stable_revision_number'"
 
 
-if [[ "${stable_revision_number}" -eq null ]];
+if [[ "${stable_revision_number}" -eq null && "${rev_num}" -eq 1 ]];
 then
 	echo "WARNING: Test failed, undeploying and deleting revision $rev_num"
 
 	curl -X DELETE --header "Authorization: Basic $base64encoded" "https://api.enterprise.apigee.com/v1/organizations/$org_name/environments/$env_name/apis/$api_name/revisions/$rev_num/deployments"
 
-	#curl -X DELETE --header "Authorization: Basic $base64encoded" "https://api.enterprise.apigee.com/v1/organizations/$org_name/apis/$api_name/revisions/$rev_num"
+	curl -X DELETE --header "Authorization: Basic $base64encoded" "https://api.enterprise.apigee.com/v1/organizations/$org_name/apis/$api_name/revisions/$rev_num"
 	
-	#curl -X DELETE --header "Authorization: Basic $base64encoded" "https://api.enterprise.apigee.com/v1/organizations/$org_name/apis/$api_name"
+	curl -X DELETE --header "Authorization: Basic $base64encoded" "https://api.enterprise.apigee.com/v1/organizations/$org_name/apis/$api_name"
 else
 echo "WARNING: Test failed, reverting from $rev_num to $stable_revision_number --- undeploying and deleting revision $rev_num"
 
@@ -76,5 +75,5 @@ echo ""
 echo "Successfully deployed stable revision : '$stable_revision_number'"
 fi
 
-echo "Failing the Job"
+echo "\nFailing the Job"
 exit 1

@@ -74,7 +74,7 @@ jobs:
        if: always()
        with:
         webhook_url: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
-        #needs: ${{ toJson(needs) }}
+        needs: ${{ toJson(needs) }}
         job: ${{ toJson(job) }}
         steps: ${{ toJson(steps) }} 
    
@@ -144,6 +144,6 @@ jobs:
        if: always()
        with:
         webhook_url: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
-        #needs: ${{ toJson(needs) }}
+        needs: ${{ toJson(needs) }}
         job: ${{ toJson(job) }}
-        #steps: ${{ toJson(steps) }}   
+        steps: ${{ toJson(steps) }}   

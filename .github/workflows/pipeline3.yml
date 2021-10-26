@@ -68,6 +68,15 @@ jobs:
         pendingComment: "Deployment stage pending!"
         successComment: "Deployment stage succeeded!"
         failComment: "Deployment stage failed!"
+        
+     - name: Microsoft Teams Notification
+       uses: skitionek/notify-microsoft-teams@master
+       if: always()
+       with:
+        webhook_url: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
+        #needs: ${{ toJson(needs) }}
+        job: ${{ toJson(job) }}
+        steps: ${{ toJson(steps) }} 
    
    Post-Deployment:
     runs-on: ubuntu-latest
@@ -129,3 +138,12 @@ jobs:
         pendingComment: "Post-Deployment stage pending!"
         successComment: "Post-Deployment stage succeeded!"
         failComment: "Post-Deployment stage failed!"
+     
+     - name: Microsoft Teams Notification
+       uses: skitionek/notify-microsoft-teams@master
+       if: always()
+       with:
+        webhook_url: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
+        #needs: ${{ toJson(needs) }}
+        job: ${{ toJson(job) }}
+        #steps: ${{ toJson(steps) }}   

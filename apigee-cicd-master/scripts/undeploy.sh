@@ -12,10 +12,12 @@ echo "base64encoded: $base64encoded"
 echo "ProxyName: $ProxyName"
 echo "stable revision: $stable_revision_number"
 
+echo "**************************************************"
 echo "Fall Back Edge.json Deployment"
+echo "**************************************************"
 echo "Before Decryption"
 echo "**************************************************"
-cd $GITHUB_WORKSPACE/apigee-cicd-master/$ProxyName && ls
+cd $GITHUB_WORKSPACE/apigee-cicd-master/$ProxyName/edge-fallback && ls
 
 #Decrypt the file
 #--batch to prevent interactive command

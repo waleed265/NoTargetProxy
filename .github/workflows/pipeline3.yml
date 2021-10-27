@@ -60,6 +60,7 @@ jobs:
        
      - name: commit-status-update
        uses: ouzi-dev/commit-status-updater@v1.1.0
+       continue-on-error: true
        if: always()
        with:
         status: "${{ job.status }}"
@@ -130,6 +131,7 @@ jobs:
        
      - name: commit-status-update
        uses: ouzi-dev/commit-status-updater@v1.1.0
+       continue-on-error: true
        if: always()
        with:
         status: "${{ job.status }}"

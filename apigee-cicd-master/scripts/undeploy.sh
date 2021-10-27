@@ -34,7 +34,7 @@ cd $GITHUB_WORKSPACE/apigee-cicd-master/$ProxyName && ls
 echo "**************************************************"
 echo "Deploying Fall Back Edge.json"
 echo "**************************************************"
-cd $GITHUB_WORKSPACE/apigee-cicd-master/$ProxyName && mvn apigee-config:all -P$ENV -Dusername=$apigeeUsername -Dpassword=$apigeePassword -Dorg=$ORG -Dapigee.config.options=update -Dapigee.app.ignoreAPIProducts=true
+cd $GITHUB_WORKSPACE/apigee-cicd-master/$ProxyName && mvn apigee-config:specs apigee-config:caches apigee-config:keystores apigee-config:aliases apigee-config:references apigee-config:targetservers apigee-config:resourcefiles apigee-config:apiproducts apigee-config:developers apigee-config:apps apigee-config:companies apigee-config:companyapps apigee-config:reports apigee-config:importKeys -P$ENV -Dusername=$apigeeUsername -Dpassword=$apigeePassword -Dorg=$ORG -Dapigee.config.options=update -Dapigee.app.ignoreAPIProducts=true
 
 
 current_deployment_info=$(curl -H "Authorization: Basic $base64encoded" "https://api.enterprise.apigee.com/v1/organizations/$ORG/environments/$ENV/apis/$ProxyName/deployments") 

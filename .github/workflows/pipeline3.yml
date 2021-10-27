@@ -60,7 +60,6 @@ jobs:
        
      - name: commit-status-update
        uses: ouzi-dev/commit-status-updater@v1.1.0
-       #continue-on-error: true
        if: always()
        with:
         status: "${{ job.status }}"
@@ -115,14 +114,13 @@ jobs:
           format: openapi
           target: '${{ env.ZAP_TARGET_API_URL }}'
           cmd_options: '-z "-configFile /zap/wrk/apigee-cicd-master/zap/options.prop"'
-          fail_action: true
+          #fail_action: true
        
      - name: Undeploy Current & redeploy stable revision
        if: steps.integration.outcome == 'failure' || steps.ZAP.outcome == 'failure'
        id: undeploy
        run: bash ./apigee-cicd-master/scripts/undeploy.sh
        shell: bash
-       #env: stable_revision_number: ${{needs.Deployment.outputs.output1}}
 
      - name: Undeploy Check
        if: steps.undeploy.outcome == 'success'
@@ -132,7 +130,6 @@ jobs:
        
      - name: commit-status-update
        uses: ouzi-dev/commit-status-updater@v1.1.0
-       #continue-on-error: true
        if: always()
        with:
         status: "${{ job.status }}"

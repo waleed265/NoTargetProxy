@@ -24,17 +24,17 @@ cd $GITHUB_WORKSPACE/apigee-cicd-master/$ProxyName/edge-fallback && ls
 #--yes to assume "yes" for questions
 
 gpg --quiet --batch --yes --decrypt --passphrase="$LARGE_SECRET_PASSPHRASE" \
---output $GITHUB_WORKSPACE/apigee-cicd-master/$ProxyName/edge-fallback/edge.json $GITHUB_WORKSPACE/apigee-cicd-master/$ProxyName/edge-fallback/edge-fallback.json.gpg
+--output $GITHUB_WORKSPACE/apigee-cicd-master/$ProxyName/edge.json $GITHUB_WORKSPACE/apigee-cicd-master/$ProxyName/edge-fallback.json.gpg
 
 echo "**************************************************"
 echo "After Decryption"
 echo "**************************************************"
-cd $GITHUB_WORKSPACE/apigee-cicd-master/$ProxyName/edge-fallback && ls
+cd $GITHUB_WORKSPACE/apigee-cicd-master/$ProxyName && ls
 
 echo "**************************************************"
 echo "Deploying Fall Back Edge.json"
 echo "**************************************************"
-cd $GITHUB_WORKSPACE/apigee-cicd-master/$ProxyName/edge-fallback && mvn clean install -P$ENV -Dusername=$apigeeUsername -Dpassword=$apigeePassword -Dorg=$ORG -Dapigee.config.options=update -Dapigee.app.ignoreAPIProducts=true
+cd $GITHUB_WORKSPACE/apigee-cicd-master/$ProxyName && mvn clean install -P$ENV -Dusername=$apigeeUsername -Dpassword=$apigeePassword -Dorg=$ORG -Dapigee.config.options=update -Dapigee.app.ignoreAPIProducts=true
 
 
 current_deployment_info=$(curl -H "Authorization: Basic $base64encoded" "https://api.enterprise.apigee.com/v1/organizations/$ORG/environments/$ENV/apis/$ProxyName/deployments") 

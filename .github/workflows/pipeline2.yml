@@ -3,7 +3,7 @@ on:
   pull_request:
     types: [opened]
     branches:
-    - main
+    - UAT
     #- DEV
   
   # push:

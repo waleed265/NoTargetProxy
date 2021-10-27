@@ -1,14 +1,14 @@
 name: Apigee_CICD_Pipeline_MAF_3
 on:
-  # pull_request:
-    # types: [closed]
-    # branches:
-    # - UAT
-    #- DEV
-  
-  push:
+  pull_request:
+    types: [closed]
     branches:
-    - DEV
+    - UAT
+    - PROD
+  
+  # push:
+    # branches:
+    # - DEV
     #- main
     
   workflow_dispatch:
@@ -23,7 +23,7 @@ env:
   api_product: Cicd-Prod-Product
   developer: hr@api.com
   app: hrapp
-  NEWMAN_TARGET_URL: NoTargetProxy_GET_Req_Pass1.postman_collection.json
+  NEWMAN_TARGET_URL: NoTargetProxy_GET_Req_Pass_New.postman_collection.json
   LARGE_SECRET_PASSPHRASE: ${{ secrets.LARGE_SECRET_PASSPHRASE }}
   ZAP_TARGET_API_URL: https://rimshaaizaz-eval-prod.apigee.net/notargetproxy
   
@@ -31,7 +31,7 @@ jobs:
 
    Deployment:
    # this job will only run if the PR has been merged
-    #if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     outputs:
       output1: ${{ steps.step1.outputs.stable_revision_number }}

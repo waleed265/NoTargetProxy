@@ -17,7 +17,7 @@ echo "Fall Back Edge.json Deployment"
 echo "**************************************************"
 echo "Before Decryption"
 echo "**************************************************"
-cd $GITHUB_WORKSPACE/apigee-cicd-master/$ProxyName/edge-fallback && ls
+cd $GITHUB_WORKSPACE/apigee-cicd-master/$ProxyName && ls
 
 #Decrypt the file
 #--batch to prevent interactive command

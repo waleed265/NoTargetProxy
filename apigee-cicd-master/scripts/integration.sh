@@ -23,15 +23,19 @@ sudo npm install -g newman-reporter-htmlextra
 
 newman run $GITHUB_WORKSPACE/apigee-cicd-master/test/integration/$NEWMAN_TARGET_URL -r htmlextra --reporter-htmlextra-export ./reports/newman_report.html --env-var client_id=$id --env-var client_secret=$secret --export-environment env.json
 
-newman run $GITHUB_WORKSPACE/apigee-cicd-master/test/integration/$NEWMAN_TARGET_URL --reporters cli --env-var client_id=$id --env-var client_secret=$secret 
 #cat env.json
 
-# accessToken=$(cat env.json | jq -r '.values[] | select(.key=="accessToken").value')
+accessToken=$(cat env.json | jq -r '.values[] | select(.key=="accessToken").value')
 
-# accessToken="Bearer ${accessToken}"
-# #foo="${foo} World"
-# # echo "accessToken at script: $accessToken"
-# # echo "accessToken=$accessToken" >> $GITHUB_ENV
+#foo="${foo} World"
+# echo "accessToken at script: $accessToken"
+# echo "accessToken=$accessToken" >> $GITHUB_ENV
 
-# echo  "replacer.full_list(0).replacement=$accessToken" >> $GITHUB_WORKSPACE/apigee-cicd-master/zap/options.prop
-# cat $GITHUB_WORKSPACE/apigee-cicd-master/zap/options.prop
+accessToken="Bearer ${accessToken}"
+
+
+echo  "replacer.full_list(0).replacement=$accessToken" >> $GITHUB_WORKSPACE/apigee-cicd-master/zap/options.prop
+cat $GITHUB_WORKSPACE/apigee-cicd-master/zap/options.prop
+
+newman run $GITHUB_WORKSPACE/apigee-cicd-master/test/integration/$NEWMAN_TARGET_URL --reporters cli,junit --reporter-junit-export junitReport.xml --env-var client_id=$id --env-var client_secret=$secret 
+

@@ -77,6 +77,3 @@ echo ""
 echo "Successfully deployed stable revision : '$stable_revision_number'"
 fi
 
-echo
-echo "Failing the Job"
-exit 1

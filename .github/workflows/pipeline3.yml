@@ -124,9 +124,11 @@ jobs:
        shell: bash
        #env: stable_revision_number: ${{needs.Deployment.outputs.output1}}
 
-     # - name: Undeploy Check
-       # if: steps.undeploy.outcome == 'success'
-       # run: exit 1
+     - name: Undeploy Check
+       if: steps.undeploy.outcome == 'success'
+       run: |
+        echo "Integration/ZAP test Failed. Failing the Job!"
+        exit 1
        
      - name: commit-status-update
        uses: ouzi-dev/commit-status-updater@v1.1.0

@@ -6,9 +6,9 @@ on:
     - main
     #- DEV
   
-  push:
-    branches:
-    - DEV
+  # push:
+    # branches:
+    # - DEV
     #- main
     
   workflow_dispatch:

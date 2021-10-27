@@ -45,10 +45,7 @@ jobs:
        uses: EnricoMi/publish-unit-test-result-action@v1
        if: always()
        with:
-        files: ${{ github.workspace }}/**/test-results.xml
-        
-    #- name: Coverage
-      #run: cp ${{ github.workspace }}/apigee-cicd-master/coverage/cobertura-coverage.xml ${{ github.workspace }} && cd ${{ github.workspace }} &&  ls     
+        files: ${{ github.workspace }}/**/test-results.xml    
       
      - name: Cobertura Coverage Report
        uses: 5monkeys/cobertura-action@master
@@ -80,7 +77,6 @@ jobs:
         
      - name: commit-status-update
        uses: ouzi-dev/commit-status-updater@v1.1.0
-       continue-on-error: true
        if: always()
        with:
         status: "${{ job.status }}"
@@ -88,10 +84,18 @@ jobs:
         pendingComment: "Pre-Deployment stage pending!"
         successComment: "Pre-Deployment stage succeeded!"
         failComment: "Pre-Deployment stage failed!"
+     
+     - name: Microsoft Teams Notification
+       uses: skitionek/notify-microsoft-teams@master
+       if: always()
+       with:
+        webhook_url: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
+        needs: ${{ toJson(needs) }}
+        job: ${{ toJson(job) }}
+        steps: ${{ toJson(steps) }}
    
    Deployment:
     runs-on: ubuntu-latest
-    needs: Pre-Deployment
     outputs:
       output1: ${{ steps.step1.outputs.stable_revision_number }}
     steps:
@@ -105,9 +109,10 @@ jobs:
      - name: Echo Current Stable Revision
        id: step1
        run: echo "::set-output name=stable_revision_number::$stable_revision_number"
+       #run: echo "stable_revision_number=$stable_revision_number"
       
-     - name: Install fixed Maven Plugin
-       run: mvn install -f ${{ github.workspace }}/apigee-config-maven-plugin-master/pom.xml
+     # - name: Install fixed Maven Plugin
+       # run: mvn install -f ${{ github.workspace }}/apigee-config-maven-plugin-master/pom.xml
       
      - name: Decrypt edge.json file
        run: bash ./apigee-cicd-master/scripts/decrypt_secret.sh
@@ -118,7 +123,6 @@ jobs:
        
      - name: commit-status-update
        uses: ouzi-dev/commit-status-updater@v1.1.0
-       continue-on-error: true
        if: always()
        with:
         status: "${{ job.status }}"
@@ -126,6 +130,15 @@ jobs:
         pendingComment: "Deployment stage pending!"
         successComment: "Deployment stage succeeded!"
         failComment: "Deployment stage failed!"
+        
+     - name: Microsoft Teams Notification
+       uses: skitionek/notify-microsoft-teams@master
+       if: always()
+       with:
+        webhook_url: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
+        needs: ${{ toJson(needs) }}
+        job: ${{ toJson(job) }}
+        steps: ${{ toJson(steps) }} 
    
    Post-Deployment:
     runs-on: ubuntu-latest
@@ -136,6 +149,9 @@ jobs:
        
      - name: Echo Output  
        run: echo "stable_revision_number=${{needs.Deployment.outputs.output1}}" >> $GITHUB_ENV 
+       
+     # - name: Install fixed Maven Plugin
+       # run: mvn install -f ${{ github.workspace }}/apigee-config-maven-plugin-master/pom.xml
        
      - name: Integration Test through script file
        id: integration
@@ -168,10 +184,15 @@ jobs:
        id: undeploy
        run: bash ./apigee-cicd-master/scripts/undeploy.sh
        shell: bash
+
+     - name: Undeploy Check
+       if: steps.undeploy.outcome == 'success'
+       run: |
+        echo "Integration/ZAP test Failed. Failing the Job!"
+        exit 1
        
      - name: commit-status-update
        uses: ouzi-dev/commit-status-updater@v1.1.0
-       continue-on-error: true
        if: always()
        with:
         status: "${{ job.status }}"
@@ -179,3 +200,12 @@ jobs:
         pendingComment: "Post-Deployment stage pending!"
         successComment: "Post-Deployment stage succeeded!"
         failComment: "Post-Deployment stage failed!"
+     
+     - name: Microsoft Teams Notification
+       uses: skitionek/notify-microsoft-teams@master
+       if: always()
+       with:
+        webhook_url: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
+        needs: ${{ toJson(needs) }}
+        job: ${{ toJson(job) }}
+        steps: ${{ toJson(steps) }}

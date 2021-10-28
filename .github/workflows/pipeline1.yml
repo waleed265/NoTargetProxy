@@ -16,7 +16,7 @@ env:
   ProxyName: NoTargetProxy
   ORG: maf-holding
   base64encoded: ${{ secrets.base64encoded }}
-  ENV: prod
+  ENV: sandbox
   apigeeUsername: ${{ secrets.apigeeUsername }}
   apigeePassword: ${{ secrets.apigeePassword }}
   api_product: Cicd-Prod-Product

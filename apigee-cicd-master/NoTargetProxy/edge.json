@@ -154,8 +154,7 @@
                     "sandbox"
                 ],
                 "proxies": [
-                    "NoTargetProxy",
-					"GenerateToken-Apigee_rev2_2021_08_25"
+                    "HR-API"
                 ],
                 "quota": "100000000",
                 "quotaInterval": "1",

@@ -13,7 +13,7 @@ on:
   workflow_dispatch:
   
 env:
-  ProxyName: NoTargetProxy
+  ProxyName: HR-API
   ORG: maf-holding
   base64encoded: ${{ secrets.base64encoded }}
   ENV: prod

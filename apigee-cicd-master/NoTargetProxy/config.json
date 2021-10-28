@@ -11,6 +11,12 @@
             "policies": [],
             "proxies": [],
             "targets": []
+        },
+		{
+            "name": "sandbox",
+            "policies": [],
+            "proxies": [],
+            "targets": []
         }
     ]
 }

@@ -107,10 +107,10 @@ jobs:
        run: bash ./apigee-cicd-master/scripts/revision.sh
        shell: bash
       
-     - name: Echo Current Stable Revision
-       id: step1
-       run: echo "::set-output name=stable_revision_number::$stable_revision_number"
-       run: echo "stable_revision_number=$stable_revision_number"
+     # - name: Echo Current Stable Revision
+       # id: step1
+       # run: echo "::set-output name=stable_revision_number::$stable_revision_number"
+       # # run: echo "stable_revision_number=$stable_revision_number"
       
      # - name: Install fixed Maven Plugin
        # run: mvn install -f ${{ github.workspace }}/apigee-config-maven-plugin-master/pom.xml

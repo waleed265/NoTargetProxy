@@ -155,7 +155,7 @@
                 ],
                 "proxies": [
                     "HR-API",
-					"GenerateToken-Apigee",
+					"GenerateToken-apigee",
 					"NoTargetProxy"
                 ],
                 "quota": "100000000",

@@ -115,9 +115,9 @@ jobs:
      # - name: Install fixed Maven Plugin
        # run: mvn install -f ${{ github.workspace }}/apigee-config-maven-plugin-master/pom.xml
       
-     - name: Decrypt edge.json file
-       run: bash ./apigee-cicd-master/scripts/decrypt_secret.sh
-       shell: bash
+     # - name: Decrypt edge.json file
+       # run: bash ./apigee-cicd-master/scripts/decrypt_secret.sh
+       # shell: bash
       
      - name: Deploy Proxy
        run: mvn clean install -f ${{ github.workspace }}/apigee-cicd-master/${{ env.ProxyName }}/pom.xml -Psandbox -Dusername=apigee.cicduser1@maf.ae -Dpassword=cicduser$ -Dorg=${{ env.ORG }} -Dapigee.config.options=update -Dapigee.app.ignoreAPIProducts=true 

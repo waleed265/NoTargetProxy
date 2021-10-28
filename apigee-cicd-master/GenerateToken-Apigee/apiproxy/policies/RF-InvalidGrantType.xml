@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<RaiseFault async="false" continueOnError="false" enabled="true" name="RF-InvalidGrantType">
+    <DisplayName>RF-InvalidGrantType</DisplayName>
+    <Properties/>
+    <FaultResponse>
+        <Set>
+            <Headers>
+                <Header name="Content-Type">application/json</Header>
+                <Header name="Cache-Control">no-store</Header>
+            </Headers>
+            <Payload contentType="application/json;charset=UTF-8" variablePrefix="$" variableSuffix="#">
+                {
+                    "resultCode": "999998",
+                    "resultDesc": "Required parameter [grant_type] is invalid or empty."
+                }
+            </Payload>
+            <StatusCode>400</StatusCode>
+            <ReasonPhrase>Bad Request</ReasonPhrase>
+        </Set>
+    </FaultResponse>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+</RaiseFault>

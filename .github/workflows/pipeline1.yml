@@ -13,7 +13,7 @@ on:
   workflow_dispatch:
   
 env:
-  ProxyName: HR-API
+  ProxyName: GenerateToken-Apigee
   ORG: maf-holding
   base64encoded: ${{ secrets.base64encoded }}
   ENV: prod

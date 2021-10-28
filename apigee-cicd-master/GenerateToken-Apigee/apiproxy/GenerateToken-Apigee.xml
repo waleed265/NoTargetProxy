@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<APIProxy revision="1" name="GenerateToken-Apigee_rev2_2021_08_25">
+    <Basepaths>/v1/generatetoken</Basepaths>
+    <ConfigurationVersion majorVersion="4" minorVersion="0"/>
+    <CreatedAt>1629957231034</CreatedAt>
+    <CreatedBy>rimsha.aizaz@abacuscambridge.com</CreatedBy>
+    <Description></Description>
+    <DisplayName>GenerateToken-apigee</DisplayName>
+    <LastModifiedAt>1629957231034</LastModifiedAt>
+    <LastModifiedBy>rimsha.aizaz@abacuscambridge.com</LastModifiedBy>
+    <ManifestVersion>SHA-512:a1bff133edd2317b5c7f3446266aa6378ed9a9d90cb82106640355b0121e9c1df7ea93c3eba21aa1847658993bdd6525b01833aabf811a169559a990c6e89482:ap-northeast-1</ManifestVersion>
+    <Policies>
+        <Policy>AM-AddCORS</Policy>
+        <Policy>AM-TokenResponse</Policy>
+        <Policy>BA-DecodeAuthHeader</Policy>
+        <Policy>EV-TokenResponse</Policy>
+        <Policy>JS-SetReqHeaders</Policy>
+        <Policy>OA-GenerateAccessToken</Policy>
+        <Policy>RF-InvalidApiKey</Policy>
+        <Policy>RF-InvalidAuthHeader</Policy>
+        <Policy>RF-InvalidGrantType</Policy>
+        <Policy>RF-InvalidRequest</Policy>
+        <Policy>RF-InvalidVerb</Policy>
+        <Policy>RF-UnknownResource</Policy>
+        <Policy>VAK-VerifyClientKey</Policy>
+    </Policies>
+    <ProxyEndpoints>
+        <ProxyEndpoint>default</ProxyEndpoint>
+    </ProxyEndpoints>
+    <Resources>
+        <Resource>jsc://JS-SetReqHeaders.js</Resource>
+        <Resource>jsc://ValidateRequest.js</Resource>
+    </Resources>
+    <Spec></Spec>
+    <TargetServers/>
+    <TargetEndpoints/>
+</APIProxy>

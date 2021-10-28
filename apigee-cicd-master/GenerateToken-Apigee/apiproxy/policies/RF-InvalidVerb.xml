@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<RaiseFault async="false" continueOnError="false" enabled="true" name="RF-InvalidVerb">
+    <DisplayName>RF-InvalidVerb</DisplayName>
+    <Properties/>
+    <FaultResponse>
+        <Remove>
+            <Headers/>
+        </Remove>
+        <Set>
+            <Headers>
+                <Header name="Content-Type">application/json</Header>
+                <Header name="Cache-Control">no-store</Header>
+            </Headers>
+            <Payload contentType="application/json;charset=UTF-8" variablePrefix="$" variableSuffix="#">
+                {
+                    "resultCode": "999994",
+                    "resultDesc": "Only GET verb is allowed."
+                }
+            </Payload>
+            <StatusCode>400</StatusCode>
+            <ReasonPhrase>Bad Request</ReasonPhrase>
+        </Set>
+    </FaultResponse>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+</RaiseFault>

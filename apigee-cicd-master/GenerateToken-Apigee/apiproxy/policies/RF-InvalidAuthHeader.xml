@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<RaiseFault async="false" continueOnError="false" enabled="true" name="RF-InvalidAuthHeader">
+    <DisplayName>RF-InvalidAuthHeader</DisplayName>
+    <Properties/>
+    <FaultResponse>
+        <Set>
+            <Headers>
+                <Header name="Content-Type">application/json</Header>
+                <Header name="Cache-Control">no-store</Header>
+            </Headers>
+            <Payload contentType="application/json;charset=UTF-8" variablePrefix="$" variableSuffix="#">
+                {
+                    "resultCode": "999997",
+                    "resultDesc": "Invalid Authorization Header."
+                }
+            </Payload>
+            <StatusCode>401</StatusCode>
+            <ReasonPhrase>Bad Request</ReasonPhrase>
+        </Set>
+    </FaultResponse>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+</RaiseFault>

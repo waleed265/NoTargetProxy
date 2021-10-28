@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ProxyEndpoint name="default">
+    <Description/>
+    <FaultRules>
+        <FaultRule name="InvalidAccess">
+            <!--<Step>
+                <Condition>ratelimit.Q-ApplyQuota.failed = true</Condition>
+                <Name>RF-QuotaLimitExceeded</Name>
+            </Step>-->
+            <Step>
+                <Condition>oauthV2.VAK-VerifyClientKey.failed = true</Condition>
+                <Name>RF-InvalidApiKey</Name>
+            </Step>
+            <Step>
+                <Condition>fault.name = "InvalidBasicAuthenticationSource"</Condition>
+                <Name>RF-InvalidAuthHeader</Name>
+            </Step>
+            <!--<Step>
+                <Condition>(oauthV2.failed == true)</Condition>
+                <Name>RF-InvalidAccessToken</Name>
+            </Step>-->
+        </FaultRule>
+    </FaultRules>
+    <PreFlow name="PreFlow">
+        <Request>
+            <Step>
+                <Condition>proxy.pathsuffix is Null OR !(proxy.pathsuffix MatchesPath "/generate")</Condition>
+                <Name>RF-UnknownResource</Name>
+            </Step>
+            <Step>
+                <Condition>request.verb != "GET"</Condition>
+                <Name>RF-InvalidVerb</Name>
+            </Step>
+        </Request>
+        <Response/>
+    </PreFlow>
+    <PostFlow name="PostFlow">
+        <Request/>
+        <Response/>
+    </PostFlow>
+    <Flows>
+        <Flow name="GenerateToken">
+            <Description/>
+            <Request>
+                <Step>
+                    <Condition>request.header.Authorization is null</Condition>
+                    <Name>RF-InvalidRequest</Name>
+                </Step>
+                <Step>
+                    <Condition>request.queryparam.grant_type != "client_credentials" || request.queryparam.grant_type is null</Condition>
+                    <Name>RF-InvalidGrantType</Name>
+                </Step>
+                <Step>
+                    <Name>BA-DecodeAuthHeader</Name>
+                </Step>
+                <Step>
+                    <Name>VAK-VerifyClientKey</Name>
+                </Step>
+                <Step>
+                    <Name>OA-GenerateAccessToken</Name>
+                </Step>
+            </Request>
+            <Response>
+                <Step>
+                    <Condition>oauthV2.OA-GenerateAccessToken.failed == true</Condition>
+                    <Name>RF-InvalidAuthHeader</Name>
+                </Step>
+                <Step>
+                    <Name>EV-TokenResponse</Name>
+                </Step>
+                <Step>
+                    <Name>AM-TokenResponse</Name>
+                </Step>
+            </Response>
+            <Condition>(proxy.pathsuffix MatchesPath "/generate") and (request.verb = "GET")</Condition>
+        </Flow>
+        <Flow name="OptionsPreFlight">
+            <Description/>
+            <Request>
+                <Step>
+                    <Name>JS-SetReqHeaders</Name>
+                </Step>
+            </Request>
+            <Response>
+                <Step>
+                    <Name>AM-AddCORS</Name>
+                </Step>
+            </Response>
+            <Condition>request.verb == "OPTIONS"</Condition>
+        </Flow>
+    </Flows>
+    <HTTPProxyConnection>
+        <BasePath>/v1/token</BasePath>
+        <Properties/>
+        <VirtualHost>default</VirtualHost>
+        <VirtualHost>secure</VirtualHost>
+    </HTTPProxyConnection>
+    <RouteRule name="noroute"/>
+</ProxyEndpoint>

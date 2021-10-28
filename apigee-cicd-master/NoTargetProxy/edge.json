@@ -151,9 +151,7 @@
                 "description": "Testing CICD",
                 "displayName": "Cicd-Prod-Product",
                 "environments": [
-                    "prod",
-					"test",
-					"sandbox"
+                    "sandbox"
                 ],
                 "proxies": [
                     "NoTargetProxy",

@@ -120,7 +120,7 @@ jobs:
        shell: bash
       
      - name: Deploy Proxy
-       run: mvn clean install -f ${{ github.workspace }}/apigee-cicd-master/${{ env.ProxyName }}/pom.xml -Ptest -Dusername=apigee.cicduser1@maf.ae -Dpassword=cicduser$ -Dorg=${{ env.ORG }} -Dapigee.config.options=update -Dapigee.app.ignoreAPIProducts=true
+       run: mvn clean install -f ${{ github.workspace }}/apigee-cicd-master/${{ env.ProxyName }}/pom.xml -Ptest -Dusername=apigee.cicduser1@maf.ae -Dpassword=cicduser$ -Dorg=${{ env.ORG }} -Dauthtype=oauth -Dapigee.config.options=update -Dapigee.app.ignoreAPIProducts=true 
        
      # - name: commit-status-update
        # uses: ouzi-dev/commit-status-updater@v1.1.0

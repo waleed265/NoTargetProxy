@@ -1,4 +1,4 @@
-name: Apigee_CICD_Pipeline_MAF_sandbox_PullRequest_Closed(Merged)
+name: Apigee_CICD_Pipeline_MAF_DEV_PullRequest_Closed(Merged)
 on:
   pull_request:
     types: [closed]

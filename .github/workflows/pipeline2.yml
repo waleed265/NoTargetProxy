@@ -4,10 +4,6 @@ on:
     types: [opened]
     branches:
     - sandbox
-    
-  # workflow_dispatch:
-    # branches:
-    # - DEV
 
 env:
   ProxyName: NoTargetProxy

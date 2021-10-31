@@ -41,7 +41,7 @@ echo "**************************************************"
 echo "Undeloying Unstable Proxy Revision"
 echo "**************************************************"
 
-token_response=$(curl -s -X POST "https://majid-al-futtaim-group.login.apigee.com/oauth/token" -H "Content-Type:application/x-www-form-urlencoded;charset=utf-8" -H "accept: application/json;charset=utf-8" -H "authorization: Basic ZWRnZWNsaTplZGdlY2xpc2VjcmV0" -d "grant_type=password&username=${machine_apigeeUsername}&$password=${machine_apigeePassword}")
+token_response=$(curl -s -X POST "https://majid-al-futtaim-group.login.apigee.com/oauth/token" -H "Content-Type:application/x-www-form-urlencoded;charset=utf-8" -H "accept: application/json;charset=utf-8" -H "authorization: Basic ZWRnZWNsaTplZGdlY2xpc2VjcmV0" -d "grant_type=password&username=$machine_apigeeUsername&password=$machine_apigeePassword")
 
 accessToken_SAML=$(jq -r '.access_token' <<< "${token_response}")
 echo "SAML Access Token: $accessToken_SAML"

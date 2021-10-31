@@ -176,6 +176,51 @@
             ],
           "resourcefiles":[],
           "flowhooks":[]
+        },
+		"dev": {
+          "targetServers": [
+              {
+                "name" : "cicd-target-server",
+                "host" : "mamillarevathi-eval-prod.apigee.net",
+                "isEnabled" : true,
+                "port" : 80
+              }
+          ],
+          "virtualHosts": [],
+          "caches": [
+              {
+                "name": "cicd-cache",
+                "description": "Cicd pipeline cache in Production",
+                "expirySettings": {
+                    "timeoutInSec": {
+                        "value": "6000"
+                    },
+                    "valuesNull": false
+                }
+              }            
+          ],
+          "kvms": [
+                {
+                    "name": "cicd-kvm-credentials",
+					"encrypted" : "true",
+                    "entry": [
+                        {
+                            "name": "username",
+                            "value": "test"
+                        },
+                        {
+                            "name": "password",
+                            "value": "hcl"
+                        },
+                        {
+                            "name": "test",
+                            "value": "test"
+                        }
+                    ]
+                }
+            ],
+          "resourcefiles":[],
+          "flowhooks":[]
         }
     },
     "orgConfig": {
@@ -197,7 +242,8 @@
                 "displayName": "Cicd-Prod-Product",
                 "environments": [
                     "sandbox",
-					"uat"
+					"uat",
+					"dev"
                 ],
                 "proxies": [
 					"GenerateToken-apigee",

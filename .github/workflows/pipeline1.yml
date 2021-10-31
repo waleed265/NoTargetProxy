@@ -17,8 +17,8 @@ env:
   ORG: maf-holding
   base64encoded: ${{ secrets.base64encoded }}
   ENV: sandbox
-  apigeeUsername: ${{ secrets.apigeeUsername }}
-  apigeePassword: ${{ secrets.apigeePassword }}
+  machine_apigeeUsername: ${{ secrets.machine_apigeeUsername }}
+  machine_apigeePassword: ${{ secrets.machine_apigeePassword }}
   api_product: Cicd-Prod-Product
   developer: hr@api.com
   app: hrapp
@@ -120,7 +120,7 @@ jobs:
        shell: bash
       
      - name: Deploy Proxy
-       run: mvn clean install -f ${{ github.workspace }}/apigee-cicd-master/${{ env.ProxyName }}/pom.xml -Psandbox -Dusername=apigee.cicduser1@maf.ae -Dpassword=cicduser$ -Dorg=${{ env.ORG }} -Dapigee.config.options=update -Dapigee.app.ignoreAPIProducts=true 
+       run: mvn clean install -f ${{ github.workspace }}/apigee-cicd-master/${{ env.ProxyName }}/pom.xml -Psandbox -Dusername=${{ env.machine_apigeeUsername }} -Dpassword=${{ env.machine_apigeePassword }} -Dorg=${{ env.ORG }} -Dapigee.config.options=update -Dapigee.app.ignoreAPIProducts=true 
        
      - name: commit-status-update
        uses: ouzi-dev/commit-status-updater@v1.1.0

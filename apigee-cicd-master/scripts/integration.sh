@@ -8,7 +8,7 @@ echo "api_product: $api_product"
 echo "developer: $developer"
 echo "app: $app"
 
-token_response=$(curl -s -X POST "https://majid-al-futtaim-group.login.apigee.com/oauth/token" -H "Content-Type:application/x-www-form-urlencoded;charset=utf-8" -H "accept: application/json;charset=utf-8" -H "authorization: Basic ZWRnZWNsaTplZGdlY2xpc2VjcmV0" -d "grant_type=password&username=apigee.cicduser1@maf.ae&password=cicduser$")
+token_response=$(curl -s -X POST "https://majid-al-futtaim-group.login.apigee.com/oauth/token" -H "Content-Type:application/x-www-form-urlencoded;charset=utf-8" -H "accept: application/json;charset=utf-8" -H "authorization: Basic ZWRnZWNsaTplZGdlY2xpc2VjcmV0" -d "grant_type=password&username=$machine_apigeeUsername&$password=$machine_apigeePassword")
 
 accessToken_SAML=$(jq -r '.access_token' <<< "${token_response}")
 echo "SAML Access Token: $accessToken_SAML"

@@ -17,6 +17,12 @@
             "policies": [],
             "proxies": [],
             "targets": []
+        },
+		{
+            "name": "uat",
+            "policies": [],
+            "proxies": [],
+            "targets": []
         }
     ]
 }

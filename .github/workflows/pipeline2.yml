@@ -1,19 +1,13 @@
-name: Apigee_CICD_Pipeline_MAF_2
+name: Apigee_CICD_Pipeline_MAF_sandbox_PullRequest_Open
 on:
   pull_request:
     types: [opened]
     branches:
-    - UAT
-    - PROD
-  
-  # push:
-    # branches:
-    # - main
-    # - DEV
+    - sandbox
     
-  workflow_dispatch:
-    branches:
-    - DEV
+  # workflow_dispatch:
+    # branches:
+    # - DEV
 
 env:
   ProxyName: NoTargetProxy

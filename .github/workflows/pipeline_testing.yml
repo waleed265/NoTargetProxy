@@ -1,4 +1,4 @@
-name: Apigee_CICD_Pipeline_MAF_1
+name: Apigee_CICD_Pipeline_MAF_Testing
 on:
   push:
     branches:

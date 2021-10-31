@@ -41,7 +41,7 @@ token_response=$(curl -s -X POST "https://majid-al-futtaim-group.login.apigee.co
 accessToken_SAML=$(jq -r '.access_token' <<< "${token_response}")
 echo "SAML Access Token: $accessToken_SAML"
 
-cd $GITHUB_WORKSPACE/apigee-cicd-master/$ProxyName && mvn apigee-config:specs apigee-config:caches apigee-config:keystores apigee-config:aliases apigee-config:references apigee-config:targetservers apigee-config:resourcefiles apigee-config:apiproducts apigee-config:developers apigee-config:apps apigee-config:companies apigee-config:companyapps apigee-config:reports apigee-config:importKeys -P$ENV -Dusername=$apigeeUsername -Dpassword=$apigeePassword -Dorg=$ORG -Dbearer=$accessToken_SAML -Dapigee.config.options=update -Dapigee.app.ignoreAPIProducts=true
+cd $GITHUB_WORKSPACE/apigee-cicd-master/$ProxyName && mvn apigee-config:specs apigee-config:caches apigee-config:keystores apigee-config:aliases apigee-config:references apigee-config:targetservers apigee-config:resourcefiles apigee-config:apiproducts apigee-config:developers apigee-config:apps apigee-config:companies apigee-config:companyapps apigee-config:reports apigee-config:importKeys -P$ENV -Dusername=$apigeeUsername -Dpassword=$apigeePassword -Dorg=$ORG -Dauthtype=oauth -Dbearer=$accessToken_SAML -Dapigee.config.options=update -Dapigee.app.ignoreAPIProducts=true
 
 current_deployment_info=$(curl -H "Authorization: Bearer $accessToken_SAML" "https://api.enterprise.apigee.com/v1/organizations/$ORG/environments/$ENV/apis/$ProxyName/deployments") 
 

@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
   
 env:
-  ProxyName: GenerateToken-apigee
+  ProxyName: GenerateToken-Apigee
   ORG: maf-holding
   base64encoded: ${{ secrets.base64encoded }}
   ENV: uat

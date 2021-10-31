@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
   
 env:
-  ProxyName: NoTargetProxy
+  ProxyName: GenerateToken-apigee
   ORG: maf-holding
   base64encoded: ${{ secrets.base64encoded }}
   ENV: uat
@@ -114,7 +114,7 @@ jobs:
        shell: bash
       
      - name: Deploy Proxy
-       run: mvn clean install -f ${{ github.workspace }}/apigee-cicd-master/${{ env.ProxyName }}/pom.xml -P${{ env.ENV }} -Dusername=${{ env.machine_apigeeUsername }} -Dpassword=${{ env.machine_apigeePassword }} -Dorg=${{ env.ORG }} -Dapigee.config.options=update -Dapigee.app.ignoreAPIProducts=true 
+       run: mvn clean install -f ${{ github.workspace }}/apigee-cicd-master/${{ env.ProxyName }}/pom.xml -P${{ env.ENV }} -Dusername=${{ env.machine_apigeeUsername }} -Dpassword=${{ env.machine_apigeePassword }} -Dorg=${{ env.ORG }} -Dapigee.config.options=none -Dapigee.app.ignoreAPIProducts=true 
        
      - name: commit-status-update
        uses: ouzi-dev/commit-status-updater@v1.1.0

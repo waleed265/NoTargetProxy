@@ -3,21 +3,21 @@ on:
   pull_request:
     types: [closed]
     branches:
-    - DEV
+    - sandbox
   
 env:
   ProxyName: NoTargetProxy
   ORG: maf-holding
   base64encoded: ${{ secrets.base64encoded }}
-  ENV: dev
+  ENV: sandbox
   machine_apigeeUsername: ${{ secrets.machine_apigeeUsername }}
   machine_apigeePassword: ${{ secrets.machine_apigeePassword }}
   api_product: Cicd-Prod-Product
   developer: hr@api.com
   app: hrapp
-  NEWMAN_TARGET_URL: NoTargetProxy_GET_Req_Pass_SAML_DEV.postman_collection.json
+  NEWMAN_TARGET_URL: NoTargetProxy_GET_Req_Pass_SAML.postman_collection.json
   LARGE_SECRET_PASSPHRASE: ${{ secrets.LARGE_SECRET_PASSPHRASE }}
-  ZAP_TARGET_API_URL: https://maf-holding-dev.apigee.net/notargetproxy
+  ZAP_TARGET_API_URL: https://maf-holding-sandbox.apigee.net/notargetproxy
   
 jobs:
 

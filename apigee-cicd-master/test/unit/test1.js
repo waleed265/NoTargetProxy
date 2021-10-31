@@ -3,7 +3,7 @@
 var expect = require('expect.js');
 var sinon = require('sinon');
 var rewire = require('rewire');
-var app = rewire('../../NoTargetProxy/apiproxy/resources/jsc/app-sameed.js');//D:\WaleedBhai
+var app = rewire('../../NoTargetProxy/apiproxy/resources/jsc/app1.js');
 
 var fakeContext = {
   getVariable: function(s) {},

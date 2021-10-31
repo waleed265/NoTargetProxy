@@ -1,96 +1,30 @@
-name: Apigee_CICD_Pipeline_MAF_1
+name: Apigee_CICD_Pipeline_MAF_DEV_PullRequest_Closed(Merged)
 on:
-  # push:
-    # branches:
-    # - DEV
-    
-  workflow_dispatch:
+  pull_request:
+    types: [closed]
+    branches:
+    - DEV
   
 env:
   ProxyName: NoTargetProxy
   ORG: maf-holding
   base64encoded: ${{ secrets.base64encoded }}
-  ENV: sandbox
+  ENV: dev
   machine_apigeeUsername: ${{ secrets.machine_apigeeUsername }}
   machine_apigeePassword: ${{ secrets.machine_apigeePassword }}
   api_product: Cicd-Prod-Product
   developer: hr@api.com
   app: hrapp
-  NEWMAN_TARGET_URL: NoTargetProxy_GET_Req_Pass_SAML.postman_collection.json
+  NEWMAN_TARGET_URL: NoTargetProxy_GET_Req_Pass_SAML_DEV.postman_collection.json
   LARGE_SECRET_PASSPHRASE: ${{ secrets.LARGE_SECRET_PASSPHRASE }}
-  ZAP_TARGET_API_URL: https://maf-holding-sandbox.apigee.net/notargetproxy
+  ZAP_TARGET_API_URL: https://maf-holding-dev.apigee.net/notargetproxy
   
 jobs:
 
-   Pre-Deployment:
-    runs-on: ubuntu-latest 
-    steps:
-     - name: Checkout Repository
-       uses: actions/checkout@v2
-    
-     - name: Unit-Test-With-Coverage
-       run: cd ${{ github.workspace }}/apigee-cicd-master && npm install && npm test test/unit/*.js && npm run coverage test/unit/*.js
-      
-     - name: Coverage
-       run: cd ${{ github.workspace }}/apigee-cicd-master/coverage && ls 
-      
-     - name: Publish Unit Test Results
-       uses: EnricoMi/publish-unit-test-result-action@v1
-       if: always()
-       with:
-        files: ${{ github.workspace }}/**/test-results.xml    
-      
-     - name: Cobertura Coverage Report
-       uses: 5monkeys/cobertura-action@master
-       with:
-        path: ${{ github.workspace }}/apigee-cicd-master/coverage/cobertura-coverage.xml
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        minimum_coverage: 75
-        skip_covered: false
-        fail_below_threshold: true
-        show_line: true
-        show_branch: true
-        show_class_names: true
-        show_missing: true
-        only_changed_files: false
-    
-     - name: Policy-Code-Analysis
-       run: |
-        cd ${{ github.workspace }}/apigee-cicd-master
-        sudo npm install -g apigeelint
-        apigeelint -s ${{ env.ProxyName }}/apiproxy -f table.js
-        apigeelint -s ${{ env.ProxyName }}/apiproxy -f html.js > ${{ github.workspace }}/reports/apigeelint.html
-        
-     - name: Publishing Apigee Lint Report to Artifacts
-       uses: actions/upload-artifact@v2
-       if: always()
-       with:
-        name: Apigee Lint Report
-        path: ${{ github.workspace }}/reports/apigeelint.html
-        
-     - name: commit-status-update
-       uses: ouzi-dev/commit-status-updater@v1.1.0
-       continue-on-error: true
-       if: always()
-       with:
-        status: "${{ job.status }}"
-        addHoldComment: "true"
-        pendingComment: "Pre-Deployment stage pending!"
-        successComment: "Pre-Deployment stage succeeded!"
-        failComment: "Pre-Deployment stage failed!"
-     
-     - name: Microsoft Teams Notification
-       uses: skitionek/notify-microsoft-teams@master
-       if: always()
-       with:
-        webhook_url: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
-        needs: ${{ toJson(needs) }}
-        job: ${{ toJson(job) }}
-        steps: ${{ toJson(steps) }}
-   
    Deployment:
+   # this job will only run if the PR has been merged
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
-    needs: Pre-Deployment
     outputs:
       output1: ${{ steps.step1.outputs.stable_revision_number }}
     steps:
@@ -104,17 +38,13 @@ jobs:
      - name: Echo Current Stable Revision
        id: step1
        run: echo "::set-output name=stable_revision_number::$stable_revision_number"
-       # run: echo "stable_revision_number=$stable_revision_number"
-      
-     # - name: Install fixed Maven Plugin
-       # run: mvn install -f ${{ github.workspace }}/apigee-config-maven-plugin-master/pom.xml
       
      - name: Decrypt edge.json file
        run: bash ./apigee-cicd-master/scripts/decrypt_secret.sh
        shell: bash
       
      - name: Deploy Proxy
-       run: mvn clean install -f ${{ github.workspace }}/apigee-cicd-master/${{ env.ProxyName }}/pom.xml -Psandbox -Dusername=${{ env.machine_apigeeUsername }} -Dpassword=${{ env.machine_apigeePassword }} -Dorg=${{ env.ORG }} -Dapigee.config.options=update -Dapigee.app.ignoreAPIProducts=true 
+       run: mvn clean install -f ${{ github.workspace }}/apigee-cicd-master/${{ env.ProxyName }}/pom.xml -P${{ env.ENV }} -Dusername=${{ env.machine_apigeeUsername }} -Dpassword=${{ env.machine_apigeePassword }} -Dorg=${{ env.ORG }} -Dapigee.config.options=update -Dapigee.app.ignoreAPIProducts=true
        
      - name: commit-status-update
        uses: ouzi-dev/commit-status-updater@v1.1.0
@@ -146,9 +76,6 @@ jobs:
      - name: Echo Output  
        run: echo "stable_revision_number=${{needs.Deployment.outputs.output1}}" >> $GITHUB_ENV 
        
-     # - name: Install fixed Maven Plugin
-       # run: mvn install -f ${{ github.workspace }}/apigee-config-maven-plugin-master/pom.xml
-       
      - name: Integration Test through script file
        id: integration
        run: bash ./apigee-cicd-master/scripts/integration.sh
@@ -173,7 +100,7 @@ jobs:
           format: openapi
           target: '${{ env.ZAP_TARGET_API_URL }}'
           cmd_options: '-z "-configFile /zap/wrk/apigee-cicd-master/zap/options.prop"'
-          fail_action: true
+          #fail_action: true
        
      - name: Undeploy Current & redeploy stable revision
        if: steps.integration.outcome == 'failure' || steps.ZAP.outcome == 'failure'
@@ -205,4 +132,4 @@ jobs:
         webhook_url: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
         needs: ${{ toJson(needs) }}
         job: ${{ toJson(job) }}
-        steps: ${{ toJson(steps) }}
+        steps: ${{ toJson(steps) }}   

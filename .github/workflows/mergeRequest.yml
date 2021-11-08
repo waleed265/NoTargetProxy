@@ -29,6 +29,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       output1: ${{ steps.step1.outputs.stable_revision_number }}
+      output2: ${{ steps.env.outputs.ENV }}
     steps:
      - name: Checkout Repository
        uses: actions/checkout@v2
@@ -36,10 +37,14 @@ jobs:
      - name: Get branch name (pull request)
        if: github.event_name == 'pull_request'
        shell: bash
-       run: echo "BRANCH_NAME=$(echo ${GITHUB_BASE_REF} | tr / -)" >> $GITHUB_ENV
+       run: echo "ENV=$(echo ${GITHUB_BASE_REF} | tr / -)" >> $GITHUB_ENV
 
      - name: Debug
-       run: echo ${{ env.BRANCH_NAME }} 
+       run: echo ${{ env.ENV }} 
+       
+     - name: Setting $ENV as output for passing it to next job
+       id: env
+       run: echo "::set-output name=ENV::$ENV"
       
      - name: Checking Current Stable Revision
        run: bash ./apigee-cicd-master/scripts/revision.sh
@@ -83,8 +88,11 @@ jobs:
      - name: Checkout Repository
        uses: actions/checkout@v2
        
+     - name: Echo Output  
+       run: echo "ENV=${{needs.Deployment.outputs.output2}}" >> $GITHUB_ENV 
+       
      - name: Debug
-       run: echo ${{ env.BRANCH_NAME }} 
+       run: echo ${{ env.ENV }} 
        
      - name: Echo Output  
        run: echo "stable_revision_number=${{needs.Deployment.outputs.output1}}" >> $GITHUB_ENV 

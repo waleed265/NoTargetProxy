@@ -88,8 +88,8 @@ jobs:
      - name: Checkout Repository
        uses: actions/checkout@v2
        
-     # - name: Echo Output  
-       # run: echo "ENV=${{needs.Deployment.outputs.output2}}" >> $GITHUB_ENV 
+     - name: Echo Output  
+       run: echo "ENV=${{needs.Deployment.outputs.output2}}" >> $GITHUB_ENV 
        
      - name: Debug
        run: echo ${{ env.ENV }} 

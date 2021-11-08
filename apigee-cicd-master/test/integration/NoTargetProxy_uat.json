@@ -97,7 +97,7 @@
 					}
 				],
 				"url": {
-					"raw": "https://maf-holding-uat.apigee.net/notargetproxy",
+					"raw": "https://maf-holding-uat.apigee.net/NoTargetProxy",
 					"protocol": "https",
 					"host": [
 						"maf-holding-uat",
@@ -105,7 +105,7 @@
 						"net"
 					],
 					"path": [
-						"notargetproxy"
+						"NoTargetProxy"
 					]
 				}
 			},

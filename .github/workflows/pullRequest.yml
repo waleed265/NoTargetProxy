@@ -18,14 +18,18 @@ jobs:
      - name: Checkout Repository
        uses: actions/checkout@v2
        
-    # extract branch name on pull request
-     - name: Print branch name
-       if: github.event_name == 'pull_request'
-       run: echo "::set-env name=BRANCH_NAME::$(echo ${GITHUB_HEAD_REF})"
+     - name: Get branch name (merge)
+       if: github.event_name != 'pull_request'
+       shell: bash
+       run: echo "BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/} | tr / -)" >> $GITHUB_ENV
 
-      # print branch name
-     - name: Get branch name
-       run: echo 'The branch name is' $BRANCH_NAME
+     - name: Get branch name (pull request)
+       if: github.event_name == 'pull_request'
+       shell: bash
+       run: echo "BRANCH_NAME=$(echo ${GITHUB_HEAD_REF} | tr / -)" >> $GITHUB_ENV
+
+     - name: Debug
+       run: echo ${{ env.BRANCH_NAME }}   
     
      - name: Unit-Test-With-Coverage
        run: cd ${{ github.workspace }}/apigee-cicd-master && npm install && npm test test/unit/*.js && npm run coverage test/unit/*.js

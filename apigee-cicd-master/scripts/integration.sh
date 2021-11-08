@@ -12,7 +12,7 @@ echo "ProxyName: $ProxyName"
 NEWMAN_TARGET_COLLECTION="${ProxyName}_${ENV}.json"
 echo "NEWMAN_TARGET_COLLECTION: $NEWMAN_TARGET_COLLECTION"
 
-ZAP_TARGET_API_URL="https://${ORG}-${ENV}.apigee.net/${ProxyName}"
+ZAP_TARGET_API_URL="https://${ORG}-${ENV}.apigee.net/${proxy_basepath}"
 echo "ZAP_TARGET_API_URL: $ZAP_TARGET_API_URL"
 echo "ZAP_TARGET_API_URL=$ZAP_TARGET_API_URL" >> $GITHUB_ENV
 

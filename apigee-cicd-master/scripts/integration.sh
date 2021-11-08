@@ -7,6 +7,14 @@ echo "base64encoded: $base64encoded"
 echo "api_product: $api_product"
 echo "developer: $developer"
 echo "app: $app"
+echo "ProxyName: $ProxyName"
+
+NEWMAN_TARGET_COLLECTION="${ProxyName}_${ENV}.json"
+echo "NEWMAN_TARGET_COLLECTION: $NEWMAN_TARGET_COLLECTION"
+
+ZAP_TARGET_API_URL="https://${ORG}-${ENV}.apigee.net/${ProxyName}"
+echo "ZAP_TARGET_API_URL: $ZAP_TARGET_API_URL"
+echo "ZAP_TARGET_API_URL=$ZAP_TARGET_API_URL" >> $GITHUB_ENV
 
 token_response=$(curl -s -X POST "https://majid-al-futtaim-group.login.apigee.com/oauth/token" -H "Content-Type:application/x-www-form-urlencoded;charset=utf-8" -H "accept: application/json;charset=utf-8" -H "authorization: Basic ZWRnZWNsaTplZGdlY2xpc2VjcmV0" -d "grant_type=password&username=$machine_apigeeUsername&password=$machine_apigeePassword")
 
@@ -26,7 +34,7 @@ secret=$(jq -r .consumerSecret <<< "${client_secret}" )
 sudo npm install -g newman 
 sudo npm install -g newman-reporter-htmlextra
 
-newman run $GITHUB_WORKSPACE/apigee-cicd-master/test/integration/$NEWMAN_TARGET_URL -r htmlextra --reporter-htmlextra-export ./reports/newman_report.html --env-var client_id=$id --env-var client_secret=$secret --export-environment env.json
+newman run $GITHUB_WORKSPACE/apigee-cicd-master/test/integration/$NEWMAN_TARGET_COLLECTION -r htmlextra --reporter-htmlextra-export ./reports/newman_report.html --env-var client_id=$id --env-var client_secret=$secret --export-environment env.json
 
 #cat env.json
 
@@ -42,5 +50,5 @@ accessToken="Bearer ${accessToken}"
 echo  "replacer.full_list(0).replacement=$accessToken" >> $GITHUB_WORKSPACE/apigee-cicd-master/zap/options.prop
 cat $GITHUB_WORKSPACE/apigee-cicd-master/zap/options.prop
 
-newman run $GITHUB_WORKSPACE/apigee-cicd-master/test/integration/$NEWMAN_TARGET_URL --reporters cli,junit --reporter-junit-export junitReport.xml --env-var client_id=$id --env-var client_secret=$secret 
+newman run $GITHUB_WORKSPACE/apigee-cicd-master/test/integration/$NEWMAN_TARGET_COLLECTION --reporters cli,junit --reporter-junit-export junitReport.xml --env-var client_id=$id --env-var client_secret=$secret 
 

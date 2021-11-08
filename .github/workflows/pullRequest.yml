@@ -18,9 +18,14 @@ jobs:
      - name: Checkout Repository
        uses: actions/checkout@v2
        
+    # extract branch name on pull request
+     - name: Print branch name
+       if: github.event_name == 'pull_request'
+       run: echo "::set-env name=BRANCH_NAME::$(echo ${GITHUB_HEAD_REF})"
+
+      # print branch name
      - name: Get branch name
-       uses: nelonoel/branch-name@v1.0.1
-     - run: echo ${BRANCH_NAME}
+       run: echo 'The branch name is' $BRANCH_NAME
     
      - name: Unit-Test-With-Coverage
        run: cd ${{ github.workspace }}/apigee-cicd-master && npm install && npm test test/unit/*.js && npm run coverage test/unit/*.js

@@ -17,7 +17,7 @@ env:
   api_product: Cicd-Prod-Product
   developer: hr@api.com
   app: hrapp
-  NEWMAN_TARGET_URL: NoTargetProxy_GET_Req_Pass_SAML_sandbox.postman_collection.json
+  #NEWMAN_TARGET_URL: NoTargetProxy_GET_Req_Pass_SAML_sandbox.postman_collection.json
   LARGE_SECRET_PASSPHRASE: ${{ secrets.LARGE_SECRET_PASSPHRASE }}
   ZAP_TARGET_API_URL: https://maf-holding-sandbox.apigee.net/notargetproxy
   
@@ -88,13 +88,13 @@ jobs:
      - name: Checkout Repository
        uses: actions/checkout@v2
        
-     - name: Echo Output  
+     - name: Getting $ENV output from "Deployment" Job & setting as environment variable 
        run: echo "ENV=${{needs.Deployment.outputs.output2}}" >> $GITHUB_ENV 
        
      - name: Debug
        run: echo ${{ env.ENV }} 
        
-     - name: Echo Output  
+     - name: Getting $stable_revision_number output from "Deployment" Job & setting as environment variable  
        run: echo "stable_revision_number=${{needs.Deployment.outputs.output1}}" >> $GITHUB_ENV 
        
      - name: Integration Test through script file

@@ -4,8 +4,8 @@ on:
     types: [opened]
     branches:
     - sandbox
-    - DEV
-    - UAT
+    - dev
+    - uat
 
 env:
   ProxyName: NoTargetProxy
@@ -17,16 +17,11 @@ jobs:
     steps:
      - name: Checkout Repository
        uses: actions/checkout@v2
-       
-     - name: Get branch name (merge)
-       if: github.event_name != 'pull_request'
-       shell: bash
-       run: echo "BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/} | tr / -)" >> $GITHUB_ENV
 
      - name: Get branch name (pull request)
        if: github.event_name == 'pull_request'
        shell: bash
-       run: echo "BRANCH_NAME=$(echo ${GITHUB_BASE_REF} | tr / -)" >> $GITHUB_ENV
+       run: echo "BRANCH_NAME=$(echo ${GITHUB_BASE_REF})" >> $GITHUB_ENV
 
      - name: Debug
        run: echo ${{ env.BRANCH_NAME }}   

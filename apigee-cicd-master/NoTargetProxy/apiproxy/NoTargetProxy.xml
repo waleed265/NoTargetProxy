@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <APIProxy revision="70" name="NoTargetProxy">
-    <Basepaths>/NoTargetProxy</Basepaths>
+    <Basepaths>/notargetproxy</Basepaths>
     <ConfigurationVersion majorVersion="4" minorVersion="0"/>
     <CreatedAt>1627304802490</CreatedAt>
     <CreatedBy>rimsha.aizaz@abacuscambridge.com</CreatedBy>
-    <Description>NoTarget API Proxy</Description>
+    <Description>root git: a2dac32e 21aa3916-9269-4dcb-8026-d80bc8e3b2b4-qxtjn ::jenkins git: 7308938e osboxes ::NoTarget API Proxy</Description>
     <DisplayName>No-Target</DisplayName>
     <LastModifiedAt>1629958772859</LastModifiedAt>
     <LastModifiedBy>rimsha.aizaz@abacuscambridge.com</LastModifiedBy>

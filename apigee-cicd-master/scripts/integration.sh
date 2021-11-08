@@ -12,6 +12,10 @@ echo "ProxyName: $ProxyName"
 NEWMAN_TARGET_COLLECTION="${ProxyName}_${ENV}.json"
 echo "NEWMAN_TARGET_COLLECTION: $NEWMAN_TARGET_COLLECTION"
 
+ZAP_TARGET_API_URL="https://${ORG}-${ENV}.apigee.net/${ProxyName}"
+echo "ZAP_TARGET_API_URL: $ZAP_TARGET_API_URL"
+echo "ZAP_TARGET_API_URL=$ZAP_TARGET_API_URL" >> $GITHUB_ENV
+
 token_response=$(curl -s -X POST "https://majid-al-futtaim-group.login.apigee.com/oauth/token" -H "Content-Type:application/x-www-form-urlencoded;charset=utf-8" -H "accept: application/json;charset=utf-8" -H "authorization: Basic ZWRnZWNsaTplZGdlY2xpc2VjcmV0" -d "grant_type=password&username=$machine_apigeeUsername&password=$machine_apigeePassword")
 
 accessToken_SAML=$(jq -r '.access_token' <<< "${token_response}")

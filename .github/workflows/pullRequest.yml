@@ -8,7 +8,7 @@ on:
     - uat
 
 env:
-  ProxyName: NoTargetProxy
+  ProxyName: ${{ github.event.repository.name }}
   
 jobs:
 

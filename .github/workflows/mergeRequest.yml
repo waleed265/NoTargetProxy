@@ -8,7 +8,8 @@ on:
     - uat
   
 env:
-  ProxyName: NoTargetProxy
+  #ProxyName: NoTargetProxy
+  ProxyName: ${{ github.event.repository.name }}
   ORG: maf-holding
   #base64encoded: ${{ secrets.base64encoded }}
   #ENV: sandbox

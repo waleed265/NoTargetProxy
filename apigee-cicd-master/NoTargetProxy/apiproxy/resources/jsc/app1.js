@@ -1,3 +1,5 @@
+//app1.js
+
 function checkIsMandatory(paramName, paramValue) {
     if(paramValue === null || paramValue === "") {
         context.setVariable("InvalidRequest", true);

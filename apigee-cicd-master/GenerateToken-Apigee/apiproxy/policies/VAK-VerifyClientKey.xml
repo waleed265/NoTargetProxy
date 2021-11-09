@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<VerifyAPIKey async="false" continueOnError="false" enabled="true" name="VAK-VerifyClientKey">
-    <DisplayName>VAK-VerifyClientKey</DisplayName>
-    <Properties/>
-    <APIKey ref="req_client_id"/>
-</VerifyAPIKey>

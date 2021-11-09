@@ -58,14 +58,14 @@ jobs:
         cd ${{ github.workspace }}/apigee-cicd-master
         sudo npm install -g apigeelint
         apigeelint -s ${{ env.ProxyName }}/apiproxy -f table.js
-        apigeelint -s ${{ env.ProxyName }}/apiproxy -f html.js > ${{ github.workspace }}/reports/apigeelint.html
+        apigeelint -s ${{ env.ProxyName }}/apiproxy -f html.js > ${{ github.workspace }}/apigeelint.html
         
      - name: Publishing Apigee Lint Report to Artifacts
        uses: actions/upload-artifact@v2
        if: always()
        with:
         name: Apigee Lint Report
-        path: ${{ github.workspace }}/reports/apigeelint.html
+        path: ${{ github.workspace }}/apigeelint.html
         
      - name: commit-status-update
        uses: ouzi-dev/commit-status-updater@v1.1.0

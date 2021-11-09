@@ -109,7 +109,7 @@ jobs:
        if: always()
        with:
         name: Newman Integration Report
-        path: ${{ github.workspace }}/reports/newman_report.html
+        path: ${{ github.workspace }}/newman_report.html
        
      - name: ZAP Scan
        if: steps.integration.outcome == 'success'

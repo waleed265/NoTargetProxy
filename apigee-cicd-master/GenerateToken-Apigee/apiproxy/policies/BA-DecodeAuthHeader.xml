@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<BasicAuthentication async="false" continueOnError="false" enabled="true" name="BA-DecodeAuthHeader">
-    <DisplayName>BA-DecodeAuthHeader</DisplayName>
-    <Operation>Decode</Operation>
-    <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>
-    <Source>request.header.Authorization</Source>
-    <User ref="req_client_id"/>
-    <Password ref="req_client_secret"/>
-</BasicAuthentication>

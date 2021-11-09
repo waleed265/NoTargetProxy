@@ -1,3 +1,5 @@
+//app.js
+
 function checkVerb() {	
 	var verb = context.getVariable("request.verb");
 	//print("checkverb method: "+verb);

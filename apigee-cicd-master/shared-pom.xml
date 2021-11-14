@@ -18,16 +18,6 @@
                 <updatePolicy>never</updatePolicy>
             </releases>
         </pluginRepository>
-		<!-- <pluginRepository>
-			<id>MuhammadWaleedIqbal</id>
-			<url>https://pkgs.dev.azure.com/MuhammadWaleedIqbal/_packaging/MuhammadWaleedIqbal/maven/v1</url>
-			<releases>
-			<enabled>true</enabled>
-			</releases>
-			<snapshots>
-			<enabled>true</enabled>
-			</snapshots>
-        </pluginRepository> -->
     </pluginRepositories>
     <!-- Since Maven 3.0.3, for two plugins bound to the same phase, the order 
          of execution is the same as the order in which you define them. -->
@@ -90,11 +80,25 @@
 					</execution>
 					<execution>
 					<id>create-config-cache</id>
-					<phase>verify</phase> 
+					<phase>install</phase> 
 					<goals>
 					<goal>caches</goal>
 					</goals>
 					</execution>
+					<execution>
+                    <id>create-config-kvm</id>
+                    <phase>install</phase>                        
+                    <goals>
+                    <goal>keyvaluemaps</goal>
+                    </goals>
+                    </execution>
+					<execution> 
+                        <id>create-config-flowhooks</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>flowhooks</goal>
+                        </goals>
+                    </execution>
 					<execution>
 					<id>create-config-keystores</id>
 					<phase>verify</phase> 
@@ -179,9 +183,15 @@
 					<goal>importKeys</goal>
 					</goals>
 					</execution>
+					<execution>
+					<id>create-config-virtualhosts</id>
+					<phase>verify</phase> 
+					<goals>
+					<goal>virtualhosts</goal>
+					</goals>
+					</execution>
 				</executions>
             </plugin>            
-
         </plugins>
     </build>
     <profiles>
@@ -288,41 +298,7 @@
             <version>4.8.2</version>
             <scope>test</scope>
         </dependency>
-		<!-- <dependency>
-		  <groupId>abcaaa</groupId>
-		  <artifactId>apigee-config-maven-plugin</artifactId>
-		  <version>1.4.7</version>
-		</dependency>
-		<dependency>
-		  <groupId>org.sonatype.oss</groupId>
-		  <artifactId>oss-parent</artifactId>
-		  <version>7</version>
-		</dependency> -->
     </dependencies>
-	<!-- <repositories>
-		<repository>
-			<id>MuhammadWaleedIqbal</id>
-			<url>https://pkgs.dev.azure.com/MuhammadWaleedIqbal/_packaging/MuhammadWaleedIqbal/maven/v1</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
-	<distributionManagement>
-		<repository>
-			<id>MuhammadWaleedIqbal</id>
-			<url>https://pkgs.dev.azure.com/MuhammadWaleedIqbal/_packaging/MuhammadWaleedIqbal/maven/v1</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-	</distributionManagement> -->
 </project>
 
 

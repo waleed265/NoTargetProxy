@@ -1,24 +1,23 @@
 name: Apigee_CICD_Pipeline_MAF_Testing
 on:
-  push:
-    branches:
-    - DEV
-    
-  workflow_dispatch:
+   #push:
+    #branches:
+     #- sandbox
+
+   workflow_dispatch:
   
 env:
-  ProxyName: NoTargetProxy
+  ProxyName: ${{ github.event.repository.name }}    #Setting Repository Name as Proxy Name #ProxyName: NoTargetProxy
   ORG: maf-holding
-  base64encoded: ${{ secrets.base64encoded }}
-  ENV: dev
+  ENV: sandbox
   machine_apigeeUsername: ${{ secrets.machine_apigeeUsername }}
   machine_apigeePassword: ${{ secrets.machine_apigeePassword }}
+  SAML_BASIC: ${{ secrets.SAML_BASIC }}
   api_product: Cicd-Prod-Product
   developer: hr@api.com
   app: hrapp
-  NEWMAN_TARGET_URL: NoTargetProxy_GET_Req_Pass_SAML_DEV.postman_collection.json
   LARGE_SECRET_PASSPHRASE: ${{ secrets.LARGE_SECRET_PASSPHRASE }}
-  ZAP_TARGET_API_URL: https://maf-holding-dev.apigee.net/notargetproxy
+  proxy_basepath: ${{ secrets.proxy_basepath }}
   
 jobs:
 
@@ -59,14 +58,14 @@ jobs:
         cd ${{ github.workspace }}/apigee-cicd-master
         sudo npm install -g apigeelint
         apigeelint -s ${{ env.ProxyName }}/apiproxy -f table.js
-        apigeelint -s ${{ env.ProxyName }}/apiproxy -f html.js > ${{ github.workspace }}/reports/apigeelint.html
+        apigeelint -s ${{ env.ProxyName }}/apiproxy -f html.js > ${{ github.workspace }}/apigeelint.html
         
      - name: Publishing Apigee Lint Report to Artifacts
        uses: actions/upload-artifact@v2
        if: always()
        with:
         name: Apigee Lint Report
-        path: ${{ github.workspace }}/reports/apigeelint.html
+        path: ${{ github.workspace }}/apigeelint.html
         
      - name: commit-status-update
        uses: ouzi-dev/commit-status-updater@v1.1.0
@@ -154,7 +153,7 @@ jobs:
        if: always()
        with:
         name: Newman Integration Report
-        path: ${{ github.workspace }}/reports/newman_report.html
+        path: ${{ github.workspace }}/newman_report.html
        
      - name: ZAP Scan
        if: steps.integration.outcome == 'success'

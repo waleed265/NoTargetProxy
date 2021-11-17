@@ -3,7 +3,7 @@
 # ORG=$1
 # base64encoded=$2
 echo "ORG: $ORG"
-echo "base64encoded: $base64encoded"
+#echo "base64encoded: $base64encoded"
 echo "api_product: $api_product"
 echo "developer: $developer"
 echo "app: $app"
@@ -16,7 +16,7 @@ ZAP_TARGET_API_URL="https://${ORG}-${ENV}.apigee.net/${proxy_basepath}"
 echo "ZAP_TARGET_API_URL: $ZAP_TARGET_API_URL"
 echo "ZAP_TARGET_API_URL=$ZAP_TARGET_API_URL" >> $GITHUB_ENV
 
-token_response=$(curl -s -X POST "https://majid-al-futtaim-group.login.apigee.com/oauth/token" -H "Content-Type:application/x-www-form-urlencoded;charset=utf-8" -H "accept: application/json;charset=utf-8" -H "authorization: Basic ZWRnZWNsaTplZGdlY2xpc2VjcmV0" -d "grant_type=password&username=$machine_apigeeUsername&password=$machine_apigeePassword")
+token_response=$(curl -s -X POST "https://majid-al-futtaim-group.login.apigee.com/oauth/token" -H "Content-Type:application/x-www-form-urlencoded;charset=utf-8" -H "accept: application/json;charset=utf-8" -H "authorization: Basic $SAML_BASIC" -d "grant_type=password&username=$machine_apigeeUsername&password=$machine_apigeePassword")
 
 accessToken_SAML=$(jq -r '.access_token' <<< "${token_response}")
 echo "SAML Access Token: $accessToken_SAML"

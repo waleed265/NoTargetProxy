@@ -4,7 +4,7 @@
     <Flows/>
     <HTTPTargetConnection>
         <Properties/>
-        <URL>http://rimshaaizaz-eval-test.apigee.net</URL>
+        <URL>http://test.apigee.net</URL>
     </HTTPTargetConnection>
     <PreFlow name="PreFlow">
         <Request/>

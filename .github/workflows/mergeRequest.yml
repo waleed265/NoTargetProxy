@@ -8,20 +8,16 @@ on:
     - uat
   
 env:
-  #ProxyName: NoTargetProxy
-  ProxyName: ${{ github.event.repository.name }}
+  ProxyName: ${{ github.event.repository.name }}    #Setting Repository Name as Proxy Name #ProxyName: NoTargetProxy
   ORG: maf-holding
-  #base64encoded: ${{ secrets.base64encoded }}
-  #ENV: sandbox
   machine_apigeeUsername: ${{ secrets.machine_apigeeUsername }}
   machine_apigeePassword: ${{ secrets.machine_apigeePassword }}
+  SAML_BASIC: ${{ secrets.SAML_BASIC }}
   proxy_basepath: ${{ secrets.proxy_basepath }}
   api_product: Cicd-Prod-Product
   developer: hr@api.com
   app: hrapp
-  #NEWMAN_TARGET_URL: NoTargetProxy_GET_Req_Pass_SAML_sandbox.postman_collection.json
   LARGE_SECRET_PASSPHRASE: ${{ secrets.LARGE_SECRET_PASSPHRASE }}
-  #ZAP_TARGET_API_URL: https://maf-holding-sandbox.apigee.net/notargetproxy
   
 jobs:
 

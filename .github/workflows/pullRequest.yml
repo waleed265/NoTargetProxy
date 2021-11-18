@@ -30,19 +30,18 @@ jobs:
        run: bash ./apigee-cicd-master/scripts/pullRequest_validation.sh
     
      - name: Unit-Test-With-Coverage
+       id: unit
        run: cd ${{ github.workspace }}/apigee-cicd-master && npm install && npm test test/unit/*.js && npm run coverage test/unit/*.js
-      
-     - name: Coverage
-       run: cd ${{ github.workspace }}/apigee-cicd-master/coverage && ls 
       
      - name: Publish Unit Test Results
        uses: EnricoMi/publish-unit-test-result-action@v1
-       if: always()
+       if: steps.unit.outcome != 'skipped'
        with:
         files: ${{ github.workspace }}/**/test-results.xml    
       
      - name: Cobertura Coverage Report
        uses: 5monkeys/cobertura-action@master
+       if: steps.unit.outcome != 'skipped'
        with:
         path: ${{ github.workspace }}/apigee-cicd-master/coverage/cobertura-coverage.xml
         repo_token: ${{ secrets.GITHUB_TOKEN }}
@@ -56,6 +55,7 @@ jobs:
         only_changed_files: false
     
      - name: Policy-Code-Analysis
+       id: apigeelint
        run: |
         cd ${{ github.workspace }}/apigee-cicd-master
         sudo npm install -g apigeelint
@@ -64,7 +64,7 @@ jobs:
         
      - name: Publishing Apigee Lint Report to Artifacts
        uses: actions/upload-artifact@v2
-       if: always()
+       if: steps.apigeelint.outcome != 'skipped'
        with:
         name: Apigee Lint Report
         path: ${{ github.workspace }}/apigeelint.html

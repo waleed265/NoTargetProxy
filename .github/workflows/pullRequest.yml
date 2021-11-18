@@ -26,14 +26,16 @@ jobs:
         echo "SOURCE_BRANCH_NAME=$(echo ${GITHUB_HEAD_REF} | tr / -)" >> $GITHUB_ENV
 
      - name: Debug
+       shell: bash
        run: |
-        echo "SOURCE_BRANCH_NAME:${{ env.SOURCE_BRANCH_NAME }}"
-        echo "TARGET_BRANCH_NAME:${{ env.TARGET_BRANCH_NAME }}"
-        if (${{ env.TARGET_BRANCH_NAME }} -eq "uat" && ${{ env.SOURCE_BRANCH_NAME }} -ne "dev")
+        echo "SOURCE_BRANCH_NAME:$SOURCE_BRANCH_NAME"
+        echo "TARGET_BRANCH_NAME:$TARGET_BRANCH_NAME"
+        if [[$TARGET_BRANCH_NAME -eq "uat" && $SOURCE_BRANCH_NAME -ne "dev"]]
          {
-            echo "Cannot create pull request from ${{ env.SOURCE_BRANCH_NAME }} to ${{ env.TARGET_BRANCH_NAME }}"
+            echo "Cannot create pull request from $SOURCE_BRANCH_NAME to $TARGET_BRANCH_NAME"
             exit 1
-          }  
+          }
+        fi
     
      - name: Unit-Test-With-Coverage
        run: cd ${{ github.workspace }}/apigee-cicd-master && npm install && npm test test/unit/*.js && npm run coverage test/unit/*.js

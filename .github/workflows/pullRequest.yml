@@ -21,10 +21,19 @@ jobs:
      - name: Get branch name (pull request)
        if: github.event_name == 'pull_request'
        shell: bash
-       run: echo "BRANCH_NAME=$(echo ${GITHUB_BASE_REF} | tr / -)" >> $GITHUB_ENV
+       run: |
+        echo "TARGET_BRANCH_NAME=$(echo ${GITHUB_BASE_REF} | tr / -)" >> $GITHUB_ENV
+        echo "SOURCE_BRANCH_NAME=$(echo ${GITHUB_HEAD_REF} | tr / -)" >> $GITHUB_ENV
 
      - name: Debug
-       run: echo ${{ env.BRANCH_NAME }}   
+       run: |
+        echo "SOURCE_BRANCH_NAME:${{ env.SOURCE_BRANCH_NAME }}"
+        echo "TARGET_BRANCH_NAME:${{ env.TARGET_BRANCH_NAME }}"
+        if (${{ env.TARGET_BRANCH_NAME }} -eq "uat" && ${{ env.SOURCE_BRANCH_NAME }} -ne "dev")
+         {
+            echo "Cannot create pull request from ${{ env.SOURCE_BRANCH_NAME }} to ${{ env.TARGET_BRANCH_NAME }}"
+            exit 1
+          }  
     
      - name: Unit-Test-With-Coverage
        run: cd ${{ github.workspace }}/apigee-cicd-master && npm install && npm test test/unit/*.js && npm run coverage test/unit/*.js

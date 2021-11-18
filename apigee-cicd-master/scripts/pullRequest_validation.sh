@@ -16,5 +16,8 @@ echo "TARGET_BRANCH_NAME:$TARGET_BRANCH_NAME"
             echo "Cannot create Pull Request from '$SOURCE_BRANCH_NAME' to '$TARGET_BRANCH_NAME' branch...!!!"
             exit 1
           }
+		  
+	else
+	echo "Valid Pull Request generated from '$SOURCE_BRANCH_NAME' to '$TARGET_BRANCH_NAME' branch...!!!"
 	
     fi 

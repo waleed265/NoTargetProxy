@@ -26,7 +26,7 @@ jobs:
         echo "SOURCE_BRANCH_NAME=$(echo ${GITHUB_HEAD_REF} | tr / -)" >> $GITHUB_ENV
 
      - name: Debug
-       shell: bash
+       #shell: bash
        run: |
         echo "SOURCE_BRANCH_NAME:$SOURCE_BRANCH_NAME"
         echo "TARGET_BRANCH_NAME:$TARGET_BRANCH_NAME"

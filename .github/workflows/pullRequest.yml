@@ -6,6 +6,7 @@ on:
     - sandbox
     - dev
     - uat
+    - prod
 
 env:
   ProxyName: ${{ github.event.repository.name }}    #Setting Repository Name as Proxy Name #ProxyName: NoTargetProxy

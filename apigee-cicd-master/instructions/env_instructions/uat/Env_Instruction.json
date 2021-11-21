@@ -5,13 +5,13 @@
 			{
 				"filename" : "xyz_targetServers.json",
 				"action":"create",
-				"filePath": "/dev/targetServers",
+				"fileDir": "targetServers",
 				"fallback": "Fallback_Scenario_1"
 			},
 			{
 				"filename" : "xyz_targetServers.json",
 				"action":"delete",
-				"filePath": "/dev/targetServers",
+				"fileDir": "targetServers",
 				"fallback": "Fallback_Scenario_2"
 			}
 		],
@@ -20,7 +20,7 @@
 			{
 				"filename" : "xyz_targetServers.json",
 				"action":"delete",
-				"filePath": "/dev/targetServers"
+				"fileDir": "targetServers"
 			}
 		],
 	"Fallback_Scenario_2":
@@ -28,12 +28,12 @@
 			{
 				"filename" : "xyz_targetServers.json",
 				"action":"delete",
-				"filePath": "/dev/targetServers"
+				"fileDir": "targetServers"
 			},
 			{
 				"filename" : "xyz_targetServers.json",
 				"action":"create",
-				"filePath": "/dev/targetServers"
+				"fileDir": "targetServers"
 			}
 		],
 	"status" : "EXECUTE"

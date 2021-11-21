@@ -1,0 +1,41 @@
+{
+"data": {
+	"ExecuteFiles":
+		[
+			{
+				"filename" : "xyz_targetServers.json",
+				"action":"create",
+				"filePath": "/dev/targetServers",
+				"fallback": "Fallback_Scenario_1"
+			},
+			{
+				"filename" : "xyz_targetServers.json",
+				"action":"delete",
+				"filePath": "/dev/targetServers",
+				"fallback": "Fallback_Scenario_2"
+			}
+		],
+	"Fallback_Scenario_1":
+		[
+			{
+				"filename" : "xyz_targetServers.json",
+				"action":"delete",
+				"filePath": "/dev/targetServers"
+			}
+		],
+	"Fallback_Scenario_2":
+		[
+			{
+				"filename" : "xyz_targetServers.json",
+				"action":"delete",
+				"filePath": "/dev/targetServers"
+			},
+			{
+				"filename" : "xyz_targetServers.json",
+				"action":"create",
+				"filePath": "/dev/targetServers"
+			}
+		],
+	"status" : "EXECUTE"
+	}
+}

@@ -50,6 +50,10 @@ jobs:
         cd ${{ github.workspace }}/org_config && ls
         echo "****env_config******"
         cd ${{ github.workspace }}/Env_Config && ls
+        
+     - name: Running env_Instructions.sh script
+       run: bash ./apigee-cicd-master/scripts/env_Instructions.sh
+       shell: bash
     
      # - name: Unit-Test-With-Coverage
        # run: cd ${{ github.workspace }}/apigee-cicd-master && npm install && npm test test/unit/*.js && npm run coverage test/unit/*.js

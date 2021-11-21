@@ -39,16 +39,16 @@ jobs:
        uses: actions/checkout@v2
        with:
         repository: waleed265/Env_Config
-        ref: 'sandbox'
+        ref: 'dev'
         path: Env_Config
         token: ${{ secrets.MYPAT }}  
 
      - name: Echo Workspace
        run: |
         cd ${{ github.workspace }} && ls
-        echo "org_config"
+        echo "****org_config******"
         cd ${{ github.workspace }}/org_config && ls
-        echo "env_config"
+        echo "****env_config******"
         cd ${{ github.workspace }}/Env_Config && ls
     
      # - name: Unit-Test-With-Coverage

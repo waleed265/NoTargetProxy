@@ -13,10 +13,10 @@ env:
   machine_apigeeUsername: ${{ secrets.machine_apigeeUsername }}
   machine_apigeePassword: ${{ secrets.machine_apigeePassword }}
   SAML_BASIC: ${{ secrets.SAML_BASIC }}
-  proxy_basepath: ${{ secrets.proxy_basepath }}
-  api_product: Cicd-Prod-Product
-  developer: hr@api.com
-  app: hrapp
+  # proxy_basepath: ${{ secrets.proxy_basepath }}
+  # api_product: Cicd-Prod-Product
+  # developer: hr@api.com
+  # app: hrapp
   LARGE_SECRET_PASSPHRASE: ${{ secrets.LARGE_SECRET_PASSPHRASE }}
   
 jobs:

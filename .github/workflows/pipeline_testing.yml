@@ -13,11 +13,11 @@ env:
   machine_apigeeUsername: ${{ secrets.machine_apigeeUsername }}
   machine_apigeePassword: ${{ secrets.machine_apigeePassword }}
   SAML_BASIC: ${{ secrets.SAML_BASIC }}
-  api_product: Cicd-Prod-Product
-  developer: hr@api.com
-  app: hrapp
+  # api_product: Cicd-Prod-Product
+  # developer: hr@api.com
+  # app: hrapp
   LARGE_SECRET_PASSPHRASE: ${{ secrets.LARGE_SECRET_PASSPHRASE }}
-  proxy_basepath: ${{ secrets.proxy_basepath }}
+  #proxy_basepath: ${{ secrets.proxy_basepath }}
   
 jobs:
 
@@ -27,33 +27,39 @@ jobs:
      - name: Checkout Repository
        uses: actions/checkout@v2
        
-     - name: Checkout organization repo
-       uses: actions/checkout@v2
-       with:
-        repository: waleed265/org_config
-        #ref: 'sandbox'
-        path: org_config
-        token: ${{ secrets.MYPAT }}
-       
-     - name: Checkout environment repo
-       uses: actions/checkout@v2
-       with:
-        repository: waleed265/Env_Config
-        ref: 'dev'
-        path: Env_Config
-        token: ${{ secrets.MYPAT }}  
-
-     - name: Echo Workspace
-       run: |
-        cd ${{ github.workspace }} && ls
-        echo "****org_config******"
-        cd ${{ github.workspace }}/org_config && ls
-        echo "****env_config******"
-        cd ${{ github.workspace }}/Env_Config && ls
-        
-     - name: Running env_Instructions.sh script
-       run: bash ./apigee-cicd-master/scripts/env_Instructions.sh
+     - name: Integration Test through script file
+       id: integration
+       run: bash ./apigee-cicd-master/scripts/integration.sh
        shell: bash
+       #continue-on-error: true
+       
+     # - name: Checkout organization repo
+       # uses: actions/checkout@v2
+       # with:
+        # repository: waleed265/org_config
+        # #ref: 'sandbox'
+        # path: org_config
+        # token: ${{ secrets.MYPAT }}
+       
+     # - name: Checkout environment repo
+       # uses: actions/checkout@v2
+       # with:
+        # repository: waleed265/Env_Config
+        # ref: 'dev'
+        # path: Env_Config
+        # token: ${{ secrets.MYPAT }}  
+
+     # - name: Echo Workspace
+       # run: |
+        # cd ${{ github.workspace }} && ls
+        # echo "****org_config******"
+        # cd ${{ github.workspace }}/org_config && ls
+        # echo "****env_config******"
+        # cd ${{ github.workspace }}/Env_Config && ls
+        
+     # - name: Running env_Instructions.sh script
+       # run: bash ./apigee-cicd-master/scripts/env_Instructions.sh
+       # shell: bash
     
      # - name: Unit-Test-With-Coverage
        # run: cd ${{ github.workspace }}/apigee-cicd-master && npm install && npm test test/unit/*.js && npm run coverage test/unit/*.js

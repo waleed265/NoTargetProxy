@@ -9,6 +9,18 @@ echo "developer: $developer"
 echo "app: $app"
 echo "ProxyName: $ProxyName"
 
+proxy_basepath=$(cat $GITHUB_WORKSPACE/apigee-cicd-master/instructions/proxy_details.json | jq -r '.proxy_basepath')
+echo $proxy_basepath
+
+api_product=$(cat $GITHUB_WORKSPACE/apigee-cicd-master/instructions/proxy_details.json | jq -r '.api_product')
+echo $api_product
+
+developer=$(cat $GITHUB_WORKSPACE/apigee-cicd-master/instructions/proxy_details.json | jq -r '.developer')
+echo $developer
+
+app=$(cat $GITHUB_WORKSPACE/apigee-cicd-master/instructions/proxy_details.json | jq -r '.app')
+echo $app
+
 NEWMAN_TARGET_COLLECTION="${ProxyName}_${ENV}.json"
 echo "NEWMAN_TARGET_COLLECTION: $NEWMAN_TARGET_COLLECTION"
 

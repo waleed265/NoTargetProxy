@@ -4,22 +4,19 @@
 # base64encoded=$2
 echo "ORG: $ORG"
 #echo "base64encoded: $base64encoded"
-echo "api_product: $api_product"
-echo "developer: $developer"
-echo "app: $app"
 echo "ProxyName: $ProxyName"
 
 proxy_basepath=$(cat $GITHUB_WORKSPACE/apigee-cicd-master/instructions/proxy_details.json | jq -r '.proxy_basepath')
-echo $proxy_basepath
+echo "proxy_basepath: $proxy_basepath"
 
 api_product=$(cat $GITHUB_WORKSPACE/apigee-cicd-master/instructions/proxy_details.json | jq -r '.api_product')
-echo $api_product
+echo "api_product: $api_product"
 
 developer=$(cat $GITHUB_WORKSPACE/apigee-cicd-master/instructions/proxy_details.json | jq -r '.developer')
-echo $developer
+echo "developer: $developer"
 
 app=$(cat $GITHUB_WORKSPACE/apigee-cicd-master/instructions/proxy_details.json | jq -r '.app')
-echo $app
+echo "app: $app"
 
 NEWMAN_TARGET_COLLECTION="${ProxyName}_${ENV}.json"
 echo "NEWMAN_TARGET_COLLECTION: $NEWMAN_TARGET_COLLECTION"

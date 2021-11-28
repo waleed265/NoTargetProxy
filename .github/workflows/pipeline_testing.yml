@@ -103,7 +103,8 @@ jobs:
       
       
      - name: Deploy Proxy
-       run: mvn clean install -f ${{ github.workspace }}/apigee-cicd-master/${{ env.ProxyName }}/pom.xml -P${{ env.ENV }} -Dusername=${{ env.machine_apigeeUsername }} -Dpassword=${{ env.machine_apigeePassword }} -Dorg=${{ env.ORG }} -Dapigee.config.options=none #-Dapigee.app.ignoreAPIProducts=true 
+       run: mvn clean install -f ${{ github.workspace }}/apigee-cicd-master/${{ env.ProxyName }}/pom.xml -P${{ env.ENV }} -Dusername=${{ env.machine_apigeeUsername }} -Dpassword=${{ env.machine_apigeePassword }} -Dorg=${{ env.ORG }} 
+       #-Dapigee.config.options=none -Dapigee.app.ignoreAPIProducts=true 
        
      - name: commit-status-update
        uses: ouzi-dev/commit-status-updater@v1.1.0

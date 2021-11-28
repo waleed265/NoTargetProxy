@@ -35,6 +35,17 @@ jobs:
      - name: Get branch name (pull request)
        if: github.event_name == 'pull_request'
        shell: bash
+       run: |
+        echo "TARGET_BRANCH_NAME=$(echo ${GITHUB_BASE_REF} | tr / -)" >> $GITHUB_ENV
+        echo "SOURCE_BRANCH_NAME=$(echo ${GITHUB_HEAD_REF} | tr / -)" >> $GITHUB_ENV
+
+     - name: Pull Request Branch Validation
+       shell: bash
+       run: bash ./apigee-cicd-master/scripts/pullRequest_validation.sh
+       
+     - name: Setting Apigee Environment from base branch
+       if: github.event_name == 'pull_request'
+       shell: bash
        run: echo "ENV=$(echo ${GITHUB_BASE_REF} | tr / -)" >> $GITHUB_ENV
 
      - name: Debug
@@ -57,7 +68,7 @@ jobs:
        shell: bash
       
      - name: Deploy Proxy
-       run: mvn clean install -f ${{ github.workspace }}/apigee-cicd-master/${{ env.ProxyName }}/pom.xml -P${{ env.ENV }} -Dusername=${{ env.machine_apigeeUsername }} -Dpassword=${{ env.machine_apigeePassword }} -Dorg=${{ env.ORG }} -Dapigee.config.options=update -Dapigee.app.ignoreAPIProducts=true
+       run: mvn clean install -f ${{ github.workspace }}/apigee-cicd-master/${{ env.ProxyName }}/pom.xml -P${{ env.ENV }} -Dusername=${{ env.machine_apigeeUsername }} -Dpassword=${{ env.machine_apigeePassword }} -Dorg=${{ env.ORG }} -Dapigee.config.options=none #-Dapigee.app.ignoreAPIProducts=true
        
      - name: commit-status-update
        uses: ouzi-dev/commit-status-updater@v1.1.0

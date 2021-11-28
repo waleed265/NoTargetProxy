@@ -1,6 +1,0 @@
-{
-	"proxy_basepath": "notargetproxy",
-	"api_product": "Cicd-Prod-Product",
-	"developer": "hr@api.com",
-	"app": "hrapp"
-}

@@ -12,31 +12,31 @@ echo "base64encoded: $base64encoded"
 echo "ProxyName: $ProxyName"
 echo "stable revision: $stable_revision_number"
 
-echo "**************************************************"
-echo "Fall Back Edge.json Deployment"
-echo "**************************************************"
-echo "**************************************************"
-echo "Before Decryption"
-echo "**************************************************"
-cd $GITHUB_WORKSPACE/apigee-cicd-master/$ProxyName && ls
+# echo "**************************************************"
+# echo "Fall Back Edge.json Deployment"
+# echo "**************************************************"
+# echo "**************************************************"
+# echo "Before Decryption"
+# echo "**************************************************"
+# cd $GITHUB_WORKSPACE/apigee-cicd-master/$ProxyName && ls
 
-#Decrypt the file
-#--batch to prevent interactive command
-#--yes to assume "yes" for questions
+# #Decrypt the file
+# #--batch to prevent interactive command
+# #--yes to assume "yes" for questions
 
-gpg --quiet --batch --yes --decrypt --passphrase="$LARGE_SECRET_PASSPHRASE" \
---output $GITHUB_WORKSPACE/apigee-cicd-master/$ProxyName/edge.json $GITHUB_WORKSPACE/apigee-cicd-master/$ProxyName/edge-fallback.json.gpg
+# gpg --quiet --batch --yes --decrypt --passphrase="$LARGE_SECRET_PASSPHRASE" \
+# --output $GITHUB_WORKSPACE/apigee-cicd-master/$ProxyName/edge.json $GITHUB_WORKSPACE/apigee-cicd-master/$ProxyName/edge-fallback.json.gpg
 
-echo "**************************************************"
-echo "After Decryption"
-echo "**************************************************"
-cd $GITHUB_WORKSPACE/apigee-cicd-master/$ProxyName && ls
+# echo "**************************************************"
+# echo "After Decryption"
+# echo "**************************************************"
+# cd $GITHUB_WORKSPACE/apigee-cicd-master/$ProxyName && ls
 
-echo "**************************************************"
-echo "Deploying Fall Back Edge.json"
-echo "**************************************************"
+# echo "**************************************************"
+# echo "Deploying Fall Back Edge.json"
+# echo "**************************************************"
 
-cd $GITHUB_WORKSPACE/apigee-cicd-master/$ProxyName && mvn apigee-config:specs apigee-config:caches apigee-config:keystores apigee-config:aliases apigee-config:references apigee-config:targetservers apigee-config:resourcefiles apigee-config:apiproducts apigee-config:developers apigee-config:apps apigee-config:companies apigee-config:companyapps apigee-config:reports apigee-config:importKeys -P$ENV -Dusername=$machine_apigeeUsername -Dpassword=$machine_apigeePassword -Dorg=$ORG -Dapigee.config.options=update -Dapigee.app.ignoreAPIProducts=true
+# cd $GITHUB_WORKSPACE/apigee-cicd-master/$ProxyName && mvn apigee-config:specs apigee-config:caches apigee-config:keystores apigee-config:aliases apigee-config:references apigee-config:targetservers apigee-config:resourcefiles apigee-config:apiproducts apigee-config:developers apigee-config:apps apigee-config:companies apigee-config:companyapps apigee-config:reports apigee-config:importKeys -P$ENV -Dusername=$machine_apigeeUsername -Dpassword=$machine_apigeePassword -Dorg=$ORG -Dapigee.config.options=update -Dapigee.app.ignoreAPIProducts=true
 
 echo "**************************************************"
 echo "Undeploying Unstable Proxy Revision"

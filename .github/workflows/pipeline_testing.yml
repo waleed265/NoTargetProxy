@@ -101,13 +101,12 @@ jobs:
        run: echo "::set-output name=stable_revision_number::$stable_revision_number"
        # run: echo "stable_revision_number=$stable_revision_number"
      
-     # - name: Decrypt edge.json file
-       # run: bash ./apigee-cicd-master/scripts/decrypt_secret.sh
-       # shell: bash
+     - name: Decrypt edge.json file
+       run: bash ./apigee-cicd-master/scripts/decrypt_secret.sh
+       shell: bash
       
      - name: Deploy Proxy
-       run: mvn clean install -f ${{ github.workspace }}/apigee-cicd-master/${{ env.ProxyName }}/pom.xml -P${{ env.ENV }} -Dusername=${{ env.machine_apigeeUsername }} -Dpassword=${{ env.machine_apigeePassword }} -Dorg=${{ env.ORG }} 
-       #-Dapigee.config.options=none -Dapigee.app.ignoreAPIProducts=true 
+       run: mvn clean install -f ${{ github.workspace }}/apigee-cicd-master/${{ env.ProxyName }}/pom.xml -P${{ env.ENV }} -Dusername=${{ env.machine_apigeeUsername }} -Dpassword=${{ env.machine_apigeePassword }} -Dorg=${{ env.ORG }} -Dapigee.config.options=create -Dapigee.app.ignoreAPIProducts=true 
        
      - name: commit-status-update
        uses: ouzi-dev/commit-status-updater@v1.1.0

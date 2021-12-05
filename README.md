@@ -1,4 +1,5 @@
-# Proxy_Repository_Apigee_CICD
+# Proxy-Repository-Apigee-CICD
+
 ## 1) Basic Concept
 Proxy repository is the one where a proxy which has to be deployed on Apigee edge, tested & undeployed in case of tests failure automatically using pipelines; Pipelines will deploy the proxy on APIGEE edge UI using maven plugin.
 
@@ -47,9 +48,7 @@ In this directory there will be following subdirectories
 #### 4.2.1) Target Proxy Directory
 This folder contains the target API proxy folder which has to be deployed to apigee. The name of the proxy repository should match with the name of this directory, because it is automatically set and used in the proxy pipeline. It contains following directories and files.
 - "apiproxy" directory
-- "config.json" file
 - "pom.xml" file
-
 
 ##### 4.2.1.1) "apiproxy" directory
 This folder contains the API proxy files in standard apigee API proxy directory structure. it contains the following subdirectories
@@ -60,13 +59,14 @@ This folder contains the API proxy files in standard apigee API proxy directory 
 - targets directory
 - "ProxyName.xml" file e.g. NoTargetProxy.xml 
 
-##### 4.2.1.2) "config.json" file
-This file contains the apigee environment configurations in which proxy have to be deployed. It is used during the maven deployment of the proxy to the apigee by the “apigee-config-maven-plugin”.
-
-##### 4.2.1.3) "pom.xml" file
+##### 4.2.1.2) "pom.xml" file
 A Project Object Model or POM is the fundamental unit of work in Maven. It is an XML file that contains information about the project and configuration details used by Maven to build the project. It contains default values for most projects. When executing a task or goal, Maven looks for the POM in the current directory. It reads the POM, gets the needed configuration information, and then executes the goal. 
 Some of the configuration that can be specified in the POM are the project dependencies, the plugins or goals that can be executed, the build profiles, and so on. Other information such as the project version, description, developers, mailing lists and such can also be specified.
 This file is used in maven deployment of the proxy to apigee & it is a mandatory file for proxy deployment. It contains the important descriptions of an API proxy such as groupId, artifactId, version, name & packaging of the API proxy. It also contains the reference to the shared-pom/parent-pom which contains the shared necessary deployment configurations of the API proxy.
+
+##### 4.2.1.3) Restrictions
+- The proxy repository name should be identical with the the proxy directory name
+	- The pipeline will dynamically pick the repository name & in case it is not set properly it may result the failure of pipeline
 
 #### 4.2.2) "scripts" directory
 This folder contains all the scripts files used in pipeline workflows which are as follows:

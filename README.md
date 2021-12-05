@@ -66,7 +66,7 @@ This file is used in maven deployment of the proxy to apigee & it is a mandatory
 
 ##### 4.2.1.3) Restrictions
 - The proxy repository name should be identical with the the proxy directory name
-	- The pipeline will dynamically pick the repository name & in case it is not set properly it may result the failure of pipeline
+	- The pipeline will dynamically pick the repository name & in case it is not set properly, it may result the failure of pipeline
 
 #### 4.2.2) "scripts" directory
 This folder contains all the scripts files used in pipeline workflows which are as follows:
